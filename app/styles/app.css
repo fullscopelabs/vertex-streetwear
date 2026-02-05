@@ -1,3 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bone text-charcoal antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-charcoal text-bone px-8 py-4 uppercase tracking-widest text-sm hover:bg-rust transition-colors duration-300;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-charcoal text-charcoal px-8 py-4 uppercase tracking-widest text-sm hover:bg-charcoal hover:text-bone transition-colors duration-300;
+  }
+
+  .section-padding {
+    @apply py-20 px-4;
+  }
+}
+
 :root {
   --aside-width: 400px;
   --cart-aside-summary-height-with-discount: 300px;
