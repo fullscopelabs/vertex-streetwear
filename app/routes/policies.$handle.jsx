@@ -8,7 +8,7 @@ const FALLBACK_POLICIES = {
     title: 'Terms of Service',
     body: `
       <h2>Overview</h2>
-      <p>This website is operated by VΞRTEX. Throughout the site, the terms "we", "us" and "our" refer to VΞRTEX. We offer this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.</p>
+      <p>This website is operated by <span style="letter-spacing:0.2em">V<span style="font-size:0.85em;vertical-align:baseline">☰</span>RTEX</span>. Throughout the site, the terms "we", "us" and "our" refer to <span style="letter-spacing:0.2em">V<span style="font-size:0.85em;vertical-align:baseline">☰</span>RTEX</span>. We offer this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.</p>
       <p>By visiting our site and/or purchasing something from us, you engage in our "Service" and agree to be bound by the following terms and conditions.</p>
 
       <h2>Online Store Terms</h2>
@@ -37,7 +37,7 @@ const FALLBACK_POLICIES = {
     title: 'Refund Policy',
     body: `
       <h2>Returns</h2>
-      <p>We want you to love your VΞRTEX purchase. If for any reason you're not completely satisfied, we accept returns within 30 days of delivery for a full refund to your original payment method.</p>
+      <p>We want you to love your <span style="letter-spacing:0.2em">V<span style="font-size:0.85em;vertical-align:baseline">☰</span>RTEX</span> purchase. If for any reason you're not completely satisfied, we accept returns within 30 days of delivery for a full refund to your original payment method.</p>
 
       <h2>Eligibility</h2>
       <p>To be eligible for a return, your item must be:</p>
@@ -133,12 +133,12 @@ export default function Policy() {
   return (
     <div className="bg-bone min-h-screen page-fade-in">
       {/* Dark header band */}
-      <section className="relative bg-gradient-to-br from-charcoal via-charcoal to-forest overflow-hidden grain">
-        <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 md:py-28">
+      <section className="relative bg-gradient-to-br from-charcoal via-tobacco to-forest overflow-hidden grain dark-accent-border">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 py-14 md:py-20">
           <ScrollReveal>
             <Link
               to="/policies"
-              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-bone/40 hover:text-bone/70 transition-colors duration-300 mb-8"
+              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-sand/40 hover:text-sand/70 transition-colors duration-300 mb-8"
             >
               <span>&larr;</span>
               <span>All Policies</span>
@@ -146,7 +146,7 @@ export default function Policy() {
             <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone">
               {policy.title}
             </h1>
-            <div className="w-12 h-px bg-rust mt-6" />
+            <div className="divider-lux mt-6" />
           </ScrollReveal>
         </div>
       </section>

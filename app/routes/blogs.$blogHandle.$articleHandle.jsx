@@ -88,13 +88,13 @@ export default function Article() {
   return (
     <div className="bg-bone min-h-screen page-fade-in">
       {/* Dark header band */}
-      <section className="relative bg-gradient-to-br from-charcoal via-charcoal to-forest overflow-hidden grain">
-        <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 md:py-28">
+      <section className="relative bg-gradient-to-br from-charcoal via-tobacco to-forest overflow-hidden grain dark-accent-border">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 py-14 md:py-20">
           <ScrollReveal>
             {/* Back to journal */}
             <Link
               to={`/blogs/${blogHandle}`}
-              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-bone/40 hover:text-bone/70 transition-colors duration-300 mb-8"
+              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-sand/40 hover:text-sand/70 transition-colors duration-300 mb-8"
             >
               <span>&larr;</span>
               <span>Back to Journal</span>
@@ -115,7 +115,7 @@ export default function Article() {
             <h1 className="font-serif text-4xl md:text-5xl font-light tracking-tight text-bone leading-tight">
               {title}
             </h1>
-            <div className="w-12 h-px bg-rust mt-6" />
+            <div className="divider-lux mt-6" />
           </ScrollReveal>
         </div>
       </section>

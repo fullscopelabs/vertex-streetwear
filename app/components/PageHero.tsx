@@ -15,18 +15,18 @@ interface PageHeroProps {
  */
 export function PageHero({title, subtitle, children}: PageHeroProps) {
   return (
-    <section className="relative bg-gradient-to-br from-charcoal via-charcoal to-forest overflow-hidden grain">
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-28 text-center">
+    <section className="relative bg-gradient-to-br from-charcoal via-tobacco to-forest overflow-hidden grain dark-accent-border">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-14 md:py-20 text-center">
         <ScrollReveal>
           {subtitle && (
-            <p className="text-[10px] tracking-[0.35em] uppercase text-bone/40 mb-4">
+            <p className="text-[10px] tracking-[0.35em] uppercase text-sand/50 mb-4">
               {subtitle}
             </p>
           )}
           <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone">
             {title}
           </h1>
-          <div className="w-12 h-px bg-rust mx-auto mt-6" />
+          <div className="divider-lux mx-auto mt-6" />
           {children && <div className="mt-6">{children}</div>}
         </ScrollReveal>
       </div>

@@ -41,7 +41,7 @@ function loadDeferredData({context}) {
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'VΞRTEX | Collections'}];
+  return [{title: 'V☰RTEX | Collections'}];
 };
 
 /** Handles that are internal Shopify collections, not real storefront collections */
@@ -50,6 +50,20 @@ const HIDDEN_COLLECTION_HANDLES = new Set([
   'home-page',
   'all',
 ]);
+
+/** Definition text for known collection handles */
+const COLLECTION_DEFINITIONS = {
+  'core': 'the essential. what everything else is built on.',
+  'core-collection': 'the essential. what everything else is built on.',
+  'limited': 'made once. never again.',
+  'limited-edition': 'made once. never again.',
+  'outerwear': 'the outer layer. protection meets presence.',
+  'accessories': 'the finishing details. where intention lives.',
+};
+
+function getCollectionDefinition(handle) {
+  return COLLECTION_DEFINITIONS[handle] || 'undefined. see for yourself.';
+}
 
 export default function Collections() {
   /** @type {LoaderReturnData} */
@@ -127,23 +141,23 @@ export default function Collections() {
       )}
 
       {/* CTA Band */}
-      <section className="bg-gradient-to-br from-charcoal via-charcoal to-forest grain">
-        <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 md:py-28 text-center">
+      <section className="bg-gradient-to-br from-charcoal via-tobacco to-forest grain dark-accent-border">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 py-14 md:py-20 text-center">
           <ScrollReveal>
-            <p className="text-[10px] tracking-[0.35em] uppercase text-bone/40 mb-4">
+            <p className="text-[10px] tracking-[0.35em] uppercase text-sand/50 mb-4">
               Don&apos;t Know Where to Start?
             </p>
             <h2 className="font-serif text-4xl md:text-5xl font-light tracking-tight text-bone mb-6">
               Browse Everything
             </h2>
-            <div className="w-12 h-px bg-rust mx-auto mb-8" />
-            <p className="text-bone/50 text-sm leading-relaxed max-w-md mx-auto mb-10">
+            <div className="divider-lux mx-auto mb-10" />
+            <p className="text-bone/50 text-sm leading-relaxed max-w-md mx-auto mb-12">
               View our full catalog of streetwear essentials — every piece,
               every collection, in one place.
             </p>
             <Link
               to="/collections/all"
-              className="inline-block bg-bone text-charcoal px-10 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+              className="inline-block border border-sand/30 text-sand px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] hover:bg-sand hover:text-charcoal transition-all duration-500"
             >
               Shop All Products
             </Link>
@@ -259,6 +273,14 @@ function CollectionEditorialSection({collection, index, reverse, heroImage, allH
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-charcoal leading-tight">
                 {collection.title}
               </h2>
+
+              {/* Definition accent */}
+              <p className="font-serif italic text-sm text-charcoal/40 mt-2 tracking-wide">
+                /{collection.title.toLowerCase()}/
+              </p>
+              <p className="text-charcoal/35 text-xs mt-1 italic">
+                {getCollectionDefinition(collection.handle)}
+              </p>
 
               {/* Rust accent */}
               <div className="w-10 h-px bg-rust mt-5 mb-5" />

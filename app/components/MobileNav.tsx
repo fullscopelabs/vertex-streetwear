@@ -53,8 +53,15 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
         <div className="flex flex-col h-full">
           {/* Header: Logo + Close */}
           <div className="flex items-center justify-between px-6 h-[70px] border-b border-charcoal/10">
-            <span className="text-xl font-bold tracking-tighter text-charcoal">
-              VΞRTEX
+            <span
+              className="text-xl font-serif text-charcoal"
+              style={{
+                border: '2px solid currentColor',
+                padding: '0.16em 0.48em',
+                letterSpacing: '0.2em',
+              }}
+            >
+              V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX
             </span>
             <button
               onClick={onClose}

@@ -8,7 +8,7 @@ import {PageHero} from '~/components/PageHero';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `VΞRTEX | Journal`}];
+  return [{title: `V☰RTEX | Journal`}];
 };
 
 /**
@@ -104,7 +104,7 @@ export default function Blogs() {
               </h3>
               <p className="text-charcoal/50 text-sm leading-relaxed max-w-md mx-auto mb-2">
                 We&apos;re crafting stories about design, materials, and the
-                process behind each VΞRTEX collection.
+                process behind each <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span> collection.
               </p>
               <p className="text-charcoal/40 text-sm leading-relaxed max-w-md mx-auto mb-8">
                 Check back soon for editorials, behind-the-scenes features, and
