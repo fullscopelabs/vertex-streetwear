@@ -5,7 +5,14 @@ import {redirect} from 'react-router';
  * @param {Route.LoaderArgs}
  */
 export async function loader({context}) {
-  context.customerAccount.handleAuthStatus();
+  try {
+    await context.customerAccount.handleAuthStatus();
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      return redirect('/account/orders');
+    }
+    throw error;
+  }
 
   return redirect('/account');
 }

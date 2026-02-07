@@ -8,6 +8,28 @@ import {
 import {CUSTOMER_DETAILS_QUERY} from '~/graphql/customer-account/CustomerDetailsQuery';
 import {PageHero} from '~/components/PageHero';
 
+/**
+ * Mock customer data for local styling preview when the Customer Account API
+ * is unreachable (e.g. localhost without HTTPS).
+ */
+const MOCK_CUSTOMER = {
+  firstName: 'Preview',
+  lastName: 'User',
+  emailAddress: {emailAddress: 'preview@vertex.dev'},
+  phoneNumber: null,
+  defaultAddress: null,
+  addresses: {nodes: []},
+  orders: {
+    nodes: [],
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: null,
+      endCursor: null,
+    },
+  },
+};
+
 export function shouldRevalidate() {
   return true;
 }
@@ -17,29 +39,52 @@ export function shouldRevalidate() {
  */
 export async function loader({context}) {
   const {customerAccount} = context;
-  const {data, errors} = await customerAccount.query(CUSTOMER_DETAILS_QUERY, {
-    variables: {
-      language: customerAccount.i18n.language,
-    },
-  });
 
-  if (errors?.length || !data?.customer) {
-    throw new Error('Customer not found');
-  }
-
-  return remixData(
-    {customer: data.customer},
-    {
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
+  try {
+    const {data, errors} = await customerAccount.query(
+      CUSTOMER_DETAILS_QUERY,
+      {
+        variables: {
+          language: customerAccount.i18n.language,
+        },
       },
-    },
-  );
+    );
+
+    if (errors?.length || !data?.customer) {
+      throw new Error('Customer not found');
+    }
+
+    return remixData(
+      {customer: data.customer, isPreview: false},
+      {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        },
+      },
+    );
+  } catch (error) {
+    // If we're in development and the API fails, return mock data so we can
+    // still preview/style the account pages locally over plain HTTP.
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(
+        '[account] Customer Account API unavailable — serving preview data for styling.',
+      );
+      return remixData(
+        {customer: MOCK_CUSTOMER, isPreview: true},
+        {
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+          },
+        },
+      );
+    }
+    throw error;
+  }
 }
 
 export default function AccountLayout() {
   /** @type {LoaderReturnData} */
-  const {customer} = useLoaderData();
+  const {customer, isPreview} = useLoaderData();
 
   const heading = customer
     ? customer.firstName
@@ -51,16 +96,23 @@ export default function AccountLayout() {
     <div className="bg-bone min-h-screen page-fade-in">
       <PageHero title={heading} subtitle="Your Account" />
 
-      {/* Tab navigation */}
-      <div className="border-b border-charcoal/10">
-        <div className="max-w-4xl mx-auto px-4">
+      {/* Preview banner */}
+      {isPreview && (
+        <div className="bg-rust/90 text-bone text-center py-2 text-[10px] uppercase tracking-[0.2em]">
+          Preview Mode — Displaying mock data for styling purposes
+        </div>
+      )}
+
+      {/* Tab navigation — dark bar flush with hero */}
+      <div className="bg-gradient-to-b from-charcoal to-charcoal/95 border-b border-sand/10">
+        <div className="max-w-5xl mx-auto px-6">
           <AccountMenu />
         </div>
       </div>
 
       {/* Content */}
-      <section className="py-12 px-4">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-14 px-6">
+        <div className="max-w-5xl mx-auto">
           <Outlet context={{customer}} />
         </div>
       </section>
@@ -70,7 +122,7 @@ export default function AccountLayout() {
 
 function AccountMenu() {
   return (
-    <nav role="navigation" className="flex items-center gap-8">
+    <nav role="navigation" className="flex items-center gap-0">
       {[
         {to: '/account/orders', label: 'Orders'},
         {to: '/account/profile', label: 'Profile'},
@@ -80,10 +132,10 @@ function AccountMenu() {
           key={to}
           to={to}
           className={({isActive}) =>
-            `text-xs uppercase tracking-[0.2em] font-medium pb-4 border-b-2 transition-colors duration-200 ${
+            `text-[10px] uppercase tracking-[0.25em] font-medium px-6 py-4 border-b-2 transition-colors duration-300 ${
               isActive
-                ? 'text-charcoal border-rust'
-                : 'text-charcoal/50 border-transparent hover:text-charcoal hover:border-charcoal/30'
+                ? 'text-sand border-sand'
+                : 'text-bone/40 border-transparent hover:text-bone/70 hover:border-bone/20'
             }`
           }
         >
@@ -104,7 +156,7 @@ function Logout() {
     >
       <button
         type="submit"
-        className="text-xs uppercase tracking-[0.2em] font-medium text-charcoal/40 hover:text-rust transition-colors duration-200 pb-4"
+        className="text-[10px] uppercase tracking-[0.25em] font-medium text-bone/30 hover:text-rust transition-colors duration-300 py-4"
       >
         Sign Out
       </button>
