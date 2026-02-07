@@ -1,7 +1,9 @@
 import {redirect, useLoaderData, Link} from 'react-router';
-import {Analytics} from '@shopify/hydrogen';
+import {Analytics, Image} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductCard} from '~/components/ProductCard';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @type {Route.MetaFunction}
@@ -73,52 +75,50 @@ export default function Collection() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      {/* Hero Banner (if collection has an image) */}
+      {/* Hero Banner */}
       {hasImage ? (
-        <section className="relative h-[300px] md:h-[400px] overflow-hidden">
-          <img
-            src={collection.image.url}
-            alt={collection.image.altText || collection.title}
+        <section className="relative h-[300px] md:h-[400px] overflow-hidden grain">
+          <Image
+            data={collection.image}
+            sizes="100vw"
             className="absolute inset-0 w-full h-full object-cover"
+            loading="eager"
           />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-charcoal/60" />
+          {/* Gradient overlays for depth */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-charcoal/40 to-charcoal/70" />
           {/* Content centered on top */}
           <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-bone">
-              {collection.title}
-            </h1>
-            {collection.description && (
-              <p className="text-bone/70 mt-3 max-w-xl text-sm leading-relaxed">
-                {collection.description}
+            <ScrollReveal>
+              <p className="text-[10px] tracking-[0.35em] uppercase text-bone/40 mb-3">
+                Collection
               </p>
-            )}
-            <p className="text-[10px] tracking-[0.3em] text-bone/40 mt-4 uppercase">
-              {productCount} {productCount === 1 ? 'Product' : 'Products'}
-            </p>
+              <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone">
+                {collection.title}
+              </h1>
+              <div className="w-12 h-px bg-rust mx-auto mt-5" />
+              {collection.description && (
+                <p className="text-bone/60 mt-4 max-w-xl text-sm leading-relaxed">
+                  {collection.description}
+                </p>
+              )}
+              <p className="text-[10px] tracking-[0.3em] text-bone/40 mt-4 uppercase">
+                {productCount} {productCount === 1 ? 'Product' : 'Products'}
+              </p>
+            </ScrollReveal>
           </div>
         </section>
       ) : (
-        /* Text-only header with generous spacing */
-        <section className="section-padding pb-8">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-5xl font-bold tracking-tight text-charcoal">
-              {collection.title}
-            </h1>
-            {collection.description && (
-              <p className="text-lg text-charcoal-light mt-2 max-w-2xl">
-                {collection.description}
-              </p>
-            )}
-            <p className="text-sm tracking-widest text-charcoal/40 mt-4 uppercase">
-              {productCount} {productCount === 1 ? 'Product' : 'Products'}
+        <PageHero title={collection.title} subtitle="Collection">
+          {collection.description && (
+            <p className="text-bone/60 max-w-xl mx-auto text-sm leading-relaxed">
+              {collection.description}
             </p>
-          </div>
-        </section>
+          )}
+          <p className="text-[10px] tracking-[0.3em] text-bone/40 mt-3 uppercase">
+            {productCount} {productCount === 1 ? 'Product' : 'Products'}
+          </p>
+        </PageHero>
       )}
-
-      {/* Subtle border under header */}
-      <div className="border-b border-charcoal/10" />
 
       {/* Filter / Sort Bar */}
       <section className="border-y border-charcoal/10">
@@ -173,11 +173,12 @@ export default function Collection() {
           {productCount > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products.map((product, index) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  loading={index < 8 ? 'eager' : 'lazy'}
-                />
+                <ScrollReveal key={product.id} delay={index * 75}>
+                  <ProductCard
+                    product={product}
+                    loading={index < 8 ? 'eager' : 'lazy'}
+                  />
+                </ScrollReveal>
               ))}
             </div>
           ) : (

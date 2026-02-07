@@ -2,6 +2,8 @@ import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductCard} from '~/components/ProductCard';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @type {Route.MetaFunction}
@@ -56,20 +58,35 @@ export default function AllProducts() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      {/* Page Header */}
-      <section className="section-padding pb-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl font-bold tracking-tight text-charcoal">
-            ALL PRODUCTS
-          </h1>
-          <p className="text-sm tracking-widest text-charcoal/40 mt-4 uppercase">
-            {productCount} {productCount === 1 ? 'Product' : 'Products'}
-          </p>
+      {/* Dark Hero Band */}
+      <PageHero title="All Products" subtitle="The Full Collection">
+        <p className="text-[10px] tracking-[0.3em] text-bone/40 uppercase">
+          {productCount} {productCount === 1 ? 'Product' : 'Products'}
+        </p>
+      </PageHero>
+
+      {/* Filter / Sort Bar */}
+      <section className="border-b border-charcoal/10">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-charcoal border border-charcoal/20 px-4 py-2 hover:border-charcoal/40 transition-colors duration-200">
+              Filter
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs uppercase tracking-widest text-charcoal/50">Sort by</span>
+            <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-charcoal border border-charcoal/20 px-4 py-2 hover:border-charcoal/40 transition-colors duration-200">
+              Featured
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
-
-      {/* Divider */}
-      <div className="border-b border-charcoal/10" />
 
       {/* Product Grid */}
       <section className="section-padding">
@@ -80,11 +97,12 @@ export default function AllProducts() {
               resourcesClassName="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
             >
               {({node: product, index}) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  loading={index < 8 ? 'eager' : 'lazy'}
-                />
+                <ScrollReveal key={product.id} delay={index * 75}>
+                  <ProductCard
+                    product={product}
+                    loading={index < 8 ? 'eager' : 'lazy'}
+                  />
+                </ScrollReveal>
               )}
             </PaginatedResourceSection>
           ) : (

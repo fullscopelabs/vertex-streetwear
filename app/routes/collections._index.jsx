@@ -1,6 +1,8 @@
 import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @param {Route.LoaderArgs} args
@@ -22,7 +24,7 @@ export async function loader(args) {
  */
 async function loadCriticalData({context, request}) {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 4,
+    pageBy: 8,
   });
 
   const [{collections}] = await Promise.all([
@@ -58,33 +60,22 @@ export default function Collections() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      {/* Page header */}
-      <section className="section-padding pb-12">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
-            COLLECTIONS
-          </h1>
-          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
-            Explore Our Range
-          </p>
-        </div>
-      </section>
-
-      <div className="border-b border-charcoal/10" />
+      <PageHero title="Collections" subtitle="Explore Our Range" />
 
       {/* Collection grid */}
-      <section className="py-12 px-4">
+      <section className="section-padding">
         <div className="max-w-7xl mx-auto">
           <PaginatedResourceSection
             connection={collections}
             resourcesClassName="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             {({node: collection, index}) => (
-              <CollectionItem
-                key={collection.id}
-                collection={collection}
-                index={index}
-              />
+              <ScrollReveal key={collection.id} delay={index * 100}>
+                <CollectionItem
+                  collection={collection}
+                  index={index}
+                />
+              </ScrollReveal>
             )}
           </PaginatedResourceSection>
         </div>
@@ -124,7 +115,7 @@ function CollectionItem({collection, index}) {
 
       {/* Text centered */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-bone">
+        <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-bone">
           {collection.title}
         </h2>
         <span className="mt-3 text-[10px] uppercase tracking-[0.3em] text-bone/60 group-hover:text-bone/80 transition-colors duration-200">
