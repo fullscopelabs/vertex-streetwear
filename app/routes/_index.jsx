@@ -1,8 +1,7 @@
 import {useLoaderData, Link} from 'react-router';
-import {Suspense} from 'react';
-import {Await} from 'react-router';
 import {Money} from '@shopify/hydrogen';
 import {ProductCard} from '~/components/ProductCard';
+import {ScrollReveal} from '~/components/ScrollReveal';
 
 /**
  * @type {Route.MetaFunction}
@@ -41,14 +40,7 @@ async function loadCriticalData({context}) {
  * @param {Route.LoaderArgs}
  */
 function loadDeferredData({context}) {
-  const collections = context.storefront
-    .query(COLLECTIONS_GRID_QUERY)
-    .catch((error) => {
-      console.error(error);
-      return null;
-    });
-
-  return {collections};
+  return {};
 }
 
 export default function Homepage() {
@@ -60,10 +52,10 @@ export default function Homepage() {
     <>
       <HeroSection heroProduct={heroProduct} />
       <FeaturedProducts collection={data.coreCollection} />
+      <MarqueeBand />
       <EditorialHero heroProduct={heroProduct} />
+      <BrandValues />
       <BrandStory />
-      <CollectionGrid collections={data.collections} />
-      <NewsletterSection />
     </>
   );
 }
@@ -79,74 +71,68 @@ function HeroSection({heroProduct}) {
   const heroImage = heroProduct?.featuredImage;
 
   return (
-    <section className="relative h-screen bg-bone overflow-hidden">
-      <div className="h-full flex flex-col md:flex-row">
-        {/* Left — Editorial Text */}
-        <div className="flex-1 flex flex-col justify-center items-center md:items-start px-8 md:px-16 lg:px-24 py-16 md:py-0 z-10">
-          <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal-light mb-6">
-            Est. 2024
-          </p>
-          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-charcoal leading-none">
-            VΞRTEX
-          </h1>
-          {/* Decorative rule */}
-          <div className="w-16 h-px bg-rust mt-6 mb-6" />
-          <p className="text-sm tracking-[0.2em] text-charcoal-light uppercase">
-            Contemporary Streetwear
-          </p>
-          <p className="text-xs tracking-widest text-charcoal/40 mt-2 uppercase">
-            Premium Essentials for the Modern Urban
-          </p>
-          <div className="mt-10 flex gap-4">
-            <Link to="/collections/all" className="btn-primary inline-block">
-              Shop Now
-            </Link>
-            <Link
-              to="/collections/core-collection"
-              className="btn-secondary inline-block"
-            >
-              Core Collection
-            </Link>
-          </div>
+    <section className="relative h-screen bg-charcoal overflow-hidden">
+      {/* Full-bleed background image */}
+      {heroImage && (
+        <img
+          src={heroImage.url}
+          alt={heroImage.altText || 'VΞRTEX hero'}
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+      )}
+
+      {/* Dark gradient overlays — top for header legibility, bottom for hero text */}
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black/70 via-black/40 to-transparent z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/30 to-transparent" />
+
+      {/* Text content — positioned bottom-left */}
+      <div className="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 md:pb-28">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-bone/50 mb-4">
+          Est. 2024
+        </p>
+        <h1 className="font-serif text-8xl md:text-9xl lg:text-[11rem] font-light tracking-tight text-bone leading-none">
+          VΞRTEX
+        </h1>
+        <div className="w-16 h-px bg-rust mt-6 mb-6" />
+        <p className="text-sm tracking-[0.2em] text-bone/70 uppercase">
+          Contemporary Streetwear
+        </p>
+        <div className="mt-10">
+          <Link
+            to="/collections/all"
+            className="inline-block bg-bone text-charcoal px-10 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+          >
+            Explore Collection
+          </Link>
         </div>
-
-        {/* Right — Hero Image */}
-        {heroImage && (
-          <div className="flex-1 relative hidden md:block">
-            <img
-              src={heroImage.url}
-              alt={heroImage.altText || 'VΞRTEX hero'}
-              className="absolute inset-0 w-full h-full object-cover object-center"
-            />
-            {/* Gradient fade into bone bg */}
-            <div className="absolute inset-0 bg-gradient-to-r from-bone via-bone/40 to-transparent" />
-          </div>
-        )}
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-5 h-5 text-charcoal/30"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-          />
-        </svg>
       </div>
     </section>
   );
 }
 
 /* ═══════════════════════════════════════════
- *  1b. EDITORIAL HERO PRODUCT
+ *  1b. MARQUEE DIVIDER BAND
+ * ═══════════════════════════════════════════ */
+function MarqueeBand() {
+  const text = 'PREMIUM STREETWEAR  •  EST. 2024  •  DESIGNED WITH INTENTION  •  BUILT TO ENDURE  •  ';
+  const repeated = text.repeat(4);
+
+  return (
+    <section className="bg-charcoal overflow-hidden py-5 border-y border-charcoal">
+      <div className="animate-marquee whitespace-nowrap flex-shrink-0">
+        <span className="text-bone/30 text-[11px] uppercase tracking-[0.3em] font-medium">
+          {repeated}
+        </span>
+        <span className="text-bone/30 text-[11px] uppercase tracking-[0.3em] font-medium">
+          {repeated}
+        </span>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  1c. EDITORIAL HERO PRODUCT
  * ═══════════════════════════════════════════ */
 
 /**
@@ -158,11 +144,11 @@ function EditorialHero({heroProduct}) {
   const image = heroProduct.featuredImage;
 
   return (
-    <section className="bg-charcoal text-bone overflow-hidden">
+    <section className="bg-charcoal text-bone overflow-hidden grain">
       <div className="flex flex-col md:flex-row min-h-[500px] lg:min-h-[600px]">
         {/* Image — 60% */}
         {image && (
-          <div className="w-full md:w-[60%] relative">
+          <div className="w-full md:w-[60%] relative overflow-hidden">
             <img
               src={image.url}
               alt={image.altText || heroProduct.title}
@@ -173,66 +159,31 @@ function EditorialHero({heroProduct}) {
 
         {/* Text — 40% */}
         <div className="w-full md:w-[40%] flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16 md:py-0">
-          <p className="text-[10px] uppercase tracking-[0.35em] text-bone/40 mb-4">
-            Featured
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
-            {heroProduct.title}
-          </h2>
-          <div className="w-10 h-px bg-rust mt-6 mb-6" />
-          <p className="text-bone/60 text-sm leading-relaxed">
-            A cornerstone piece of the VΞRTEX collection. Designed for those
-            who demand precision in every detail.
-          </p>
-          <p className="text-xl font-semibold mt-6 tracking-wide">
-            <Money data={heroProduct.priceRange.minVariantPrice} />
-          </p>
-          <div className="mt-8">
-            <Link
-              to={`/products/${heroProduct.handle}`}
-              className="inline-block bg-bone text-charcoal px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
-            >
-              Shop Now
-            </Link>
-          </div>
+          <ScrollReveal>
+            <p className="text-[10px] uppercase tracking-[0.35em] text-bone/40 mb-4">
+              Featured
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl font-light tracking-tight leading-tight text-bone">
+              {heroProduct.title}
+            </h2>
+            <div className="w-10 h-px bg-rust mt-6 mb-6" />
+            <p className="text-bone/60 text-sm leading-relaxed">
+              A cornerstone piece of the VΞRTEX collection. Designed for those
+              who demand precision in every detail.
+            </p>
+            <p className="text-xl font-semibold mt-6 tracking-wide text-bone">
+              <Money data={heroProduct.priceRange.minVariantPrice} />
+            </p>
+            <div className="mt-8">
+              <Link
+                to={`/products/${heroProduct.handle}`}
+                className="inline-block bg-bone text-charcoal px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+              >
+                Shop Now
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════
- *  NEWSLETTER SECTION
- * ═══════════════════════════════════════════ */
-function NewsletterSection() {
-  return (
-    <section className="border-t border-charcoal/10 py-20 px-4">
-      <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-charcoal">
-          JOIN THE VΞRTEX COLLECTIVE
-        </h2>
-        <p className="text-charcoal-light text-sm mt-4 leading-relaxed">
-          Be the first to know about new drops and exclusive releases.
-        </p>
-        <form
-          className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <input
-            type="email"
-            placeholder="Your email address"
-            className="flex-1 bg-transparent border border-charcoal/20 px-5 py-3.5 text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-charcoal transition-colors duration-200"
-          />
-          <button
-            type="submit"
-            className="btn-primary whitespace-nowrap"
-          >
-            Subscribe
-          </button>
-        </form>
-        <p className="text-[11px] text-charcoal/30 mt-4 tracking-wider">
-          No spam. Unsubscribe anytime.
-        </p>
       </div>
     </section>
   );
@@ -249,25 +200,26 @@ function FeaturedProducts({collection}) {
   const products = collection?.products?.nodes;
 
   return (
-    <section className="section-padding">
+    <section className="section-feature">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tighter text-charcoal">
-            CORE COLLECTION
+        <ScrollReveal className="text-center mb-16">
+          <h2 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-charcoal">
+            Core Collection
           </h2>
           <p className="text-charcoal/60 mt-3 tracking-wide text-sm">
             Essential pieces built to last
           </p>
-        </div>
+        </ScrollReveal>
 
         {products && products.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {products.map((product, i) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                loading={i < 2 ? 'eager' : 'lazy'}
-              />
+              <ScrollReveal key={product.id} delay={i * 100}>
+                <ProductCard
+                  product={product}
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                />
+              </ScrollReveal>
             ))}
           </div>
         ) : (
@@ -276,13 +228,46 @@ function FeaturedProducts({collection}) {
           </p>
         )}
 
-        <div className="text-center mt-12">
+        <ScrollReveal className="text-center mt-12">
           <Link
             to="/collections/core-collection"
             className="btn-secondary inline-block"
           >
             View All
           </Link>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  2b. BRAND VALUES STRIP
+ * ═══════════════════════════════════════════ */
+const VALUES = [
+  {number: '200+', label: 'Products'},
+  {number: 'Free', label: 'Shipping Over $200'},
+  {number: '100%', label: 'Premium Fabrics'},
+  {number: '24/7', label: 'Customer Support'},
+];
+
+function BrandValues() {
+  return (
+    <section className="bg-bone-dark border-y border-charcoal/10">
+      <div className="max-w-7xl mx-auto px-4 py-14 md:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+          {VALUES.map((item, i) => (
+            <ScrollReveal key={item.label} delay={i * 80}>
+              <div className="text-center">
+                <p className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal">
+                  {item.number}
+                </p>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-charcoal/40 mt-2">
+                  {item.label}
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>
@@ -294,11 +279,15 @@ function FeaturedProducts({collection}) {
  * ═══════════════════════════════════════════ */
 function BrandStory() {
   return (
-    <section className="bg-forest py-24 px-4">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-4xl font-bold tracking-tighter text-bone mb-8">
-          CRAFTED FOR THE MODERN URBAN
+    <section className="bg-gradient-to-br from-forest via-[#1E4234] to-charcoal/90 section-editorial relative overflow-hidden grain">
+      <ScrollReveal className="max-w-2xl mx-auto text-center relative z-10">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-bone/40 mb-6">
+          Our Philosophy
+        </p>
+        <h2 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone mb-8">
+          Crafted for the Modern Urban
         </h2>
+        <div className="w-12 h-px bg-rust mx-auto mb-8" />
         <p className="text-bone/80 leading-relaxed text-lg">
           Every VΞRTEX piece begins with intention. We source premium fabrics and
           work with skilled artisans to create streetwear that stands the test of
@@ -311,96 +300,16 @@ function BrandStory() {
           over the details so you don&apos;t have to. This is streetwear
           engineered for real life.
         </p>
-      </div>
+        <div className="mt-10">
+          <Link
+            to="/collections/all"
+            className="inline-block border border-bone/30 text-bone px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-bone hover:text-charcoal transition-all duration-300"
+          >
+            Discover More
+          </Link>
+        </div>
+      </ScrollReveal>
     </section>
-  );
-}
-
-/* ═══════════════════════════════════════════
- *  4. COLLECTION GRID
- * ═══════════════════════════════════════════ */
-
-const COLLECTION_CARDS = [
-  {handle: 'core-collection', label: 'Core'},
-  {handle: 'outerwear', label: 'Outerwear'},
-  {handle: 'accessories', label: 'Accessories'},
-  {handle: 'limited-edition', label: 'Limited Edition'},
-];
-
-/**
- * @param {{collections: Promise<CollectionsGridQuery | null>}}
- */
-function CollectionGrid({collections}) {
-  return (
-    <section className="section-padding">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold tracking-tighter text-charcoal text-center mb-16">
-          COLLECTIONS
-        </h2>
-        <Suspense
-          fallback={
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
-              {COLLECTION_CARDS.map((card) => (
-                <div
-                  key={card.handle}
-                  className="aspect-square bg-charcoal/5 animate-pulse"
-                />
-              ))}
-            </div>
-          }
-        >
-          <Await resolve={collections}>
-            {(response) => {
-              const nodes = response?.collections?.nodes ?? [];
-              return (
-                <div className="grid grid-cols-2 gap-4 md:gap-6">
-                  {COLLECTION_CARDS.map((card) => {
-                    const collection = nodes.find(
-                      (c) => c.handle === card.handle,
-                    );
-                    return (
-                      <CollectionCard
-                        key={card.handle}
-                        handle={card.handle}
-                        label={card.label}
-                        image={collection?.image}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            }}
-          </Await>
-        </Suspense>
-      </div>
-    </section>
-  );
-}
-
-/**
- * @param {{handle: string; label: string; image?: {url: string; altText?: string | null} | null}}
- */
-function CollectionCard({handle, label, image}) {
-  return (
-    <Link
-      to={`/collections/${handle}`}
-      prefetch="intent"
-      className="group relative aspect-square bg-charcoal flex items-center justify-center overflow-hidden transition-transform duration-300 hover:scale-[1.02]"
-    >
-      {image && (
-        <img
-          src={image.url}
-          alt={image.altText || label}
-          className="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-300 group-hover:opacity-30"
-        />
-      )}
-      <div className="relative z-10 text-center">
-        <h3 className="text-2xl md:text-3xl font-bold tracking-tighter text-bone transition-colors duration-300 group-hover:text-rust">
-          {label}
-        </h3>
-      </div>
-      <div className="absolute inset-x-0 bottom-0 h-1 bg-rust scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100" />
-    </Link>
   );
 }
 
@@ -446,30 +355,10 @@ const CORE_COLLECTION_QUERY = `#graphql
   }
 `;
 
-const COLLECTIONS_GRID_QUERY = `#graphql
-  query CollectionsGrid($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    collections(first: 10) {
-      nodes {
-        id
-        title
-        handle
-        image {
-          url
-          altText
-          width
-          height
-        }
-      }
-    }
-  }
-`;
-
 /** @typedef {import('./+types/_index').Route} Route */
 /** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
 
 /**
  * @typedef {NonNullable<CoreCollectionQuery['collection']>['products']['nodes'][number]} CoreProductFragment
  * @typedef {import('storefrontapi.generated').CoreCollectionQuery} CoreCollectionQuery
- * @typedef {import('storefrontapi.generated').CollectionsGridQuery} CollectionsGridQuery
  */

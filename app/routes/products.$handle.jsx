@@ -1,4 +1,4 @@
-import {useState, Suspense} from 'react';
+import {Suspense} from 'react';
 import {useLoaderData, Link, useNavigate, Await} from 'react-router';
 import {
   Image,
@@ -11,9 +11,9 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
-import {useAside} from '~/components/Aside';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductCard} from '~/components/ProductCard';
+import {ScrollReveal} from '~/components/ScrollReveal';
 
 /**
  * @type {Route.MetaFunction}
@@ -113,7 +113,7 @@ export default function Product() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      <div className="max-w-7xl mx-auto section-padding">
+      <div className="max-w-[1400px] mx-auto section-feature">
         {/* Two-column layout */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           {/* LEFT — Image Gallery (55%) */}
@@ -125,7 +125,7 @@ export default function Product() {
           <div className="w-full lg:w-[45%]">
             <div className="lg:sticky lg:top-24">
               {/* Title */}
-              <h1 className="text-3xl font-bold tracking-tight text-charcoal">
+              <h1 className="font-serif text-4xl md:text-5xl font-normal tracking-tight text-charcoal">
                 {title}
               </h1>
 
@@ -203,16 +203,19 @@ export default function Product() {
             if (related.length === 0) return null;
             return (
               <section className="border-t border-charcoal/10 mt-20 pt-16 pb-8 max-w-7xl mx-auto px-4">
-                <h2 className="text-2xl font-bold tracking-tight text-charcoal text-center mb-12">
-                  YOU MAY ALSO LIKE
-                </h2>
+                <ScrollReveal>
+                  <h2 className="font-serif text-4xl font-light tracking-tight text-charcoal text-center mb-12">
+                    You May Also Like
+                  </h2>
+                </ScrollReveal>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   {related.slice(0, 4).map((relProduct, i) => (
-                    <ProductCard
-                      key={relProduct.id}
-                      product={relProduct}
-                      loading={i < 2 ? 'eager' : 'lazy'}
-                    />
+                    <ScrollReveal key={relProduct.id} delay={i * 100}>
+                      <ProductCard
+                        product={relProduct}
+                        loading={i < 2 ? 'eager' : 'lazy'}
+                      />
+                    </ScrollReveal>
                   ))}
                 </div>
               </section>
@@ -245,55 +248,28 @@ export default function Product() {
  * ═══════════════════════════════════════════ */
 
 function ImageGallery({images, selectedVariant}) {
-  const variantImageIndex = images.findIndex(
-    (img) => img.id === selectedVariant?.image?.id,
-  );
-  const [selectedIndex, setSelectedIndex] = useState(
-    variantImageIndex >= 0 ? variantImageIndex : 0,
-  );
-
-  const mainImage = images[selectedIndex] || selectedVariant?.image;
+  // Stacked vertical gallery (SSENSE / Mr Porter pattern)
+  // All images displayed vertically — user scrolls through them
+  const allImages =
+    images.length > 0 ? images : selectedVariant?.image ? [selectedVariant.image] : [];
 
   return (
-    <div>
-      {/* Main Image */}
-      <div className="aspect-square bg-charcoal/5 overflow-hidden">
-        {mainImage && (
+    <div className="space-y-2">
+      {allImages.map((image, index) => (
+        <div
+          key={image.id || index}
+          className="bg-charcoal/5 overflow-hidden cursor-zoom-in"
+        >
           <Image
-            alt={mainImage.altText || 'Product image'}
-            data={mainImage}
-            aspectRatio="1/1"
+            alt={image.altText || `Product image ${index + 1}`}
+            data={image}
+            aspectRatio="3/4"
             sizes="(min-width: 1024px) 55vw, 100vw"
-            className="w-full h-full object-cover"
+            className="w-full h-auto object-cover"
+            loading={index === 0 ? 'eager' : 'lazy'}
           />
-        )}
-      </div>
-
-      {/* Thumbnail Row */}
-      {images.length > 1 && (
-        <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
-          {images.map((image, index) => (
-            <button
-              key={image.id || index}
-              type="button"
-              onClick={() => setSelectedIndex(index)}
-              className={`relative flex-shrink-0 w-20 h-20 overflow-hidden transition-all duration-200 ${
-                index === selectedIndex
-                  ? 'ring-2 ring-charcoal ring-offset-2 ring-offset-bone'
-                  : 'opacity-60 hover:opacity-100'
-              }`}
-            >
-              <Image
-                alt={image.altText || `Product thumbnail ${index + 1}`}
-                data={image}
-                aspectRatio="1/1"
-                sizes="80px"
-                className="w-full h-full object-cover"
-              />
-            </button>
-          ))}
         </div>
-      )}
+      ))}
     </div>
   );
 }
@@ -388,7 +364,6 @@ function VariantSelector({productOptions, productHandle}) {
  * ═══════════════════════════════════════════ */
 
 function AddToCartSection({selectedVariant}) {
-  const {open} = useAside();
   const isAvailable = selectedVariant?.availableForSale;
 
   const lines = selectedVariant
@@ -403,7 +378,6 @@ function AddToCartSection({selectedVariant}) {
           <button
             type="submit"
             disabled={!selectedVariant || !isAvailable || isAdding}
-            onClick={() => open('cart')}
             className={`btn-primary w-full text-center ${
               !isAvailable || isAdding
                 ? 'opacity-50 cursor-not-allowed'

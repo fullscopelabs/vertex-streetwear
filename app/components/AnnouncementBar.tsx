@@ -6,7 +6,11 @@ const MESSAGES = [
   'PREMIUM STREETWEAR ESSENTIALS',
 ];
 
-export function AnnouncementBar() {
+interface AnnouncementBarProps {
+  onDismiss?: () => void;
+}
+
+export function AnnouncementBar({onDismiss}: AnnouncementBarProps) {
   const [dismissed, setDismissed] = useState(false);
 
   if (dismissed) return null;
@@ -17,7 +21,7 @@ export function AnnouncementBar() {
     .join('');
 
   return (
-    <div className="relative bg-charcoal text-bone overflow-hidden z-50">
+    <div className="fixed top-0 left-0 right-0 bg-charcoal text-bone overflow-hidden z-[60]">
       <div className="flex items-center h-9">
         {/* Marquee track */}
         <div className="animate-marquee whitespace-nowrap flex-shrink-0">
@@ -32,7 +36,10 @@ export function AnnouncementBar() {
 
       {/* Dismiss button */}
       <button
-        onClick={() => setDismissed(true)}
+        onClick={() => {
+          setDismissed(true);
+          onDismiss?.();
+        }}
         className="absolute right-3 top-1/2 -translate-y-1/2 text-bone/60 hover:text-bone transition-colors duration-200"
         aria-label="Dismiss announcement"
       >

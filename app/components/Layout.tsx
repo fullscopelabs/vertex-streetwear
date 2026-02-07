@@ -1,10 +1,9 @@
-import {Suspense} from 'react';
+import {Suspense, useState} from 'react';
 import {Await, Link} from 'react-router';
 import {Aside} from '~/components/Aside';
 import {Header, HeaderMenu} from '~/components/Header';
 import {Footer} from '~/components/Footer';
 import {AnnouncementBar} from '~/components/AnnouncementBar';
-import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
   SearchFormPredictive,
@@ -30,13 +29,14 @@ export function Layout({
   isLoggedIn,
   publicStoreDomain,
 }: LayoutProps) {
+  const [announcementDismissed, setAnnouncementDismissed] = useState(false);
+
   return (
     <Aside.Provider>
-      <CartAside cart={cart} />
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      <AnnouncementBar />
-      <Header cart={cart} />
+      <AnnouncementBar onDismiss={() => setAnnouncementDismissed(true)} />
+      <Header cart={cart} announcementVisible={!announcementDismissed} />
       <main>{children}</main>
       <Footer
         footer={footer}
@@ -44,18 +44,6 @@ export function Layout({
         publicStoreDomain={publicStoreDomain}
       />
     </Aside.Provider>
-  );
-}
-
-function CartAside({cart}: {cart: Promise<CartApiQueryFragment | null>}) {
-  return (
-    <Aside type="cart" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await resolve={cart}>
-          {(cart) => <CartMain cart={cart} layout="aside" />}
-        </Await>
-      </Suspense>
-    </Aside>
   );
 }
 
