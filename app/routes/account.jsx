@@ -6,6 +6,7 @@ import {
   useLoaderData,
 } from 'react-router';
 import {CUSTOMER_DETAILS_QUERY} from '~/graphql/customer-account/CustomerDetailsQuery';
+import {PageHero} from '~/components/PageHero';
 
 export function shouldRevalidate() {
   return true;
@@ -48,16 +49,7 @@ export default function AccountLayout() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      <section className="section-padding pb-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Decorative line */}
-          <div className="w-12 h-px bg-rust mb-8" />
-
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-charcoal">
-            {heading}
-          </h1>
-        </div>
-      </section>
+      <PageHero title={heading} subtitle="Your Account" />
 
       {/* Tab navigation */}
       <div className="border-b border-charcoal/10">

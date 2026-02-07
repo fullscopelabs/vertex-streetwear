@@ -6,6 +6,8 @@ import {
   useOptimisticCart,
 } from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @type {Route.MetaFunction}
@@ -123,12 +125,13 @@ export default function Cart() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      <div className="max-w-7xl mx-auto section-padding">
-        {/* Page Title */}
-        <h1 className="text-4xl font-bold tracking-tight text-charcoal mb-12">
-          YOUR CART
-        </h1>
+      <PageHero title="Your Cart" subtitle="Review Your Selection">
+        <p className="text-[10px] tracking-[0.3em] text-bone/40 uppercase">
+          {lines.length} {lines.length === 1 ? 'Item' : 'Items'}
+        </p>
+      </PageHero>
 
+      <div className="max-w-7xl mx-auto section-padding">
         {/* Two-column layout */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           {/* LEFT — Cart Items (65%) */}
@@ -142,15 +145,19 @@ export default function Cart() {
 
             {/* Line Items */}
             <ul className="divide-y divide-charcoal/10">
-              {lines.map((line) => (
-                <CartLineItem key={line.id} line={line} />
+              {lines.map((line, index) => (
+                <ScrollReveal key={line.id} delay={index * 75}>
+                  <CartLineItem line={line} />
+                </ScrollReveal>
               ))}
             </ul>
           </div>
 
           {/* RIGHT — Order Summary (35%, sticky) */}
           <div className="w-full lg:w-[35%]">
-            <OrderSummary cart={cart} />
+            <ScrollReveal delay={150}>
+              <OrderSummary cart={cart} />
+            </ScrollReveal>
           </div>
         </div>
       </div>
@@ -165,20 +172,23 @@ export default function Cart() {
 function CartEmpty() {
   return (
     <div className="bg-bone min-h-screen page-fade-in">
+      <PageHero title="Your Cart" subtitle="Review Your Selection" />
       <div className="max-w-7xl mx-auto section-padding">
-        <div className="text-center py-20">
-          <h1 className="text-3xl font-bold tracking-tight text-charcoal uppercase">
-            Your Cart is Empty
-          </h1>
-          <p className="text-charcoal/50 mt-4 text-lg">
-            Continue shopping to add items to your cart.
-          </p>
-          <Link
-            to="/collections/all"
-            className="btn-secondary inline-block mt-8"
-          >
-            Continue Shopping
-          </Link>
+        <div className="text-center py-12">
+          <ScrollReveal>
+            <p className="text-charcoal/50 text-lg mb-2">
+              Your cart is empty.
+            </p>
+            <p className="text-charcoal/40 text-sm mb-8">
+              Continue shopping to add items to your cart.
+            </p>
+            <Link
+              to="/collections/all"
+              className="btn-secondary inline-block"
+            >
+              Continue Shopping
+            </Link>
+          </ScrollReveal>
         </div>
       </div>
     </div>

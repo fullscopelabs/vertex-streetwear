@@ -3,6 +3,7 @@ import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
 import {SearchForm} from '~/components/SearchForm';
 import {SearchResults} from '~/components/SearchResults';
 import {getEmptyPredictiveSearchResult} from '~/lib/search';
+import {ScrollReveal} from '~/components/ScrollReveal';
 
 /**
  * @type {Route.MetaFunction}
@@ -39,43 +40,44 @@ export default function SearchPage() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      {/* Hero search area */}
-      <section className="section-padding pb-12">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
-            SEARCH
-          </h1>
-          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
-            Find what you&apos;re looking for
-          </p>
+      {/* Dark hero search area */}
+      <section className="relative bg-gradient-to-br from-charcoal via-charcoal to-forest overflow-hidden grain">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 md:py-28 text-center">
+          <ScrollReveal>
+            <p className="text-[10px] tracking-[0.35em] uppercase text-bone/40 mb-4">
+              Find what you&apos;re looking for
+            </p>
+            <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone">
+              Search
+            </h1>
+            <div className="w-12 h-px bg-rust mx-auto mt-6" />
 
-          <SearchForm className="mt-10">
-            {({inputRef}) => (
-              <div className="flex items-stretch border border-charcoal/20 focus-within:border-charcoal transition-colors duration-200">
-                <input
-                  defaultValue={term}
-                  name="q"
-                  placeholder="Search products, articles..."
-                  ref={inputRef}
-                  type="search"
-                  className="flex-1 bg-transparent px-5 py-3.5 text-sm text-charcoal placeholder:text-charcoal/30 focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="bg-charcoal text-bone px-6 text-xs uppercase tracking-[0.15em] font-medium hover:bg-rust transition-colors duration-300"
-                >
-                  Search
-                </button>
-              </div>
-            )}
-          </SearchForm>
+            <SearchForm className="mt-10">
+              {({inputRef}) => (
+                <div className="flex items-stretch border border-bone/20 focus-within:border-bone/40 transition-colors duration-200">
+                  <input
+                    defaultValue={term}
+                    name="q"
+                    placeholder="Search products, articles..."
+                    ref={inputRef}
+                    type="search"
+                    className="flex-1 bg-transparent px-5 py-3.5 text-sm text-bone placeholder:text-bone/30 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="bg-bone text-charcoal px-6 text-xs uppercase tracking-[0.15em] font-medium hover:bg-rust hover:text-bone transition-colors duration-300"
+                  >
+                    Search
+                  </button>
+                </div>
+              )}
+            </SearchForm>
+          </ScrollReveal>
         </div>
       </section>
 
-      <div className="border-b border-charcoal/10" />
-
       {/* Results */}
-      <section className="py-12 px-4">
+      <section className="section-padding">
         <div className="max-w-7xl mx-auto">
           {error && (
             <p className="text-rust text-sm mb-6">{error}</p>
@@ -85,11 +87,13 @@ export default function SearchPage() {
           ) : (
             <SearchResults result={result} term={term}>
               {({articles, pages, products, term}) => (
-                <div className="space-y-16">
-                  <SearchResults.Products products={products} term={term} />
-                  <SearchResults.Articles articles={articles} term={term} />
-                  <SearchResults.Pages pages={pages} term={term} />
-                </div>
+                <ScrollReveal>
+                  <div className="space-y-16">
+                    <SearchResults.Products products={products} term={term} />
+                    <SearchResults.Articles articles={articles} term={term} />
+                    <SearchResults.Pages pages={pages} term={term} />
+                  </div>
+                </ScrollReveal>
               )}
             </SearchResults>
           )}
