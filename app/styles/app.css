@@ -46,9 +46,15 @@
 
 /* ═══════════════════════════════════════════
  *  FOUC PREVENTION
- *  root.jsx injects <style>body{opacity:0}</style> inline.
- *  Once this stylesheet loads, the rule below (unlayered, later
- *  in source order) overrides it and reveals the page.
+ *  root.jsx injects:
+ *    html { background-color: #F5F5F0 }   ← matches --color-bone so the
+ *                                             page is NEVER white, not even
+ *                                             for one frame during a reload.
+ *    body { opacity: 0 }                  ← hides content until this
+ *                                             stylesheet loads.
+ *
+ *  The rule below overrides the inline opacity and reveals the page
+ *  instantly once all CSS (including Tailwind) is ready.
  * ═══════════════════════════════════════════ */
 body {
   opacity: 1;
@@ -129,8 +135,13 @@ body {
     @apply py-16 md:py-20 px-4;
   }
 
+  /* page-fade-in animation removed — it caused a double-flash on full
+     page reload because the `forwards` fill-mode left content at full
+     opacity for one frame before the animation kicked in and dropped it
+     to opacity:0.  Scroll-triggered animations via ScrollReveal still
+     provide the visual polish on each section as users scroll down. */
   .page-fade-in {
-    @apply animate-fade-in;
+    /* intentionally empty — class kept in markup for easy re-enabling */
   }
 
   /* Film grain texture overlay for dark sections — adds tactile depth */

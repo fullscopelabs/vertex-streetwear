@@ -146,24 +146,30 @@ export function Layout({children}) {
   const nonce = useNonce();
 
   return (
-    <html lang="en">
+    <html lang="en" style={{backgroundColor: '#F5F5F0'}}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        {/* Critical inline CSS: hide body until external stylesheets load.
-            Prevents FOUC where raw unstyled HTML flashes on first visit.
-            app.css overrides this with body { opacity: 1 } once loaded. */}
+        <meta name="theme-color" content="#F5F5F0" />
+        <meta name="color-scheme" content="light" />
+        {/* Hide body until app.css loads and sets opacity:1.
+            The html background-color is set as an element attribute above
+            so the page is bone from the very first byte — never white. */}
         <style
           nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: 'body{opacity:0}',
-          }}
+          dangerouslySetInnerHTML={{__html: 'body{opacity:0}'}}
         />
-        {/* Google Fonts: Cormorant Garamond (serif display face) */}
+        {/* Google Fonts: Cormorant Garamond (serif display face).
+            • display=optional — on reload the font is already cached so it
+              loads instantly with zero swap.  On a cold first visit the
+              fallback is used gracefully (no jarring swap) and the font
+              is cached for next time.
+            • Render-blocking intentionally so the font CSS (not the files)
+              is ready before first paint. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=optional"
           rel="stylesheet"
         />
         <link rel="stylesheet" href={resetStyles}></link>

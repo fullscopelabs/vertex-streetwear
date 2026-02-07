@@ -21,9 +21,13 @@ interface HeaderProps {
 
 export function Header({cart, announcementVisible = true}: HeaderProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const isHomepage = location.pathname === '/';
+
+  // Initialise with the correct value for the current page so the SSR render
+  // already matches the final client state — prevents the white-text flash on
+  // non-homepage pages where the header must start in its "scrolled" style.
+  const [isScrolled, setIsScrolled] = useState(!isHomepage);
 
   useEffect(() => {
     if (!isHomepage) {
