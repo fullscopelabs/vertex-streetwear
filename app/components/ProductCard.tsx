@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 
@@ -25,6 +26,7 @@ interface ProductCardProps {
 
 export function ProductCard({product, loading}: ProductCardProps) {
   const image = product.featuredImage;
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <Link
@@ -34,6 +36,11 @@ export function ProductCard({product, loading}: ProductCardProps) {
     >
       {/* Image Container */}
       <div className="relative aspect-square bg-charcoal/5 overflow-hidden mb-4">
+        {/* Skeleton loader */}
+        {image && !imageLoaded && (
+          <div className="absolute inset-0 bg-charcoal/10 animate-pulse" />
+        )}
+
         {image && (
           <Image
             alt={image.altText || product.title}
@@ -41,7 +48,10 @@ export function ProductCard({product, loading}: ProductCardProps) {
             data={image}
             loading={loading}
             sizes="(min-width: 768px) 25vw, 50vw"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
           />
         )}
 
@@ -54,13 +64,16 @@ export function ProductCard({product, loading}: ProductCardProps) {
             Quick View
           </span>
         </div>
+
+        {/* Rust accent bar on hover */}
+        <div className="absolute inset-x-0 bottom-0 h-0.5 bg-rust scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
       </div>
 
       {/* Product Info */}
-      <h3 className="font-medium text-sm uppercase tracking-wider text-charcoal">
+      <h3 className="font-semibold text-sm uppercase tracking-wider text-charcoal">
         {product.title}
       </h3>
-      <p className="text-charcoal/70 text-sm mt-1">
+      <p className="text-charcoal-light text-sm mt-1 tracking-wide">
         <Money data={product.priceRange.minVariantPrice} />
       </p>
     </Link>

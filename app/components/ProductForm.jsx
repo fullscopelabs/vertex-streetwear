@@ -111,9 +111,7 @@ export function ProductForm({productOptions, selectedVariant}) {
               ]
             : []
         }
-      >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
-      </AddToCartButton>
+      />
     </div>
   );
 }
