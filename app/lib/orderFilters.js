@@ -50,7 +50,8 @@ export function buildOrderSearchQuery(filters) {
 }
 
 /**
- * Parses order filter parameters from URLSearchParams
+ * Parses and sanitises order filter parameters from URLSearchParams.
+ * Enforces max length and strips unsafe characters to prevent injection.
  * @returns Parsed filter parameters
  * @example
  * const url = new URL('https://example.com/orders?name=1001&confirmation_number=ABC123');
@@ -60,16 +61,18 @@ export function buildOrderSearchQuery(filters) {
 export function parseOrderFilters(searchParams) {
   const filters = {};
 
-  const name = searchParams.get(ORDER_FILTER_FIELDS.NAME);
-  if (name) {
-    filters.name = name;
+  const rawName = searchParams.get(ORDER_FILTER_FIELDS.NAME);
+  if (rawName) {
+    filters.name = sanitizeFilterValue(rawName.trim()).slice(0, 50);
   }
 
-  const confirmationNumber = searchParams.get(
+  const rawConfirmation = searchParams.get(
     ORDER_FILTER_FIELDS.CONFIRMATION_NUMBER,
   );
-  if (confirmationNumber) {
-    filters.confirmationNumber = confirmationNumber;
+  if (rawConfirmation) {
+    filters.confirmationNumber = sanitizeFilterValue(
+      rawConfirmation.trim(),
+    ).slice(0, 50);
   }
 
   return filters;
