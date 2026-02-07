@@ -5,7 +5,7 @@
   "version": "2025.7.3",
   "type": "module",
   "scripts": {
-    "build": "shopify hydrogen build --codegen && cp dist/server/index.js dist/client/_worker.js",
+    "build": "shopify hydrogen build --codegen && node scripts/build-worker.js",
     "dev": "shopify hydrogen dev --codegen",
     "preview": "shopify hydrogen preview --build",
     "lint": "eslint --no-error-on-unmatched-pattern .",
