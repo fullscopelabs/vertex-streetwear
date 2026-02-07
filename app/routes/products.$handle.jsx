@@ -112,89 +112,101 @@ export default function Product() {
   const images = product.images.nodes;
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
-      <div className="max-w-[1400px] mx-auto py-16 md:py-20 px-4">
-        {/* Two-column layout */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-          {/* LEFT — Image Gallery (55%) */}
-          <div className="w-full lg:w-[55%]">
-            <ImageGallery images={images} selectedVariant={selectedVariant} />
-          </div>
+    <div className="min-h-screen page-fade-in">
+      {/* Hero gradient background */}
+      <div className="bg-gradient-to-b from-bone-dark via-bone to-bone">
+        <div className="max-w-[1400px] mx-auto py-12 md:py-16 px-4">
+          {/* Two-column layout */}
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+            {/* LEFT — Image Gallery (55%) */}
+            <div className="w-full lg:w-[55%]">
+              <ImageGallery images={images} selectedVariant={selectedVariant} />
+            </div>
 
-          {/* RIGHT — Product Info (45%, sticky) */}
-          <div className="w-full lg:w-[45%]">
-            {/* Mobile layout no longer needs separate image sections */}
+            {/* RIGHT — Product Info (45%, sticky) */}
+            <div className="w-full lg:w-[45%]">
+              <div className="lg:sticky lg:top-24">
+                {/* Premium info card */}
+                <div className="bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-8 md:p-10">
+                  {/* Title */}
+                  <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight text-charcoal leading-tight">
+                    {title}
+                  </h1>
 
-            <div className="lg:sticky lg:top-24">
-              {/* Title */}
-              <h1 className="font-serif text-4xl md:text-5xl font-normal tracking-tight text-charcoal">
-                {title}
-              </h1>
+                  {/* Accent divider */}
+                  <div className="divider-lux mt-6 mb-6" />
 
-              {/* Price */}
-              <div className="text-2xl mt-2 text-charcoal">
-                <ProductPriceDisplay
-                  price={selectedVariant?.price}
-                  compareAtPrice={selectedVariant?.compareAtPrice}
-                />
-              </div>
+                  {/* Price */}
+                  <div className="text-2xl md:text-3xl text-charcoal font-light">
+                    <ProductPriceDisplay
+                      price={selectedVariant?.price}
+                      compareAtPrice={selectedVariant?.compareAtPrice}
+                    />
+                  </div>
 
-              {/* Variant Selector */}
-              <div className="mt-8">
-                <VariantSelector
-                  productOptions={productOptions}
-                />
-              </div>
+                  {/* Variant Selector */}
+                  <div className="mt-8 pt-8 border-t border-charcoal/10">
+                    <VariantSelector
+                      productOptions={productOptions}
+                    />
+                  </div>
 
-              {/* Add to Cart */}
-              <div className="mt-8">
-                <AddToCartSection selectedVariant={selectedVariant} />
-              </div>
+                  {/* Add to Cart */}
+                  <div className="mt-8">
+                    <AddToCartSection selectedVariant={selectedVariant} />
+                  </div>
 
-              {/* Description */}
-              {descriptionHtml && (
-                <div
-                  className="prose prose-sm text-charcoal/70 mt-8 max-w-none"
-                  dangerouslySetInnerHTML={{__html: descriptionHtml}}
-                />
-              )}
+                  {/* Description */}
+                  {descriptionHtml && (
+                    <>
+                      <div className="divider-sand mt-10 mb-8" />
+                      <div
+                        className="prose prose-sm text-charcoal/70 max-w-none leading-relaxed"
+                        dangerouslySetInnerHTML={{__html: descriptionHtml}}
+                      />
+                    </>
+                  )}
 
-              {/* Collapsible Details */}
-              <div className="mt-10 border-t border-charcoal/10">
-                <CollapsibleDetail title="Shipping & Returns">
-                  <p>
-                    Free standard shipping on all orders over $200. Express
-                    shipping available at checkout.
-                  </p>
-                  <p className="mt-2">
-                    30-day return policy. Items must be unworn with original tags
-                    attached. Final sale items are not eligible for return.
-                  </p>
-                </CollapsibleDetail>
+                  {/* Collapsible Details */}
+                  <div className="mt-8 pt-8 border-t border-charcoal/10">
+                    <CollapsibleDetail title="Shipping & Returns">
+                      <p className="text-sm text-charcoal/70 leading-relaxed">
+                        Free standard shipping on all orders over $200. Express
+                        shipping available at checkout.
+                      </p>
+                      <p className="mt-3 text-sm text-charcoal/70 leading-relaxed">
+                        30-day return policy. Items must be unworn with original tags
+                        attached. Final sale items are not eligible for return.
+                      </p>
+                    </CollapsibleDetail>
 
-                <CollapsibleDetail title="Size Guide">
-                  <p>
-                    This piece features an oversized, relaxed fit. We recommend
-                    sizing down if you prefer a more tailored silhouette.
-                  </p>
-                  <p className="mt-2">
-                    Model is 6&apos;1&quot; / 185cm and wears a size M.
-                  </p>
-                </CollapsibleDetail>
+                    <CollapsibleDetail title="Size Guide">
+                      <p className="text-sm text-charcoal/70 leading-relaxed">
+                        This piece features an oversized, relaxed fit. We recommend
+                        sizing down if you prefer a more tailored silhouette.
+                      </p>
+                      <p className="mt-3 text-sm text-charcoal/70 leading-relaxed">
+                        Model is 6&apos;1&quot; / 185cm and wears a size M.
+                      </p>
+                    </CollapsibleDetail>
 
-                <CollapsibleDetail title="Care Instructions">
-                  <p>Machine wash cold with like colors. Tumble dry low.</p>
-                  <p className="mt-2">
-                    Do not bleach. Iron on low heat if needed. Do not dry clean.
-                  </p>
-                </CollapsibleDetail>
+                    <CollapsibleDetail title="Care Instructions">
+                      <p className="text-sm text-charcoal/70 leading-relaxed">
+                        Machine wash cold with like colors. Tumble dry low.
+                      </p>
+                      <p className="mt-3 text-sm text-charcoal/70 leading-relaxed">
+                        Do not bleach. Iron on low heat if needed. Do not dry clean.
+                      </p>
+                    </CollapsibleDetail>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* You May Also Like */}
+      {/* You May Also Like - Dark Premium Section */}
       <Suspense fallback={null}>
         <Await resolve={relatedProducts}>
           {(data) => {
@@ -203,22 +215,31 @@ export default function Product() {
             ) ?? [];
             if (related.length === 0) return null;
             return (
-              <section className="mt-12 md:mt-16 pt-8 md:pt-12 pb-8 max-w-7xl mx-auto px-4">
-                <div className="divider-sand max-w-xs mx-auto mb-10 md:mb-14" />
-                <ScrollReveal>
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 text-center mb-10 md:mb-14">
-                    You May Also Like
-                  </p>
-                </ScrollReveal>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                  {related.slice(0, 4).map((relProduct, i) => (
-                    <ScrollReveal key={relProduct.id} delay={i * 100}>
-                      <ProductCard
-                        product={relProduct}
-                        loading={i < 2 ? 'eager' : 'lazy'}
-                      />
-                    </ScrollReveal>
-                  ))}
+              <section className="relative bg-gradient-to-b from-charcoal to-charcoal/95 dark-accent-border grain py-16 md:py-20">
+                <div className="relative z-10 max-w-7xl mx-auto px-4">
+                  <ScrollReveal>
+                    <div className="text-center mb-12 md:mb-16">
+                      <div className="divider-sand max-w-xs mx-auto mb-8" />
+                      <h2 className="font-serif text-2xl md:text-3xl text-bone font-light tracking-wide mb-3">
+                        You May Also Like
+                      </h2>
+                      <p className="text-[10px] uppercase tracking-[0.3em] text-sand/60">
+                        Curated for Your Style
+                      </p>
+                    </div>
+                  </ScrollReveal>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                    {related.slice(0, 4).map((relProduct, i) => (
+                      <ScrollReveal key={relProduct.id} delay={i * 100}>
+                        <div className="bg-bone-dark/90 backdrop-blur-sm border border-sand/20 p-4 hover:border-sand/40 transition-all duration-300">
+                          <ProductCard
+                            product={relProduct}
+                            loading={i < 2 ? 'eager' : 'lazy'}
+                          />
+                        </div>
+                      </ScrollReveal>
+                    ))}
+                  </div>
                 </div>
               </section>
             );
