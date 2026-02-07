@@ -1,6 +1,8 @@
 import {Link, useLoaderData} from 'react-router';
 import {getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @type {Route.MetaFunction}
@@ -60,36 +62,36 @@ export default function Blogs() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      <section className="section-padding pb-12">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
-            JOURNAL
-          </h1>
-          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
-            Stories &amp; Editorials
-          </p>
-        </div>
-      </section>
+      <PageHero title="Journal" subtitle="Stories & Editorials" />
 
-      <div className="border-b border-charcoal/10" />
-
-      <section className="py-12 px-4">
+      <section className="section-padding">
         <div className="max-w-3xl mx-auto">
           <PaginatedResourceSection connection={blogs}>
-            {({node: blog}) => (
-              <Link
-                key={blog.handle}
-                prefetch="intent"
-                to={`/blogs/${blog.handle}`}
-                className="group block py-8 border-b border-charcoal/10 first:pt-0"
-              >
-                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-charcoal group-hover:text-rust transition-colors duration-200">
-                  {blog.title}
-                </h2>
-                <span className="inline-block mt-3 text-xs uppercase tracking-[0.15em] text-charcoal/40 group-hover:text-charcoal transition-colors duration-200">
-                  Read More &rarr;
-                </span>
-              </Link>
+            {({node: blog, index}) => (
+              <ScrollReveal key={blog.handle} delay={index * 100}>
+                <Link
+                  prefetch="intent"
+                  to={`/blogs/${blog.handle}`}
+                  className="group flex items-center justify-between py-8 border-b border-charcoal/10 first:pt-0"
+                >
+                  <div>
+                    <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal group-hover:text-rust transition-colors duration-300">
+                      {blog.title}
+                    </h2>
+                    {blog.seo?.description && (
+                      <p className="text-sm text-charcoal/50 mt-2 max-w-lg leading-relaxed">
+                        {blog.seo.description}
+                      </p>
+                    )}
+                    <span className="inline-block mt-3 text-xs uppercase tracking-[0.15em] text-charcoal/40 group-hover:text-rust transition-colors duration-300">
+                      Read More
+                    </span>
+                  </div>
+                  <span className="text-charcoal/20 group-hover:text-rust group-hover:translate-x-1 transition-all duration-300 text-xl ml-6 flex-shrink-0">
+                    &rarr;
+                  </span>
+                </Link>
+              </ScrollReveal>
             )}
           </PaginatedResourceSection>
         </div>

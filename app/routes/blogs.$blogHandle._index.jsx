@@ -2,6 +2,8 @@ import {Link, useLoaderData} from 'react-router';
 import {Image, getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @type {Route.MetaFunction}
@@ -30,7 +32,7 @@ export async function loader(args) {
  */
 async function loadCriticalData({context, request, params}) {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 4,
+    pageBy: 10,
   });
 
   if (!params.blogHandle) {
@@ -73,31 +75,21 @@ export default function Blog() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      <section className="section-padding pb-12">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal uppercase">
-            {blog.title}
-          </h1>
-          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
-            Stories &amp; Editorials
-          </p>
-        </div>
-      </section>
+      <PageHero title={blog.title} subtitle="Stories & Editorials" />
 
-      <div className="border-b border-charcoal/10" />
-
-      <section className="py-12 px-4">
+      <section className="section-padding">
         <div className="max-w-7xl mx-auto">
           <PaginatedResourceSection
             connection={articles}
             resourcesClassName="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             {({node: article, index}) => (
-              <ArticleItem
-                article={article}
-                key={article.id}
-                loading={index < 2 ? 'eager' : 'lazy'}
-              />
+              <ScrollReveal key={article.id} delay={index * 100}>
+                <ArticleItem
+                  article={article}
+                  loading={index < 2 ? 'eager' : 'lazy'}
+                />
+              </ScrollReveal>
             )}
           </PaginatedResourceSection>
         </div>
@@ -141,7 +133,7 @@ function ArticleItem({article, loading}) {
       <p className="text-[10px] tracking-[0.25em] uppercase text-charcoal/40 mb-2">
         {publishedAt}
       </p>
-      <h3 className="text-lg font-semibold tracking-tight text-charcoal group-hover:text-rust transition-colors duration-200">
+      <h3 className="font-serif text-xl font-normal tracking-tight text-charcoal group-hover:text-rust transition-colors duration-200">
         {article.title}
       </h3>
     </Link>

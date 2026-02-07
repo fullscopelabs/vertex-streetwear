@@ -1,6 +1,7 @@
-import {useLoaderData} from 'react-router';
+import {useLoaderData, Link, useParams} from 'react-router';
 import {Image} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {ScrollReveal} from '~/components/ScrollReveal';
 
 /**
  * @type {Route.MetaFunction}
@@ -75,6 +76,7 @@ function loadDeferredData({context}) {
 export default function Article() {
   /** @type {LoaderReturnData} */
   const {article} = useLoaderData();
+  const {blogHandle} = useParams();
   const {title, image, contentHtml, author} = article;
 
   const publishedDate = new Intl.DateTimeFormat('en-US', {
@@ -85,45 +87,81 @@ export default function Article() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      <article className="section-padding">
-        <div className="max-w-3xl mx-auto">
-          {/* Meta line */}
-          <div className="flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-charcoal/40 mb-6">
-            <time dateTime={article.publishedAt}>{publishedDate}</time>
-            {author?.name && (
-              <>
-                <span>&middot;</span>
-                <address className="not-italic">{author.name}</address>
-              </>
-            )}
-          </div>
+      {/* Dark header band */}
+      <section className="relative bg-gradient-to-br from-charcoal via-charcoal to-forest overflow-hidden grain">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 md:py-28">
+          <ScrollReveal>
+            {/* Back to journal */}
+            <Link
+              to={`/blogs/${blogHandle}`}
+              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-bone/40 hover:text-bone/70 transition-colors duration-300 mb-8"
+            >
+              <span>&larr;</span>
+              <span>Back to Journal</span>
+            </Link>
 
-          {/* Title */}
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-charcoal leading-tight">
-            {title}
-          </h1>
+            {/* Meta line */}
+            <div className="flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-bone/40 mb-4">
+              <time dateTime={article.publishedAt}>{publishedDate}</time>
+              {author?.name && (
+                <>
+                  <span>&middot;</span>
+                  <address className="not-italic">{author.name}</address>
+                </>
+              )}
+            </div>
+
+            {/* Title */}
+            <h1 className="font-serif text-4xl md:text-5xl font-light tracking-tight text-bone leading-tight">
+              {title}
+            </h1>
+            <div className="w-12 h-px bg-rust mt-6" />
+          </ScrollReveal>
         </div>
+      </section>
 
+      <article>
         {/* Hero image */}
         {image && (
-          <div className="max-w-4xl mx-auto mt-10 overflow-hidden">
-            <Image
-              data={image}
-              sizes="(min-width: 768px) 80vw, 100vw"
-              loading="eager"
-              className="w-full h-auto"
-            />
+          <div className="max-w-4xl mx-auto mt-12 px-4 overflow-hidden">
+            <ScrollReveal>
+              <Image
+                data={image}
+                sizes="(min-width: 768px) 80vw, 100vw"
+                loading="eager"
+                className="w-full h-auto"
+              />
+            </ScrollReveal>
           </div>
         )}
 
         {/* Article body */}
-        <div className="max-w-3xl mx-auto mt-10">
-          <div
-            className="cms-prose"
-            dangerouslySetInnerHTML={{__html: contentHtml}}
-          />
+        <div className="max-w-3xl mx-auto px-4 py-12 md:py-16">
+          <ScrollReveal>
+            <div
+              className="cms-prose"
+              dangerouslySetInnerHTML={{__html: contentHtml}}
+            />
+          </ScrollReveal>
         </div>
       </article>
+
+      {/* Back to journal CTA */}
+      <section className="border-t border-charcoal/10">
+        <div className="max-w-3xl mx-auto px-4 py-16 text-center">
+          <ScrollReveal>
+            <p className="text-[10px] tracking-[0.35em] uppercase text-charcoal/40 mb-4">
+              Continue Reading
+            </p>
+            <Link
+              to={`/blogs/${blogHandle}`}
+              className="btn-secondary inline-block"
+            >
+              Back to Journal
+            </Link>
+          </ScrollReveal>
+        </div>
+      </section>
     </div>
   );
 }
