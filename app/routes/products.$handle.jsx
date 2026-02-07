@@ -113,7 +113,7 @@ export default function Product() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
-      <div className="max-w-[1400px] mx-auto section-feature">
+      <div className="max-w-[1400px] mx-auto py-16 md:py-20 px-4">
         {/* Two-column layout */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           {/* LEFT — Image Gallery (55%) */}
@@ -203,10 +203,10 @@ export default function Product() {
             ) ?? [];
             if (related.length === 0) return null;
             return (
-              <section className="mt-20 pt-16 pb-8 max-w-7xl mx-auto px-4">
-                <div className="divider-sand max-w-xs mx-auto mb-14" />
+              <section className="mt-12 md:mt-16 pt-8 md:pt-12 pb-8 max-w-7xl mx-auto px-4">
+                <div className="divider-sand max-w-xs mx-auto mb-10 md:mb-14" />
                 <ScrollReveal>
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 text-center mb-14">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 text-center mb-10 md:mb-14">
                     You May Also Like
                   </p>
                 </ScrollReveal>
