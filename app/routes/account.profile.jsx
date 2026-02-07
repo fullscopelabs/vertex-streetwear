@@ -6,6 +6,11 @@ import {
   useNavigation,
   useOutletContext,
 } from 'react-router';
+import {
+  getFormString,
+  validateName,
+  firstError,
+} from '~/lib/validation';
 
 /**
  * @type {Route.MetaFunction}
@@ -18,7 +23,14 @@ export const meta = () => {
  * @param {Route.LoaderArgs}
  */
 export async function loader({context}) {
-  context.customerAccount.handleAuthStatus();
+  try {
+    await context.customerAccount.handleAuthStatus();
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      return {};
+    }
+    throw error;
+  }
 
   return {};
 }
@@ -30,25 +42,44 @@ export async function action({request, context}) {
   const {customerAccount} = context;
 
   if (request.method !== 'PUT') {
-    return data({error: 'Method not allowed'}, {status: 405});
+    return data({error: 'Method not allowed', success: false}, {status: 405});
   }
 
-  const form = await request.formData();
-
   try {
-    const customer = {};
-    const validInputKeys = ['firstName', 'lastName'];
-    for (const [key, value] of form.entries()) {
-      if (!validInputKeys.includes(key)) {
-        continue;
-      }
-      if (typeof value === 'string' && value.length) {
-        customer[key] = value;
+    const form = await request.formData();
+
+    // ── Size limit check (prevent memory exhaustion) ──
+    let fieldCount = 0;
+    for (const _ of form.entries()) {
+      fieldCount++;
+      if (fieldCount > 10) {
+        return data(
+          {error: 'Too many form fields.', success: false, customer: null},
+          {status: 400},
+        );
       }
     }
 
-    // update customer and possibly password
-    const {data, errors} = await customerAccount.mutate(
+    // ── Sanitise ──
+    const firstName = getFormString(form, 'firstName', 50);
+    const lastName = getFormString(form, 'lastName', 50);
+
+    // ── Validate ──
+    const validationError = firstError([
+      validateName(firstName, 'First name'),
+      validateName(lastName, 'Last name'),
+    ]);
+
+    if (validationError) {
+      return data(
+        {error: validationError.message, success: false, customer: null},
+        {status: 400},
+      );
+    }
+
+    // ── Mutate ──
+    const customer = {firstName, lastName};
+    const {data: mutationData, errors} = await customerAccount.mutate(
       CUSTOMER_UPDATE_MUTATION,
       {
         variables: {
@@ -59,23 +90,33 @@ export async function action({request, context}) {
     );
 
     if (errors?.length) {
-      throw new Error(errors[0].message);
+      // Log detailed error server-side, return generic message to client
+      console.error('[account.profile] GraphQL error:', errors[0]);
+      throw new Error('Unable to update profile. Please try again.');
     }
 
-    if (!data?.customerUpdate?.customer) {
+    if (!mutationData?.customerUpdate?.customer) {
       throw new Error('Customer profile update failed.');
     }
 
     return {
       error: null,
-      customer: data?.customerUpdate?.customer,
+      success: true,
+      customer: mutationData?.customerUpdate?.customer,
     };
   } catch (error) {
+    // Log full error details server-side
+    console.error('[account.profile] Action error:', error);
+    
+    // Return user-friendly message to client (avoid leaking internal details)
+    const userMessage =
+      process.env.NODE_ENV === 'production'
+        ? 'Unable to update profile. Please try again or contact support.'
+        : error.message;
+    
     return data(
-      {error: error.message, customer: null},
-      {
-        status: 400,
-      },
+      {error: userMessage, success: false, customer: null},
+      {status: 400},
     );
   }
 }
@@ -87,22 +128,72 @@ export default function AccountProfile() {
   const action = useActionData();
   const customer = action?.customer ?? account?.customer;
 
+  const email = customer?.emailAddress?.emailAddress;
+  const phone = customer?.phoneNumber?.phoneNumber;
+
   return (
     <div className="max-w-xl">
-      <h2 className="font-serif text-3xl font-light tracking-tight text-charcoal mb-8">
-        My Profile
-      </h2>
-      <Form method="PUT" className="space-y-6">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-4">
+      <div className="mb-10">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 mb-2">
+          Account Settings
+        </p>
+        <h2 className="font-serif text-4xl font-light tracking-tight text-charcoal">
+          My Profile
+        </h2>
+      </div>
+
+      {/* ── Account info (read-only, from Shopify auth) ── */}
+      <div className="mb-10 space-y-4">
+        <p className="text-[10px] uppercase tracking-[0.25em] text-charcoal/40">
+          Account
+        </p>
+
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-charcoal/35 mb-1">
+            Email
+          </p>
+          <p className="text-sm text-charcoal">
+            {email || '—'}
+          </p>
+        </div>
+
+        {phone && (
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-charcoal/35 mb-1">
+              Phone
+            </p>
+            <p className="text-sm text-charcoal">{phone}</p>
+          </div>
+        )}
+
+        <p className="text-[10px] text-charcoal/30 leading-relaxed">
+          Email and phone are managed through your{' '}
+          <a
+            href="https://shopify.com/98899820913/account/profile"
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:text-charcoal/50 transition-colors"
+          >
+            Shopify account settings
+          </a>.
+        </p>
+      </div>
+
+      <div className="divider-sand mb-10" />
+
+      {/* ── Editable profile fields ── */}
+      <Form method="PUT" className="space-y-8" noValidate>
+        <p className="text-[10px] uppercase tracking-[0.25em] text-charcoal/40">
           Personal Information
         </p>
+
         <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label
               htmlFor="firstName"
-              className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-2 block"
+              className="text-[10px] uppercase tracking-[0.2em] text-charcoal/35 mb-2 block"
             >
-              First name
+              First name*
             </label>
             <input
               id="firstName"
@@ -111,17 +202,21 @@ export default function AccountProfile() {
               autoComplete="given-name"
               placeholder="First name"
               aria-label="First name"
-              defaultValue={customer.firstName ?? ''}
-              minLength={2}
-              className="w-full border border-charcoal/20 bg-transparent px-4 py-3 text-sm text-charcoal focus:border-charcoal/40 focus:outline-none transition-colors"
+              defaultValue={customer?.firstName ?? ''}
+              required
+              minLength={1}
+              maxLength={50}
+              pattern="[A-Za-zÀ-ÿ\s\-'.]{1,50}"
+              title="Letters, spaces, hyphens, apostrophes, and periods only"
+              className="w-full border-b border-charcoal/15 bg-transparent px-0 py-3 text-sm text-charcoal placeholder:text-charcoal/25 focus:border-charcoal/40 focus:outline-none transition-colors invalid:border-rust/40"
             />
           </div>
           <div>
             <label
               htmlFor="lastName"
-              className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-2 block"
+              className="text-[10px] uppercase tracking-[0.2em] text-charcoal/35 mb-2 block"
             >
-              Last name
+              Last name*
             </label>
             <input
               id="lastName"
@@ -130,22 +225,38 @@ export default function AccountProfile() {
               autoComplete="family-name"
               placeholder="Last name"
               aria-label="Last name"
-              defaultValue={customer.lastName ?? ''}
-              minLength={2}
-              className="w-full border border-charcoal/20 bg-transparent px-4 py-3 text-sm text-charcoal focus:border-charcoal/40 focus:outline-none transition-colors"
+              defaultValue={customer?.lastName ?? ''}
+              required
+              minLength={1}
+              maxLength={50}
+              pattern="[A-Za-zÀ-ÿ\s\-'.]{1,50}"
+              title="Letters, spaces, hyphens, apostrophes, and periods only"
+              className="w-full border-b border-charcoal/15 bg-transparent px-0 py-3 text-sm text-charcoal placeholder:text-charcoal/25 focus:border-charcoal/40 focus:outline-none transition-colors invalid:border-rust/40"
             />
           </div>
         </fieldset>
-        {action?.error && (
-          <p className="text-rust text-sm">{action.error}</p>
+
+        {/* Success / error feedback */}
+        {action?.success && (
+          <p className="text-sm text-charcoal/60" role="status">
+            Profile updated successfully.
+          </p>
         )}
-        <button
-          type="submit"
-          disabled={state !== 'idle'}
-          className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {state !== 'idle' ? 'Updating' : 'Update'}
-        </button>
+        {action?.error && (
+          <p className="text-rust text-sm" role="alert">
+            {action.error}
+          </p>
+        )}
+
+        <div className="pt-2">
+          <button
+            type="submit"
+            disabled={state !== 'idle'}
+            className="bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-10 py-3.5 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {state !== 'idle' ? 'Updating...' : 'Update Profile'}
+          </button>
+        </div>
       </Form>
     </div>
   );
@@ -154,6 +265,7 @@ export default function AccountProfile() {
 /**
  * @typedef {{
  *   error: string | null;
+ *   success: boolean;
  *   customer: CustomerFragment | null;
  * }} ActionResponse
  */
