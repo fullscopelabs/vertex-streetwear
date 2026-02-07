@@ -12,26 +12,26 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
           <footer className="bg-gradient-to-b from-charcoal to-forest text-bone grain">
             {/* Newsletter — integrated into footer instead of separate section */}
             <div className="border-b border-sand/8">
-              <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16 lg:py-20">
                 <div className="max-w-lg">
-                  <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-bone">
+                  <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-bone">
                     Stay in the Loop
                   </h3>
-                  <p className="text-bone/40 text-sm mt-3 leading-relaxed">
+                  <p className="text-bone/40 text-xs sm:text-sm mt-2 sm:mt-3 leading-relaxed">
                     New drops, exclusive access, and stories from the studio.
                   </p>
                   <form
-                    className="mt-6 flex gap-0"
+                    className="mt-4 sm:mt-6 flex gap-0"
                     onSubmit={(e) => e.preventDefault()}
                   >
                     <input
                       type="email"
                       placeholder="Your email"
-                      className="flex-1 bg-transparent border border-bone/20 border-r-0 px-4 py-3 text-sm text-bone placeholder:text-bone/30 focus:outline-none focus:border-bone/40 transition-colors duration-200"
+                      className="flex-1 bg-transparent border border-bone/20 border-r-0 px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-bone placeholder:text-bone/30 focus:outline-none focus:border-bone/40 transition-colors duration-200"
                     />
                     <button
                       type="submit"
-                      className="cursor-pointer bg-bone text-charcoal px-6 py-3 text-xs uppercase tracking-[0.12em] font-semibold hover:bg-rust hover:text-bone transition-all duration-300 whitespace-nowrap"
+                      className="cursor-pointer bg-bone text-charcoal px-4 sm:px-6 py-2.5 sm:py-3 text-[10px] sm:text-xs uppercase tracking-[0.12em] font-semibold hover:bg-rust hover:text-bone transition-all duration-300 whitespace-nowrap"
                     >
                       Subscribe
                     </button>
@@ -41,21 +41,21 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
             </div>
 
             {/* Main footer links */}
-            <div className="max-w-7xl mx-auto px-6 py-14">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-14">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
                 {/* Col 1: Brand */}
-                <div>
+                <div className="pb-6 border-b border-bone/10 md:border-b-0 md:pb-0">
                   <Link to="/" className="inline-block">
-                    <h3 className="font-serif text-2xl" style={{letterSpacing: '0.2em'}}>
+                    <h3 className="font-serif text-xl sm:text-2xl" style={{letterSpacing: '0.2em'}}>
                       V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX
                     </h3>
                   </Link>
-                  <p className="text-bone/40 text-sm mt-4 leading-relaxed max-w-xs">
+                  <p className="text-bone/40 text-xs sm:text-sm mt-3 sm:mt-4 leading-relaxed max-w-xs">
                     Contemporary streetwear essentials. Designed with intention,
                     built to endure.
                   </p>
                   {/* Social Icons */}
-                  <div className="flex items-center gap-5 mt-6">
+                  <div className="flex items-center gap-4 sm:gap-5 mt-4 sm:mt-6">
                     <a
                       href="https://instagram.com"
                       target="_blank"
@@ -92,128 +92,131 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                   </div>
                 </div>
 
-                {/* Col 2: Shop */}
-                <div>
-                  <h4 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-bone/60 mb-6">
-                    Shop
-                  </h4>
-                  <ul className="space-y-3">
-                    <li>
-                      <Link
-                        to="/collections/all"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Shop All
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/collections/core-collection"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Core
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/collections/outerwear"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Outerwear
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/collections/accessories"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Accessories
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/collections/limited-edition"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Limited Edition
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                {/* Col 2 & 3: Shop & Info - 2 columns on mobile */}
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 md:col-span-2">
+                  {/* Shop */}
+                  <div>
+                    <h4 className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-bone/60 mb-4 sm:mb-6">
+                      Shop
+                    </h4>
+                    <ul className="space-y-2 sm:space-y-3">
+                      <li>
+                        <Link
+                          to="/collections/all"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Shop All
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/collections/core-collection"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Core
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/collections/outerwear"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Outerwear
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/collections/accessories"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Accessories
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/collections/limited-edition"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Limited Edition
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
 
-                {/* Col 3: Info */}
-                <div>
-                  <h4 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-bone/60 mb-6">
-                    Info
-                  </h4>
-                  <ul className="space-y-3">
-                    <li>
-                      <Link
-                        to="/blogs/news"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Journal
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/collections"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        All Collections
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/shipping-returns"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Shipping &amp; Returns
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/policies"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Policies
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/search"
-                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
-                      >
-                        Search
-                      </Link>
-                    </li>
-                  </ul>
+                  {/* Info */}
+                  <div>
+                    <h4 className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-bone/60 mb-4 sm:mb-6">
+                      Info
+                    </h4>
+                    <ul className="space-y-2 sm:space-y-3">
+                      <li>
+                        <Link
+                          to="/blogs/news"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Journal
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/collections"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          All Collections
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/shipping-returns"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Shipping &amp; Returns
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/policies"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Policies
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/search"
+                          className="text-xs sm:text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                        >
+                          Search
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Bottom Bar */}
             <div className="border-t border-bone/10">
-              <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p className="text-[11px] text-bone/25 tracking-wider">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+                <p className="text-[10px] sm:text-[11px] text-bone/25 tracking-wide sm:tracking-wider text-center md:text-left">
                   &copy; {new Date().getFullYear()} <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span>. All rights reserved.
                 </p>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4 sm:gap-6">
                   <Link
                     to="/policies/privacy-policy"
-                    className="text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wider"
+                    className="text-[10px] sm:text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wide sm:tracking-wider"
                   >
                     Privacy
                   </Link>
                   <Link
                     to="/policies/terms-of-service"
-                    className="text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wider"
+                    className="text-[10px] sm:text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wide sm:tracking-wider"
                   >
                     Terms
                   </Link>
                   <Link
                     to="/policies/refund-policy"
-                    className="text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wider"
+                    className="text-[10px] sm:text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wide sm:tracking-wider"
                   >
                     Refunds
                   </Link>
