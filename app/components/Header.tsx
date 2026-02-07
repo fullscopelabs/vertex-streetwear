@@ -44,13 +44,13 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomepage, location.pathname]);
 
-  // Solid after scroll; frosted-glass scrim on homepage for nav legibility
+  // Dark frosted glass — consistent across all states
   const headerBg = isScrolled
-    ? 'bg-bone/95 backdrop-blur-md border-b border-charcoal/10'
+    ? 'bg-charcoal/80 backdrop-blur-xl border-b border-white/5'
     : 'bg-black/20 backdrop-blur-sm border-b border-white/5';
 
-  const textColor = isScrolled ? 'text-charcoal' : 'text-white';
-  const hoverColor = isScrolled ? 'hover:text-rust' : 'hover:text-white/60';
+  const textColor = 'text-white';
+  const hoverColor = 'hover:text-white/60';
 
   // Position header below announcement bar when it's visible
   const headerTop = announcementVisible ? 'top-9' : 'top-0';
@@ -68,9 +68,14 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
           <NavLink
             prefetch="intent"
             to="/"
-            className={`font-serif text-2xl tracking-tight transition-colors duration-500 ${textColor}`}
+            className={`font-serif text-2xl transition-colors duration-500 ${textColor}`}
+            style={{
+              border: '2px solid currentColor',
+              padding: '0.16em 0.48em',
+              letterSpacing: '0.2em',
+            }}
           >
-            VΞRTEX
+            V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX
           </NavLink>
 
           {/* Desktop Navigation */}
@@ -83,7 +88,7 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
                 className={({isActive}) =>
                   `uppercase text-[11px] tracking-[0.15em] font-medium transition-colors duration-300 ${
                     isActive
-                      ? 'text-rust'
+                      ? 'text-sand'
                       : `${textColor} ${hoverColor}`
                   }`
                 }
@@ -97,7 +102,7 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
           <div className="flex items-center gap-5">
             <NavLink
               to="/account"
-              className={`hidden md:block transition-colors duration-300 ${textColor} hover:text-rust`}
+              className={`hidden md:block transition-colors duration-300 ${textColor} hover:text-sand`}
               aria-label="Account"
             >
               <svg
@@ -175,7 +180,7 @@ function CartIcon({count, textColor}: {count: number; textColor: string}) {
 
   return (
     <button
-      className={`relative cursor-pointer transition-colors duration-300 ${textColor} hover:text-rust`}
+      className={`relative cursor-pointer transition-colors duration-300 ${textColor} hover:text-sand`}
       onClick={() => {
         navigate('/cart');
         (publish as (...args: unknown[]) => void)('cart_viewed', {
@@ -223,7 +228,7 @@ function MobileMenuToggle({
 }) {
   return (
     <button
-      className={`md:hidden transition-colors duration-300 ${textColor} hover:text-rust`}
+      className={`md:hidden transition-colors duration-300 ${textColor} hover:text-sand`}
       onClick={onOpen}
       aria-label="Open menu"
     >

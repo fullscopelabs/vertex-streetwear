@@ -9,9 +9,9 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="bg-gradient-to-b from-charcoal to-[#1F1F1F] text-bone grain">
+          <footer className="bg-gradient-to-b from-charcoal to-forest text-bone grain">
             {/* Newsletter — integrated into footer instead of separate section */}
-            <div className="border-b border-bone/10">
+            <div className="border-b border-sand/8">
               <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
                 <div className="max-w-lg">
                   <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-bone">
@@ -46,8 +46,8 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                 {/* Col 1: Brand */}
                 <div>
                   <Link to="/" className="inline-block">
-                    <h3 className="font-serif text-2xl tracking-tight">
-                      VΞRTEX
+                    <h3 className="font-serif text-2xl" style={{letterSpacing: '0.2em'}}>
+                      V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX
                     </h3>
                   </Link>
                   <p className="text-bone/40 text-sm mt-4 leading-relaxed max-w-xs">
@@ -196,7 +196,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
             <div className="border-t border-bone/10">
               <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
                 <p className="text-[11px] text-bone/25 tracking-wider">
-                  &copy; {new Date().getFullYear()} VΞRTEX. All rights reserved.
+                  &copy; {new Date().getFullYear()} <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span>. All rights reserved.
                 </p>
                 <div className="flex items-center gap-6">
                   <Link

@@ -1,13 +1,12 @@
 import {useLoaderData, Link} from 'react-router';
 import {Money} from '@shopify/hydrogen';
-import {ProductCard} from '~/components/ProductCard';
 import {ScrollReveal} from '~/components/ScrollReveal';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'VΞRTEX | Contemporary Streetwear'}];
+  return [{title: 'V☰RTEX | Contemporary Streetwear'}];
 };
 
 /**
@@ -24,14 +23,18 @@ export async function loader(args) {
  * @param {Route.LoaderArgs}
  */
 async function loadCriticalData({context}) {
-  const [{collection}] = await Promise.all([
+  const [{collection}, {product: featuredProduct}] = await Promise.all([
     context.storefront.query(CORE_COLLECTION_QUERY, {
       variables: {handle: 'core-collection', first: 4},
+    }),
+    context.storefront.query(FEATURED_PRODUCT_QUERY, {
+      variables: {handle: 'monolith-oversized-hoodie'},
     }),
   ]);
 
   return {
     coreCollection: collection,
+    featuredProduct,
   };
 }
 
@@ -47,15 +50,15 @@ export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
   const heroProduct = data.coreCollection?.products?.nodes?.[0] ?? null;
+  const featuredProduct = data.featuredProduct ?? heroProduct;
 
   return (
     <>
       <HeroSection heroProduct={heroProduct} />
-      <FeaturedProducts collection={data.coreCollection} />
-      <MarqueeBand />
-      <EditorialHero heroProduct={heroProduct} />
       <BrandValues />
+      <EditorialHero heroProduct={featuredProduct} />
       <BrandStory />
+      <MarqueeBand />
     </>
   );
 }
@@ -76,7 +79,7 @@ function HeroSection({heroProduct}) {
       {heroImage && (
         <img
           src={heroImage.url}
-          alt={heroImage.altText || 'VΞRTEX hero'}
+          alt={heroImage.altText || 'V☰RTEX hero'}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
       )}
@@ -90,17 +93,17 @@ function HeroSection({heroProduct}) {
         <p className="text-[10px] uppercase tracking-[0.35em] text-bone/50 mb-4">
           Est. 2024
         </p>
-        <h1 className="font-serif text-8xl md:text-9xl lg:text-[11rem] font-light tracking-tight text-bone leading-none">
-          VΞRTEX
+        <h1 className="font-serif text-8xl md:text-9xl lg:text-[11rem] font-light text-bone leading-none" style={{letterSpacing: '0.2em'}}>
+          V<span style={{fontSize: '0.85em', lineHeight: 1, verticalAlign: 'baseline'}}>☰</span>RTEX
         </h1>
-        <div className="w-16 h-px bg-rust mt-6 mb-6" />
-        <p className="text-sm tracking-[0.2em] text-bone/70 uppercase">
+        <div className="divider-lux mt-6 mb-6" />
+        <p className="text-sm tracking-[0.2em] text-sand/70 uppercase">
           Contemporary Streetwear
         </p>
         <div className="mt-10">
           <Link
             to="/collections/all"
-            className="inline-block bg-bone text-charcoal px-10 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+            className="inline-block border border-sand/30 text-sand px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] hover:bg-sand hover:text-charcoal transition-all duration-500"
           >
             Explore Collection
           </Link>
@@ -144,7 +147,7 @@ function EditorialHero({heroProduct}) {
   const image = heroProduct.featuredImage;
 
   return (
-    <section className="bg-charcoal text-bone overflow-hidden grain">
+    <section className="bg-gradient-to-br from-charcoal via-charcoal to-tobacco text-bone overflow-hidden grain dark-accent-border">
       <div className="flex flex-col md:flex-row min-h-[500px] lg:min-h-[600px]">
         {/* Image — 60% */}
         {image && (
@@ -160,15 +163,15 @@ function EditorialHero({heroProduct}) {
         {/* Text — 40% */}
         <div className="w-full md:w-[40%] flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16 md:py-0">
           <ScrollReveal>
-            <p className="text-[10px] uppercase tracking-[0.35em] text-bone/40 mb-4">
+            <p className="text-[10px] uppercase tracking-[0.35em] text-sand/50 mb-4">
               Featured
             </p>
             <h2 className="font-serif text-4xl md:text-5xl font-light tracking-tight leading-tight text-bone">
               {heroProduct.title}
             </h2>
-            <div className="w-10 h-px bg-rust mt-6 mb-6" />
+            <div className="divider-lux mt-6 mb-6" />
             <p className="text-bone/60 text-sm leading-relaxed">
-              A cornerstone piece of the VΞRTEX collection. Designed for those
+              A cornerstone piece of the <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span> collection. Designed for those
               who demand precision in every detail.
             </p>
             <p className="text-xl font-semibold mt-6 tracking-wide text-bone">
@@ -177,65 +180,13 @@ function EditorialHero({heroProduct}) {
             <div className="mt-8">
               <Link
                 to={`/products/${heroProduct.handle}`}
-                className="inline-block bg-bone text-charcoal px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+                className="inline-block border border-sand/30 text-sand px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] hover:bg-sand hover:text-charcoal transition-all duration-500"
               >
                 Shop Now
               </Link>
             </div>
           </ScrollReveal>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════
- *  2. FEATURED PRODUCTS SECTION
- * ═══════════════════════════════════════════ */
-
-/**
- * @param {{collection: CoreCollectionQuery['collection'] | null}}
- */
-function FeaturedProducts({collection}) {
-  const products = collection?.products?.nodes;
-
-  return (
-    <section className="section-feature">
-      <div className="max-w-7xl mx-auto">
-        <ScrollReveal className="text-center mb-16">
-          <h2 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-charcoal">
-            Core Collection
-          </h2>
-          <p className="text-charcoal/60 mt-3 tracking-wide text-sm">
-            Essential pieces built to last
-          </p>
-        </ScrollReveal>
-
-        {products && products.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {products.map((product, i) => (
-              <ScrollReveal key={product.id} delay={i * 100}>
-                <ProductCard
-                  product={product}
-                  loading={i < 2 ? 'eager' : 'lazy'}
-                />
-              </ScrollReveal>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-charcoal/40">
-            Products coming soon.
-          </p>
-        )}
-
-        <ScrollReveal className="text-center mt-12">
-          <Link
-            to="/collections/core-collection"
-            className="btn-secondary inline-block"
-          >
-            View All
-          </Link>
-        </ScrollReveal>
       </div>
     </section>
   );
@@ -253,20 +204,25 @@ const VALUES = [
 
 function BrandValues() {
   return (
-    <section className="bg-bone-dark border-y border-charcoal/10">
-      <div className="max-w-7xl mx-auto px-4 py-14 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+    <section className="bg-charcoal dark-accent-border">
+      <div className="max-w-7xl mx-auto px-6 py-8 md:py-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
           {VALUES.map((item, i) => (
-            <ScrollReveal key={item.label} delay={i * 80}>
-              <div className="text-center">
-                <p className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal">
-                  {item.number}
-                </p>
-                <p className="text-[10px] uppercase tracking-[0.25em] text-charcoal/40 mt-2">
-                  {item.label}
-                </p>
-              </div>
-            </ScrollReveal>
+            <div
+              key={item.label}
+              className={`text-center ${
+                i < VALUES.length - 1
+                  ? 'md:border-r md:border-sand/10'
+                  : ''
+              }`}
+            >
+              <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-bone/80">
+                {item.number}
+              </p>
+              <p className="text-[9px] uppercase tracking-[0.2em] text-bone/30 mt-1">
+                {item.label}
+              </p>
+            </div>
           ))}
         </div>
       </div>
@@ -279,31 +235,31 @@ function BrandValues() {
  * ═══════════════════════════════════════════ */
 function BrandStory() {
   return (
-    <section className="bg-gradient-to-br from-forest via-[#1E4234] to-charcoal/90 section-editorial relative overflow-hidden grain">
+    <section className="bg-gradient-to-br from-forest via-tobacco to-charcoal/90 relative overflow-hidden grain dark-accent-border py-28 md:py-40 px-4">
       <ScrollReveal className="max-w-2xl mx-auto text-center relative z-10">
-        <p className="text-[10px] uppercase tracking-[0.35em] text-bone/40 mb-6">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-sand/60 mb-6">
           Our Philosophy
         </p>
         <h2 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone mb-8">
           Crafted for the Modern Urbanite
         </h2>
-        <div className="w-12 h-px bg-rust mx-auto mb-8" />
+        <div className="divider-lux mx-auto mb-10" />
         <p className="text-bone/80 leading-relaxed text-lg">
-          Every VΞRTEX piece begins with intention. We source premium fabrics and
+          Every <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span> piece begins with intention. We source premium fabrics and
           work with skilled artisans to create streetwear that stands the test of
           time — both in durability and design. Our collections are rooted in the
           belief that contemporary style should be accessible, sustainable, and
           unapologetically bold.
         </p>
-        <p className="text-bone/60 leading-relaxed mt-6">
+        <p className="text-bone/50 leading-relaxed mt-6">
           From the cut of each silhouette to the weight of every fabric, we obsess
           over the details so you don&apos;t have to. This is streetwear
           engineered for real life.
         </p>
-        <div className="mt-10">
+        <div className="mt-12">
           <Link
             to="/collections/all"
-            className="inline-block border border-bone/30 text-bone px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-bone hover:text-charcoal transition-all duration-300"
+            className="inline-block border border-sand/30 text-sand px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] hover:bg-sand hover:text-charcoal transition-all duration-500"
           >
             Discover More
           </Link>
@@ -350,6 +306,33 @@ const CORE_COLLECTION_QUERY = `#graphql
         nodes {
           ...CoreProduct
         }
+      }
+    }
+  }
+`;
+
+const FEATURED_PRODUCT_QUERY = `#graphql
+  query FeaturedProduct(
+    $handle: String!
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      featuredImage {
+        id
+        url
+        altText
+        width
+        height
       }
     }
   }
