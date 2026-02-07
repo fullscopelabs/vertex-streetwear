@@ -105,7 +105,7 @@ export default function AccountLayout() {
 
       {/* Tab navigation — dark bar flush with hero */}
       <div className="bg-gradient-to-b from-charcoal to-charcoal/95 border-b border-sand/10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-3 sm:px-6">
           <AccountMenu />
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function AccountLayout() {
 
 function AccountMenu() {
   return (
-    <nav role="navigation" className="flex items-center gap-0">
+    <nav role="navigation" className="flex items-center gap-0 overflow-x-auto">
       {[
         {to: '/account/orders', label: 'Orders'},
         {to: '/account/profile', label: 'Profile'},
@@ -132,7 +132,7 @@ function AccountMenu() {
           key={to}
           to={to}
           className={({isActive}) =>
-            `text-[10px] uppercase tracking-[0.25em] font-medium px-6 py-4 border-b-2 transition-colors duration-300 ${
+            `text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.25em] font-medium px-3 sm:px-5 md:px-6 py-4 border-b-2 transition-colors duration-300 whitespace-nowrap ${
               isActive
                 ? 'text-sand border-sand'
                 : 'text-bone/40 border-transparent hover:text-bone/70 hover:border-bone/20'
@@ -156,7 +156,7 @@ function Logout() {
     >
       <button
         type="submit"
-        className="cursor-pointer text-[10px] uppercase tracking-[0.25em] font-medium text-bone/30 hover:text-rust transition-colors duration-300 py-4"
+        className="cursor-pointer text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.25em] font-medium text-bone/30 hover:text-rust transition-colors duration-300 py-4 px-3 sm:px-4 whitespace-nowrap"
       >
         Sign Out
       </button>
