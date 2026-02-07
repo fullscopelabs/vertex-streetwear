@@ -9,28 +9,58 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="bg-charcoal text-bone">
-            {/* Main footer content */}
-            <div className="max-w-7xl mx-auto px-4 py-16">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          <footer className="bg-gradient-to-b from-charcoal to-[#1F1F1F] text-bone grain">
+            {/* Newsletter — integrated into footer instead of separate section */}
+            <div className="border-b border-bone/10">
+              <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+                <div className="max-w-lg">
+                  <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-bone">
+                    Stay in the Loop
+                  </h3>
+                  <p className="text-bone/40 text-sm mt-3 leading-relaxed">
+                    New drops, exclusive access, and stories from the studio.
+                  </p>
+                  <form
+                    className="mt-6 flex gap-0"
+                    onSubmit={(e) => e.preventDefault()}
+                  >
+                    <input
+                      type="email"
+                      placeholder="Your email"
+                      className="flex-1 bg-transparent border border-bone/20 border-r-0 px-4 py-3 text-sm text-bone placeholder:text-bone/30 focus:outline-none focus:border-bone/40 transition-colors duration-200"
+                    />
+                    <button
+                      type="submit"
+                      className="bg-bone text-charcoal px-6 py-3 text-xs uppercase tracking-[0.12em] font-semibold hover:bg-rust hover:text-bone transition-all duration-300 whitespace-nowrap"
+                    >
+                      Subscribe
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            {/* Main footer links */}
+            <div className="max-w-7xl mx-auto px-6 py-14">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
                 {/* Col 1: Brand */}
-                <div className="lg:col-span-1">
+                <div>
                   <Link to="/" className="inline-block">
-                    <h3 className="text-2xl font-bold tracking-tighter">
+                    <h3 className="font-serif text-2xl tracking-tight">
                       VΞRTEX
                     </h3>
                   </Link>
-                  <p className="text-bone/50 text-sm mt-4 leading-relaxed max-w-xs">
-                    Premium streetwear essentials crafted for the modern urban.
-                    Designed with intention, built to last.
+                  <p className="text-bone/40 text-sm mt-4 leading-relaxed max-w-xs">
+                    Contemporary streetwear essentials. Designed with intention,
+                    built to endure.
                   </p>
                   {/* Social Icons */}
-                  <div className="flex items-center gap-4 mt-6">
+                  <div className="flex items-center gap-5 mt-6">
                     <a
                       href="https://instagram.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-bone/40 hover:text-rust transition-colors duration-300"
+                      className="text-bone/30 hover:text-bone transition-colors duration-300"
                       aria-label="Instagram"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -41,7 +71,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                       href="https://x.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-bone/40 hover:text-rust transition-colors duration-300"
+                      className="text-bone/30 hover:text-bone transition-colors duration-300"
                       aria-label="X (Twitter)"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -52,7 +82,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                       href="https://tiktok.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-bone/40 hover:text-rust transition-colors duration-300"
+                      className="text-bone/30 hover:text-bone transition-colors duration-300"
                       aria-label="TikTok"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -64,14 +94,14 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
 
                 {/* Col 2: Shop */}
                 <div>
-                  <h4 className="text-xs uppercase tracking-[0.2em] font-semibold text-bone mb-6">
+                  <h4 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-bone/60 mb-6">
                     Shop
                   </h4>
                   <ul className="space-y-3">
                     <li>
                       <Link
                         to="/collections/all"
-                        className="text-sm text-bone/50 hover:text-rust transition-colors duration-300"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
                       >
                         Shop All
                       </Link>
@@ -79,7 +109,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     <li>
                       <Link
                         to="/collections/core-collection"
-                        className="text-sm text-bone/50 hover:text-rust transition-colors duration-300"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
                       >
                         Core
                       </Link>
@@ -87,7 +117,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     <li>
                       <Link
                         to="/collections/outerwear"
-                        className="text-sm text-bone/50 hover:text-rust transition-colors duration-300"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
                       >
                         Outerwear
                       </Link>
@@ -95,7 +125,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     <li>
                       <Link
                         to="/collections/accessories"
-                        className="text-sm text-bone/50 hover:text-rust transition-colors duration-300"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
                       >
                         Accessories
                       </Link>
@@ -103,7 +133,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     <li>
                       <Link
                         to="/collections/limited-edition"
-                        className="text-sm text-bone/50 hover:text-rust transition-colors duration-300"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
                       >
                         Limited Edition
                       </Link>
@@ -111,58 +141,51 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                   </ul>
                 </div>
 
-                {/* Col 3: Help */}
+                {/* Col 3: Info */}
                 <div>
-                  <h4 className="text-xs uppercase tracking-[0.2em] font-semibold text-bone mb-6">
-                    Help
+                  <h4 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-bone/60 mb-6">
+                    Info
                   </h4>
                   <ul className="space-y-3">
                     <li>
                       <Link
+                        to="/blogs/news"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                      >
+                        Journal
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/collections"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                      >
+                        All Collections
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
                         to="/policies/shipping-policy"
-                        className="text-sm text-bone/50 hover:text-rust transition-colors duration-300"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
                       >
                         Shipping &amp; Returns
                       </Link>
                     </li>
                     <li>
-                      <span className="text-sm text-bone/50 hover:text-rust transition-colors duration-300 cursor-pointer">
-                        Size Guide
-                      </span>
+                      <Link
+                        to="/policies"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                      >
+                        Policies
+                      </Link>
                     </li>
                     <li>
-                      <span className="text-sm text-bone/50 hover:text-rust transition-colors duration-300 cursor-pointer">
-                        Contact
-                      </span>
-                    </li>
-                    <li>
-                      <span className="text-sm text-bone/50 hover:text-rust transition-colors duration-300 cursor-pointer">
-                        FAQ
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Col 4: About */}
-                <div>
-                  <h4 className="text-xs uppercase tracking-[0.2em] font-semibold text-bone mb-6">
-                    About
-                  </h4>
-                  <ul className="space-y-3">
-                    <li>
-                      <span className="text-sm text-bone/50 hover:text-rust transition-colors duration-300 cursor-pointer">
-                        Our Story
-                      </span>
-                    </li>
-                    <li>
-                      <span className="text-sm text-bone/50 hover:text-rust transition-colors duration-300 cursor-pointer">
-                        Sustainability
-                      </span>
-                    </li>
-                    <li>
-                      <span className="text-sm text-bone/50 hover:text-rust transition-colors duration-300 cursor-pointer">
-                        Careers
-                      </span>
+                      <Link
+                        to="/search"
+                        className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
+                      >
+                        Search
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -171,28 +194,28 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
 
             {/* Bottom Bar */}
             <div className="border-t border-bone/10">
-              <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p className="text-xs text-bone/30 tracking-wider">
+              <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p className="text-[11px] text-bone/25 tracking-wider">
                   &copy; {new Date().getFullYear()} VΞRTEX. All rights reserved.
                 </p>
                 <div className="flex items-center gap-6">
                   <Link
                     to="/policies/privacy-policy"
-                    className="text-xs text-bone/30 hover:text-bone/60 transition-colors duration-300 tracking-wider"
+                    className="text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wider"
                   >
-                    Privacy Policy
+                    Privacy
                   </Link>
                   <Link
                     to="/policies/terms-of-service"
-                    className="text-xs text-bone/30 hover:text-bone/60 transition-colors duration-300 tracking-wider"
+                    className="text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wider"
                   >
-                    Terms of Service
+                    Terms
                   </Link>
                   <Link
                     to="/policies/refund-policy"
-                    className="text-xs text-bone/30 hover:text-bone/60 transition-colors duration-300 tracking-wider"
+                    className="text-[11px] text-bone/25 hover:text-bone/50 transition-colors duration-300 tracking-wider"
                   >
-                    Refund Policy
+                    Refunds
                   </Link>
                 </div>
               </div>

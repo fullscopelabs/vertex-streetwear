@@ -1,5 +1,5 @@
 import {Suspense, useEffect, useRef, useState} from 'react';
-import {Await, NavLink, useAsyncValue} from 'react-router';
+import {Await, NavLink, useAsyncValue, useLocation, useNavigate} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {MobileNav} from '~/components/MobileNav';
@@ -11,38 +11,76 @@ const NAV_LINKS = [
   {label: 'Outerwear', to: '/collections/outerwear'},
   {label: 'Accessories', to: '/collections/accessories'},
   {label: 'Limited', to: '/collections/limited-edition'},
+  {label: 'Journal', to: '/blogs/news'},
 ];
 
 interface HeaderProps {
   cart: Promise<CartApiQueryFragment | null>;
+  announcementVisible?: boolean;
 }
 
-export function Header({cart}: HeaderProps) {
+export function Header({cart, announcementVisible = true}: HeaderProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const isHomepage = location.pathname === '/';
+
+  useEffect(() => {
+    if (!isHomepage) {
+      setIsScrolled(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+
+    handleScroll(); // Check initial position
+    window.addEventListener('scroll', handleScroll, {passive: true});
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isHomepage, location.pathname]);
+
+  // Solid after scroll; frosted-glass scrim on homepage for nav legibility
+  const headerBg = isScrolled
+    ? 'bg-bone/95 backdrop-blur-md border-b border-charcoal/10'
+    : 'bg-black/20 backdrop-blur-sm border-b border-white/5';
+
+  const textColor = isScrolled ? 'text-charcoal' : 'text-white';
+  const hoverColor = isScrolled ? 'hover:text-rust' : 'hover:text-white/60';
+
+  // Position header below announcement bar when it's visible
+  const headerTop = announcementVisible ? 'top-9' : 'top-0';
+
+  // Spacer height accounts for both announcement bar (36px) + header (80px) = 116px, or just header (80px)
+  const spacerHeight = announcementVisible ? 'h-[116px]' : 'h-[80px]';
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-bone/95 backdrop-blur-md border-b border-charcoal/10">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-[70px]">
+      <header
+        className={`fixed ${headerTop} left-0 right-0 z-50 transition-all duration-500 ${headerBg}`}
+      >
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 h-[80px]">
           {/* Logo */}
           <NavLink
             prefetch="intent"
             to="/"
-            className="text-2xl font-bold tracking-tighter text-charcoal"
+            className={`font-serif text-2xl tracking-tight transition-colors duration-500 ${textColor}`}
           >
             VΞRTEX
           </NavLink>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8" role="navigation">
+          <nav className="hidden md:flex items-center gap-10" role="navigation">
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.to}
                 prefetch="intent"
                 to={link.to}
                 className={({isActive}) =>
-                  `uppercase text-xs tracking-widest transition-colors duration-300 ${
-                    isActive ? 'text-rust' : 'text-charcoal hover:text-rust'
+                  `uppercase text-[11px] tracking-[0.15em] font-medium transition-colors duration-300 ${
+                    isActive
+                      ? 'text-rust'
+                      : `${textColor} ${hoverColor}`
                   }`
                 }
               >
@@ -51,13 +89,39 @@ export function Header({cart}: HeaderProps) {
             ))}
           </nav>
 
-          {/* Right Side: Cart + Mobile Menu */}
-          <div className="flex items-center gap-4">
-            <CartToggle cart={cart} />
-            <MobileMenuToggle onOpen={() => setMobileNavOpen(true)} />
+          {/* Right Side: Account + Cart + Mobile Menu */}
+          <div className="flex items-center gap-5">
+            <NavLink
+              to="/account"
+              className={`hidden md:block transition-colors duration-300 ${textColor} hover:text-rust`}
+              aria-label="Account"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                />
+              </svg>
+            </NavLink>
+            <CartToggle cart={cart} textColor={textColor} />
+            <MobileMenuToggle
+              onOpen={() => setMobileNavOpen(true)}
+              textColor={textColor}
+            />
           </div>
         </div>
       </header>
+
+      {/* Spacer to offset fixed header + announcement bar on non-homepage pages */}
+      {!isHomepage && <div className={spacerHeight} />}
 
       <MobileNav
         isOpen={mobileNavOpen}
@@ -68,24 +132,30 @@ export function Header({cart}: HeaderProps) {
   );
 }
 
-function CartToggle({cart}: {cart: Promise<CartApiQueryFragment | null>}) {
+function CartToggle({
+  cart,
+  textColor,
+}: {
+  cart: Promise<CartApiQueryFragment | null>;
+  textColor: string;
+}) {
   return (
-    <Suspense fallback={<CartIcon count={0} />}>
+    <Suspense fallback={<CartIcon count={0} textColor={textColor} />}>
       <Await resolve={cart}>
-        <CartBanner />
+        <CartBanner textColor={textColor} />
       </Await>
     </Suspense>
   );
 }
 
-function CartBanner() {
+function CartBanner({textColor}: {textColor: string}) {
   const originalCart = useAsyncValue() as CartApiQueryFragment | null;
   const cart = useOptimisticCart(originalCart);
-  return <CartIcon count={cart?.totalQuantity ?? 0} />;
+  return <CartIcon count={cart?.totalQuantity ?? 0} textColor={textColor} />;
 }
 
-function CartIcon({count}: {count: number}) {
-  const {open} = useAside() as {open: (type: string) => void; close: () => void};
+function CartIcon({count, textColor}: {count: number; textColor: string}) {
+  const navigate = useNavigate();
   const {publish, shop, cart, prevCart} = useAnalytics();
   const [bouncing, setBouncing] = useState(false);
   const prevCount = useRef(count);
@@ -101,9 +171,9 @@ function CartIcon({count}: {count: number}) {
 
   return (
     <button
-      className="relative text-charcoal hover:text-rust transition-colors duration-300"
+      className={`relative cursor-pointer transition-colors duration-300 ${textColor} hover:text-rust`}
       onClick={() => {
-        open('cart');
+        navigate('/cart');
         (publish as (...args: unknown[]) => void)('cart_viewed', {
           cart,
           prevCart,
@@ -140,10 +210,16 @@ function CartIcon({count}: {count: number}) {
   );
 }
 
-function MobileMenuToggle({onOpen}: {onOpen: () => void}) {
+function MobileMenuToggle({
+  onOpen,
+  textColor,
+}: {
+  onOpen: () => void;
+  textColor: string;
+}) {
   return (
     <button
-      className="md:hidden text-charcoal hover:text-rust transition-colors duration-300"
+      className={`md:hidden transition-colors duration-300 ${textColor} hover:text-rust`}
       onClick={onOpen}
       aria-label="Open menu"
     >

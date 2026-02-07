@@ -9,6 +9,8 @@ const NAV_LINKS = [
   {label: 'Outerwear', to: '/collections/outerwear'},
   {label: 'Accessories', to: '/collections/accessories'},
   {label: 'Limited', to: '/collections/limited-edition'},
+  {label: 'Journal', to: '/blogs/news'},
+  {label: 'Account', to: '/account'},
 ];
 
 interface MobileNavProps {
