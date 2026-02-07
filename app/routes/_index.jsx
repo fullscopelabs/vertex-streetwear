@@ -89,21 +89,26 @@ function HeroSection({heroProduct}) {
       <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/30 to-transparent" />
 
       {/* Text content — positioned bottom-left, with top padding to clear fixed header */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-end px-8 md:px-16 lg:px-24 pt-40 pb-16 md:pb-24">
-        <p className="text-[10px] uppercase tracking-[0.35em] text-bone/50 mb-4">
+      <div className="relative z-10 min-h-screen flex flex-col justify-end px-6 md:px-16 lg:px-24 pt-40 pb-16 md:pb-24">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-bone/50 mb-3 md:mb-4">
           Est. 2024
         </p>
-        <h1 className="font-serif text-8xl md:text-9xl lg:text-[11rem] font-light text-bone leading-none" style={{letterSpacing: '0.2em'}}>
-          V<span style={{fontSize: '0.85em', lineHeight: 1, verticalAlign: 'baseline'}}>☰</span>RTEX
+        <h1 
+          className="font-serif text-[4rem] sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] font-light text-bone leading-none"
+          style={{letterSpacing: '0.12em'}}
+        >
+          <span className="inline-block" style={{letterSpacing: '0.15em'}}>
+            V<span style={{fontSize: '0.85em', lineHeight: 1, verticalAlign: 'baseline'}}>☰</span>RTEX
+          </span>
         </h1>
-        <div className="divider-lux mt-6 mb-6" />
-        <p className="text-sm tracking-[0.2em] text-sand/70 uppercase">
+        <div className="divider-lux mt-4 mb-4 md:mt-6 md:mb-6" />
+        <p className="text-xs sm:text-sm tracking-[0.18em] sm:tracking-[0.2em] text-sand/70 uppercase">
           Contemporary Streetwear
         </p>
-        <div className="mt-10">
+        <div className="mt-8 md:mt-10">
           <Link
             to="/collections/all"
-            className="inline-block border border-sand/30 text-sand px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] hover:bg-sand hover:text-charcoal transition-all duration-500"
+            className="inline-block border border-sand/30 text-sand px-8 sm:px-10 py-3.5 sm:py-4 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] sm:tracking-[0.2em] hover:bg-sand hover:text-charcoal transition-all duration-500"
           >
             Explore Collection
           </Link>
