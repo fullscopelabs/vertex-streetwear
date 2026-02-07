@@ -29,7 +29,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-charcoal/50 z-[70] transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-charcoal/50 z-[70] transition-opacity duration-300 cursor-pointer ${
           isOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
@@ -65,7 +65,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
             </span>
             <button
               onClick={onClose}
-              className="text-charcoal hover:text-rust transition-colors duration-200"
+              className="cursor-pointer text-charcoal hover:text-rust transition-colors duration-200"
               aria-label="Close menu"
             >
               <svg

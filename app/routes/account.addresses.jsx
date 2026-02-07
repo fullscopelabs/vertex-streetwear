@@ -347,7 +347,7 @@ function NewAddressForm() {
             disabled={stateForMethod('POST') !== 'idle'}
             formMethod="POST"
             type="submit"
-            className="bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-10 py-3.5 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-10 py-3.5 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {stateForMethod('POST') !== 'idle' ? 'Creating...' : 'Add Address'}
           </button>
@@ -388,7 +388,7 @@ function ExistingAddresses({addresses, defaultAddress}) {
                     disabled={stateForMethod('PUT') !== 'idle'}
                     formMethod="PUT"
                     type="submit"
-                    className="bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-6 py-3 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="cursor-pointer bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-6 py-3 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {stateForMethod('PUT') !== 'idle' ? 'Saving...' : 'Save'}
                   </button>
@@ -396,7 +396,7 @@ function ExistingAddresses({addresses, defaultAddress}) {
                     disabled={stateForMethod('DELETE') !== 'idle'}
                     formMethod="DELETE"
                     type="submit"
-                    className="border border-charcoal/15 text-charcoal/50 text-[10px] uppercase tracking-[0.15em] font-medium px-6 py-3 hover:border-rust hover:text-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="cursor-pointer border border-charcoal/15 text-charcoal/50 text-[10px] uppercase tracking-[0.15em] font-medium px-6 py-3 hover:border-rust hover:text-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {stateForMethod('DELETE') !== 'idle'
                       ? 'Deleting...'

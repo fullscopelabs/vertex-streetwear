@@ -40,7 +40,7 @@ export function AnnouncementBar({onDismiss}: AnnouncementBarProps) {
           setDismissed(true);
           onDismiss?.();
         }}
-        className="absolute right-3 top-1/2 -translate-y-1/2 text-bone/60 hover:text-bone transition-colors duration-200"
+        className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-bone/60 hover:text-bone transition-colors duration-200"
         aria-label="Dismiss announcement"
       >
         <svg

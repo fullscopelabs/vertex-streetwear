@@ -156,7 +156,7 @@ function Logout() {
     >
       <button
         type="submit"
-        className="text-[10px] uppercase tracking-[0.25em] font-medium text-bone/30 hover:text-rust transition-colors duration-300 py-4"
+        className="cursor-pointer text-[10px] uppercase tracking-[0.25em] font-medium text-bone/30 hover:text-rust transition-colors duration-300 py-4"
       >
         Sign Out
       </button>

@@ -228,7 +228,7 @@ function MobileMenuToggle({
 }) {
   return (
     <button
-      className={`md:hidden transition-colors duration-300 ${textColor} hover:text-sand`}
+      className={`md:hidden cursor-pointer transition-colors duration-300 ${textColor} hover:text-sand`}
       onClick={onOpen}
       aria-label="Open menu"
     >

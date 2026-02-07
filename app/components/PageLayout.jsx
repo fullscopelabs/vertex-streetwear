@@ -80,7 +80,7 @@ function SearchAside() {
                 list={queriesDatalistId}
               />
               &nbsp;
-              <button onClick={goToSearch}>Search</button>
+              <button onClick={goToSearch} className="cursor-pointer">Search</button>
             </>
           )}
         </SearchFormPredictive>

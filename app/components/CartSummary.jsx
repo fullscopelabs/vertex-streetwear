@@ -66,7 +66,7 @@ function CartDiscounts({discountCodes}) {
             <div className="cart-discount">
               <code>{codes?.join(', ')}</code>
               &nbsp;
-              <button>Remove</button>
+              <button className="cursor-pointer">Remove</button>
             </div>
           </UpdateDiscountForm>
         </div>
@@ -77,7 +77,7 @@ function CartDiscounts({discountCodes}) {
         <div>
           <input type="text" name="discountCode" placeholder="Discount code" />
           &nbsp;
-          <button type="submit">Apply</button>
+          <button type="submit" className="cursor-pointer">Apply</button>
         </div>
       </UpdateDiscountForm>
     </div>
@@ -162,7 +162,7 @@ function CartGiftCard({giftCardCodes}) {
             ref={giftCardCodeInput}
           />
           &nbsp;
-          <button type="submit" disabled={giftCardAddFetcher.state !== 'idle'}>
+          <button type="submit" disabled={giftCardAddFetcher.state !== 'idle'} className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
             Apply
           </button>
         </div>

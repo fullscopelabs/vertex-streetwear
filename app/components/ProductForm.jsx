@@ -65,7 +65,7 @@ export function ProductForm({productOptions, selectedVariant}) {
                   return (
                     <button
                       type="button"
-                      className={`product-options-item${
+                      className={`cursor-pointer disabled:cursor-not-allowed product-options-item${
                         exists && !selected ? ' link' : ''
                       }`}
                       key={option.name + name}

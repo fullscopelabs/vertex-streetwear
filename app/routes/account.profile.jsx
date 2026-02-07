@@ -252,7 +252,7 @@ export default function AccountProfile() {
           <button
             type="submit"
             disabled={state !== 'idle'}
-            className="bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-10 py-3.5 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-10 py-3.5 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {state !== 'idle' ? 'Updating...' : 'Update Profile'}
           </button>

@@ -284,7 +284,7 @@ function OrderSearchForm({currentFilters}) {
             <button
               type="submit"
               disabled={isSearching}
-              className="bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-7 py-3 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="cursor-pointer bg-charcoal text-bone text-[10px] uppercase tracking-[0.15em] font-medium px-7 py-3 hover:bg-rust transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSearching ? 'Searching...' : 'Search'}
             </button>
@@ -296,7 +296,7 @@ function OrderSearchForm({currentFilters}) {
                   setSearchParams(new URLSearchParams());
                   formRef.current?.reset();
                 }}
-                className="border border-charcoal/20 text-charcoal text-[10px] uppercase tracking-[0.15em] font-medium px-5 py-3 hover:border-charcoal/40 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="cursor-pointer border border-charcoal/20 text-charcoal text-[10px] uppercase tracking-[0.15em] font-medium px-5 py-3 hover:border-charcoal/40 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Clear
               </button>

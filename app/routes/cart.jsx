@@ -256,7 +256,7 @@ function CartLineItem({line}) {
           >
             <button
               type="submit"
-              className="text-rust uppercase text-xs tracking-wider hover:text-charcoal transition-colors mt-2"
+              className="cursor-pointer text-rust uppercase text-xs tracking-wider hover:text-charcoal transition-colors mt-2 disabled:cursor-not-allowed disabled:opacity-50"
               disabled={!!line.isOptimistic}
             >
               Remove

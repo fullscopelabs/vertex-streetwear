@@ -31,7 +31,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     />
                     <button
                       type="submit"
-                      className="bg-bone text-charcoal px-6 py-3 text-xs uppercase tracking-[0.12em] font-semibold hover:bg-rust hover:text-bone transition-all duration-300 whitespace-nowrap"
+                      className="cursor-pointer bg-bone text-charcoal px-6 py-3 text-xs uppercase tracking-[0.12em] font-semibold hover:bg-rust hover:text-bone transition-all duration-300 whitespace-nowrap"
                     >
                       Subscribe
                     </button>

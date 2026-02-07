@@ -64,7 +64,7 @@ function SearchAside() {
                 type="search"
               />
               &nbsp;
-              <button onClick={goToSearch}>Search</button>
+              <button onClick={goToSearch} className="cursor-pointer">Search</button>
             </>
           )}
         </SearchFormPredictive>

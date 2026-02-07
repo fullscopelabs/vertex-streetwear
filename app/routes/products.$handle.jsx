@@ -315,8 +315,8 @@ function VariantSelector({productOptions, productHandle}) {
                   : !available
                     ? 'border-charcoal/10 text-charcoal/30 cursor-not-allowed line-through opacity-30'
                     : selected
-                      ? 'bg-charcoal text-bone border-charcoal'
-                      : 'border-charcoal/20 text-charcoal hover:border-charcoal';
+                      ? 'bg-charcoal text-bone border-charcoal cursor-pointer'
+                      : 'border-charcoal/20 text-charcoal hover:border-charcoal cursor-pointer';
 
                 if (isDifferentProduct) {
                   return (

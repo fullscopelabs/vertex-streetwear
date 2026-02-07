@@ -51,11 +51,11 @@ export function Aside({children, heading, type}) {
       hidden={!expanded}
       style={expanded ? undefined : {display: 'none'}}
     >
-      <button className="close-outside" onClick={close} />
+      <button className="close-outside cursor-pointer" onClick={close} />
       <aside>
         <header>
           <h3>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
+          <button className="close reset cursor-pointer" onClick={close} aria-label="Close">
             &times;
           </button>
         </header>

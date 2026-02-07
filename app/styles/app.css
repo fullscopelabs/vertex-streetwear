@@ -84,14 +84,14 @@ body {
  * ═══════════════════════════════════════════ */
 @layer components {
   .btn-primary {
-    @apply bg-charcoal text-bone px-8 py-4 uppercase tracking-[0.12em] text-sm font-semibold
+    @apply cursor-pointer bg-charcoal text-bone px-8 py-4 uppercase tracking-[0.12em] text-sm font-semibold
       hover:bg-rust transition-all duration-300
       active:scale-95
       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rust focus-visible:ring-offset-2 focus-visible:ring-offset-bone;
   }
 
   .btn-secondary {
-    @apply bg-transparent border-2 border-charcoal text-charcoal px-8 py-4 uppercase tracking-[0.12em] text-sm font-semibold
+    @apply cursor-pointer bg-transparent border-2 border-charcoal text-charcoal px-8 py-4 uppercase tracking-[0.12em] text-sm font-semibold
       hover:bg-charcoal hover:text-bone transition-all duration-300
       active:scale-95
       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rust focus-visible:ring-offset-2 focus-visible:ring-offset-bone;
