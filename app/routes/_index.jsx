@@ -245,10 +245,10 @@ function FeaturedProducts({collection}) {
  *  2b. BRAND VALUES STRIP
  * ═══════════════════════════════════════════ */
 const VALUES = [
-  {number: '200+', label: 'Products'},
+  {number: 'Curated', label: 'Collection'},
   {number: 'Free', label: 'Shipping Over $200'},
   {number: '100%', label: 'Premium Fabrics'},
-  {number: '24/7', label: 'Customer Support'},
+  {number: 'Dedicated', label: 'Customer Support'},
 ];
 
 function BrandValues() {
@@ -285,7 +285,7 @@ function BrandStory() {
           Our Philosophy
         </p>
         <h2 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone mb-8">
-          Crafted for the Modern Urban
+          Crafted for the Modern Urbanite
         </h2>
         <div className="w-12 h-px bg-rust mx-auto mb-8" />
         <p className="text-bone/80 leading-relaxed text-lg">

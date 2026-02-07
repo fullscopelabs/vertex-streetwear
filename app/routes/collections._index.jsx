@@ -51,7 +51,7 @@ function loadDeferredData({context}) {
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'VERTEX | Collections'}];
+  return [{title: 'VΞRTEX | Collections'}];
 };
 
 export default function Collections() {
@@ -70,10 +70,15 @@ export default function Collections() {
             resourcesClassName="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             {({node: collection, index}) => (
-              <ScrollReveal key={collection.id} delay={index * 100}>
+              <ScrollReveal
+                key={collection.id}
+                delay={index * 100}
+                className={index === 0 ? 'md:col-span-2' : ''}
+              >
                 <CollectionItem
                   collection={collection}
                   index={index}
+                  featured={index === 0}
                 />
               </ScrollReveal>
             )}
@@ -88,15 +93,16 @@ export default function Collections() {
  * @param {{
  *   collection: CollectionFragment;
  *   index: number;
+ *   featured?: boolean;
  * }}
  */
-function CollectionItem({collection, index}) {
+function CollectionItem({collection, index, featured = false}) {
   return (
     <Link
       key={collection.id}
       to={`/collections/${collection.handle}`}
       prefetch="intent"
-      className="group relative block overflow-hidden aspect-[4/3]"
+      className={`group relative block overflow-hidden ${featured ? 'aspect-[21/9]' : 'aspect-[4/3]'}`}
     >
       {collection?.image ? (
         <Image
