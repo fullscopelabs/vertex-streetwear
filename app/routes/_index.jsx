@@ -7,7 +7,7 @@ import {ScrollReveal} from '~/components/ScrollReveal';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'VΞRTEX | Contemporary Streetwear'}];
+  return [{title: 'VĒRTEX | Contemporary Streetwear'}];
 };
 
 /**
@@ -76,7 +76,7 @@ function HeroSection({heroProduct}) {
       {heroImage && (
         <img
           src={heroImage.url}
-          alt={heroImage.altText || 'VΞRTEX hero'}
+          alt={heroImage.altText || 'VĒRTEX hero'}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
       )}
@@ -91,7 +91,7 @@ function HeroSection({heroProduct}) {
           Est. 2024
         </p>
         <h1 className="font-serif text-8xl md:text-9xl lg:text-[11rem] font-light tracking-tight text-bone leading-none">
-          VΞRTEX
+          VĒRTEX
         </h1>
         <div className="w-16 h-px bg-rust mt-6 mb-6" />
         <p className="text-sm tracking-[0.2em] text-bone/70 uppercase">
@@ -168,7 +168,7 @@ function EditorialHero({heroProduct}) {
             </h2>
             <div className="w-10 h-px bg-rust mt-6 mb-6" />
             <p className="text-bone/60 text-sm leading-relaxed">
-              A cornerstone piece of the VΞRTEX collection. Designed for those
+              A cornerstone piece of the VĒRTEX collection. Designed for those
               who demand precision in every detail.
             </p>
             <p className="text-xl font-semibold mt-6 tracking-wide text-bone">
@@ -289,7 +289,7 @@ function BrandStory() {
         </h2>
         <div className="w-12 h-px bg-rust mx-auto mb-8" />
         <p className="text-bone/80 leading-relaxed text-lg">
-          Every VΞRTEX piece begins with intention. We source premium fabrics and
+          Every VĒRTEX piece begins with intention. We source premium fabrics and
           work with skilled artisans to create streetwear that stands the test of
           time — both in durability and design. Our collections are rooted in the
           belief that contemporary style should be accessible, sustainable, and

@@ -41,7 +41,7 @@ function loadDeferredData({context}) {
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'VΞRTEX | Collections'}];
+  return [{title: 'VĒRTEX | Collections'}];
 };
 
 /** Handles that are internal Shopify collections, not real storefront collections */

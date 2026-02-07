@@ -21,12 +21,12 @@ import {ScrollReveal} from '~/components/ScrollReveal';
 export const meta = ({data}) => {
   const title = data?.product?.title ?? 'Product';
   return [
-    {title: `${title} | VΞRTEX`},
+    {title: `${title} | VĒRTEX`},
     {
       name: 'description',
       content:
         data?.product?.description ??
-        `Shop ${title} at VΞRTEX — premium streetwear essentials.`,
+        `Shop ${title} at VĒRTEX — premium streetwear essentials.`,
     },
     {
       rel: 'canonical',

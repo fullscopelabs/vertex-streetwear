@@ -6,7 +6,7 @@ import {PageHero} from '~/components/PageHero';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'VΞRTEX | Shipping & Returns'}];
+  return [{title: 'VĒRTEX | Shipping & Returns'}];
 };
 
 export default function ShippingReturns() {
