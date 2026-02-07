@@ -1,5 +1,5 @@
 import {redirect, useLoaderData, Link} from 'react-router';
-import {Analytics, Image} from '@shopify/hydrogen';
+import {Analytics, Image, Money} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductCard} from '~/components/ProductCard';
 import {ScrollReveal} from '~/components/ScrollReveal';
@@ -120,79 +120,53 @@ export default function Collection() {
         </PageHero>
       )}
 
-      {/* Filter / Sort Bar */}
-      <section className="border-y border-charcoal/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-charcoal border border-charcoal/20 px-4 py-2 hover:border-charcoal/40 transition-colors duration-200">
-              Filter
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-3.5 h-3.5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </button>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs uppercase tracking-widest text-charcoal/50">
-              Sort by
-            </span>
-            <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-charcoal border border-charcoal/20 px-4 py-2 hover:border-charcoal/40 transition-colors duration-200">
-              Featured
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-3.5 h-3.5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </section>
+      {/* Products */}
+      {productCount > 0 ? (
+        <>
+          {/* Featured first product — editorial hero */}
+          <FeaturedProduct product={products[0]} />
 
-      {/* Product Grid or Empty State */}
-      <section className="section-padding">
-        <div className="max-w-7xl mx-auto">
-          {productCount > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {products.map((product, index) => (
-                <ScrollReveal key={product.id} delay={index * 75}>
-                  <ProductCard
-                    product={product}
-                    loading={index < 8 ? 'eager' : 'lazy'}
-                  />
+          {/* Remaining products */}
+          {products.length > 1 && (
+            <section className="section-padding">
+              <div className="max-w-7xl mx-auto">
+                <ScrollReveal className="mb-12">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 text-center">
+                    More from {collection.title}
+                  </p>
                 </ScrollReveal>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <p className="text-charcoal/50 text-lg mb-6">
-                No products in this collection yet.
-              </p>
-              <Link to="/collections/all" className="btn-primary inline-block">
-                Shop All
-              </Link>
-            </div>
+                <div
+                  className={
+                    products.length <= 3
+                      ? 'grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto'
+                      : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'
+                  }
+                >
+                  {products.slice(1).map((product, index) => (
+                    <ScrollReveal key={product.id} delay={index * 75}>
+                      <ProductCard
+                        product={product}
+                        loading={index < 8 ? 'eager' : 'lazy'}
+                      />
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </div>
+            </section>
           )}
-        </div>
-      </section>
+        </>
+      ) : (
+        <section className="section-padding">
+          <div className="max-w-7xl mx-auto text-center py-20">
+            <p className="text-charcoal/50 text-lg mb-6">
+              No products in this collection yet.
+            </p>
+            <Link to="/collections/all" className="btn-primary inline-block">
+              Shop All
+            </Link>
+          </div>
+        </section>
+      )}
 
       <Analytics.CollectionView
         data={{
@@ -203,6 +177,61 @@ export default function Collection() {
         }}
       />
     </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  FEATURED PRODUCT — editorial hero for the first product
+ * ═══════════════════════════════════════════ */
+
+function FeaturedProduct({product}) {
+  const image = product.featuredImage;
+
+  return (
+    <section className="bg-charcoal text-bone overflow-hidden grain">
+      <div className="flex flex-col md:flex-row min-h-[450px] lg:min-h-[550px]">
+        {/* Image — 60% */}
+        {image && (
+          <Link
+            to={`/products/${product.handle}`}
+            prefetch="intent"
+            className="w-full md:w-[60%] relative overflow-hidden group"
+          >
+            <Image
+              data={image}
+              sizes="(min-width: 768px) 60vw, 100vw"
+              loading="eager"
+              className="w-full h-full object-cover min-h-[350px] md:min-h-0 group-hover:scale-[1.02] transition-transform duration-700"
+            />
+          </Link>
+        )}
+
+        {/* Text — 40% */}
+        <div className="w-full md:w-[40%] flex flex-col justify-center px-8 md:px-12 lg:px-16 py-12 md:py-0">
+          <ScrollReveal>
+            <p className="text-[10px] uppercase tracking-[0.35em] text-bone/40 mb-4">
+              Featured
+            </p>
+            <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-tight text-bone">
+              {product.title}
+            </h2>
+            <div className="w-10 h-px bg-rust mt-5 mb-5" />
+            <p className="text-xl font-semibold tracking-wide text-bone">
+              <Money data={product.priceRange.minVariantPrice} />
+            </p>
+            <div className="mt-8">
+              <Link
+                to={`/products/${product.handle}`}
+                prefetch="intent"
+                className="inline-block bg-bone text-charcoal px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+              >
+                Shop Now
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
   );
 }
 
