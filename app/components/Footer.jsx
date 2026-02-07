@@ -165,7 +165,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                     </li>
                     <li>
                       <Link
-                        to="/policies/shipping-policy"
+                        to="/shipping-returns"
                         className="text-sm text-bone/40 hover:text-bone transition-colors duration-300"
                       >
                         Shipping &amp; Returns
