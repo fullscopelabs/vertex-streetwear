@@ -1,6 +1,7 @@
 import {useLoaderData, Link} from 'react-router';
 import {Suspense} from 'react';
 import {Await} from 'react-router';
+import {Money} from '@shopify/hydrogen';
 import {ProductCard} from '~/components/ProductCard';
 
 /**
@@ -53,13 +54,16 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  const heroProduct = data.coreCollection?.products?.nodes?.[0] ?? null;
 
   return (
     <>
-      <HeroSection />
+      <HeroSection heroProduct={heroProduct} />
       <FeaturedProducts collection={data.coreCollection} />
+      <EditorialHero heroProduct={heroProduct} />
       <BrandStory />
       <CollectionGrid collections={data.collections} />
+      <NewsletterSection />
     </>
   );
 }
@@ -67,32 +71,68 @@ export default function Homepage() {
 /* ═══════════════════════════════════════════
  *  1. HERO SECTION
  * ═══════════════════════════════════════════ */
-function HeroSection() {
+
+/**
+ * @param {{heroProduct: CoreProductFragment | null}}
+ */
+function HeroSection({heroProduct}) {
+  const heroImage = heroProduct?.featuredImage;
+
   return (
-    <section className="relative flex items-center justify-center h-screen bg-bone overflow-hidden">
-      <div className="text-center z-10">
-        <h1 className="text-7xl md:text-9xl font-bold tracking-tighter text-charcoal">
-          VΞRTEX
-        </h1>
-        <p className="text-sm tracking-widest text-charcoal/60 mt-4 uppercase">
-          Contemporary Streetwear
-        </p>
-        <div className="mt-10">
-          <Link to="/collections/all" className="btn-primary inline-block">
-            Explore Collection
-          </Link>
+    <section className="relative h-screen bg-bone overflow-hidden">
+      <div className="h-full flex flex-col md:flex-row">
+        {/* Left — Editorial Text */}
+        <div className="flex-1 flex flex-col justify-center items-center md:items-start px-8 md:px-16 lg:px-24 py-16 md:py-0 z-10">
+          <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal-light mb-6">
+            Est. 2024
+          </p>
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-charcoal leading-none">
+            VΞRTEX
+          </h1>
+          {/* Decorative rule */}
+          <div className="w-16 h-px bg-rust mt-6 mb-6" />
+          <p className="text-sm tracking-[0.2em] text-charcoal-light uppercase">
+            Contemporary Streetwear
+          </p>
+          <p className="text-xs tracking-widest text-charcoal/40 mt-2 uppercase">
+            Premium Essentials for the Modern Urban
+          </p>
+          <div className="mt-10 flex gap-4">
+            <Link to="/collections/all" className="btn-primary inline-block">
+              Shop Now
+            </Link>
+            <Link
+              to="/collections/core-collection"
+              className="btn-secondary inline-block"
+            >
+              Core Collection
+            </Link>
+          </div>
         </div>
+
+        {/* Right — Hero Image */}
+        {heroImage && (
+          <div className="flex-1 relative hidden md:block">
+            <img
+              src={heroImage.url}
+              alt={heroImage.altText || 'VΞRTEX hero'}
+              className="absolute inset-0 w-full h-full object-cover object-center"
+            />
+            {/* Gradient fade into bone bg */}
+            <div className="absolute inset-0 bg-gradient-to-r from-bone via-bone/40 to-transparent" />
+          </div>
+        )}
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6 text-charcoal/40"
+          className="w-5 h-5 text-charcoal/30"
         >
           <path
             strokeLinecap="round"
@@ -100,6 +140,99 @@ function HeroSection() {
             d="M19.5 8.25l-7.5 7.5-7.5-7.5"
           />
         </svg>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  1b. EDITORIAL HERO PRODUCT
+ * ═══════════════════════════════════════════ */
+
+/**
+ * @param {{heroProduct: CoreProductFragment | null}}
+ */
+function EditorialHero({heroProduct}) {
+  if (!heroProduct) return null;
+
+  const image = heroProduct.featuredImage;
+
+  return (
+    <section className="bg-charcoal text-bone overflow-hidden">
+      <div className="flex flex-col md:flex-row min-h-[500px] lg:min-h-[600px]">
+        {/* Image — 60% */}
+        {image && (
+          <div className="w-full md:w-[60%] relative">
+            <img
+              src={image.url}
+              alt={image.altText || heroProduct.title}
+              className="w-full h-full object-cover min-h-[400px] md:min-h-0"
+            />
+          </div>
+        )}
+
+        {/* Text — 40% */}
+        <div className="w-full md:w-[40%] flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16 md:py-0">
+          <p className="text-[10px] uppercase tracking-[0.35em] text-bone/40 mb-4">
+            Featured
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+            {heroProduct.title}
+          </h2>
+          <div className="w-10 h-px bg-rust mt-6 mb-6" />
+          <p className="text-bone/60 text-sm leading-relaxed">
+            A cornerstone piece of the VΞRTEX collection. Designed for those
+            who demand precision in every detail.
+          </p>
+          <p className="text-xl font-semibold mt-6 tracking-wide">
+            <Money data={heroProduct.priceRange.minVariantPrice} />
+          </p>
+          <div className="mt-8">
+            <Link
+              to={`/products/${heroProduct.handle}`}
+              className="inline-block bg-bone text-charcoal px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+            >
+              Shop Now
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  NEWSLETTER SECTION
+ * ═══════════════════════════════════════════ */
+function NewsletterSection() {
+  return (
+    <section className="border-t border-charcoal/10 py-20 px-4">
+      <div className="max-w-2xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-charcoal">
+          JOIN THE VΞRTEX COLLECTIVE
+        </h2>
+        <p className="text-charcoal-light text-sm mt-4 leading-relaxed">
+          Be the first to know about new drops and exclusive releases.
+        </p>
+        <form
+          className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <input
+            type="email"
+            placeholder="Your email address"
+            className="flex-1 bg-transparent border border-charcoal/20 px-5 py-3.5 text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-charcoal transition-colors duration-200"
+          />
+          <button
+            type="submit"
+            className="btn-primary whitespace-nowrap"
+          >
+            Subscribe
+          </button>
+        </form>
+        <p className="text-[11px] text-charcoal/30 mt-4 tracking-wider">
+          No spam. Unsubscribe anytime.
+        </p>
       </div>
     </section>
   );
