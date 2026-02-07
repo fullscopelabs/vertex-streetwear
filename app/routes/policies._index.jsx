@@ -1,4 +1,6 @@
 import {useLoaderData, Link} from 'react-router';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @param {Route.LoaderArgs}
@@ -35,33 +37,25 @@ export default function Policies() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
+      <PageHero title="Policies" subtitle="Legal & Store Information" />
+
       <section className="section-padding">
         <div className="max-w-3xl mx-auto">
-          {/* Decorative line */}
-          <div className="w-12 h-px bg-rust mb-8" />
-
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
-            POLICIES
-          </h1>
-
-          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3 mb-12">
-            Legal &amp; Store Information
-          </p>
-
           <div className="divide-y divide-charcoal/10">
-            {policies.map((policy) => (
-              <Link
-                key={policy.id}
-                to={`/policies/${policy.handle}`}
-                className="group flex items-center justify-between py-5 hover:pl-2 transition-all duration-200"
-              >
-                <span className="text-sm font-medium text-charcoal group-hover:text-rust transition-colors duration-200">
-                  {policy.title}
-                </span>
-                <span className="text-charcoal/30 group-hover:text-rust transition-colors duration-200">
-                  &rarr;
-                </span>
-              </Link>
+            {policies.map((policy, index) => (
+              <ScrollReveal key={policy.id} delay={index * 75}>
+                <Link
+                  to={`/policies/${policy.handle}`}
+                  className="group flex items-center justify-between py-5 hover:pl-2 transition-all duration-200"
+                >
+                  <span className="text-sm font-medium text-charcoal group-hover:text-rust transition-colors duration-200">
+                    {policy.title}
+                  </span>
+                  <span className="text-charcoal/20 group-hover:text-rust group-hover:translate-x-1 transition-all duration-300">
+                    &rarr;
+                  </span>
+                </Link>
+              </ScrollReveal>
             ))}
           </div>
         </div>

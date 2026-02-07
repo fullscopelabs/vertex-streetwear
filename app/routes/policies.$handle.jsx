@@ -1,4 +1,6 @@
 import {Link, useLoaderData} from 'react-router';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @type {Route.MetaFunction}
@@ -45,29 +47,34 @@ export default function Policy() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
+      {/* Dark header band */}
+      <section className="relative bg-gradient-to-br from-charcoal via-charcoal to-forest overflow-hidden grain">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 md:py-28">
+          <ScrollReveal>
+            <Link
+              to="/policies"
+              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-bone/40 hover:text-bone/70 transition-colors duration-300 mb-8"
+            >
+              <span>&larr;</span>
+              <span>All Policies</span>
+            </Link>
+            <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone">
+              {policy.title}
+            </h1>
+            <div className="w-12 h-px bg-rust mt-6" />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* CMS content */}
       <section className="section-padding">
         <div className="max-w-3xl mx-auto">
-          {/* Back nav */}
-          <Link
-            to="/policies"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-charcoal/50 hover:text-charcoal transition-colors duration-200 mb-10"
-          >
-            <span>&larr;</span>
-            <span>All Policies</span>
-          </Link>
-
-          {/* Decorative line */}
-          <div className="w-12 h-px bg-rust mb-8" />
-
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
-            {policy.title}
-          </h1>
-
-          {/* CMS content */}
-          <div
-            className="cms-prose mt-10"
-            dangerouslySetInnerHTML={{__html: policy.body}}
-          />
+          <ScrollReveal>
+            <div
+              className="cms-prose"
+              dangerouslySetInnerHTML={{__html: policy.body}}
+            />
+          </ScrollReveal>
         </div>
       </section>
     </div>

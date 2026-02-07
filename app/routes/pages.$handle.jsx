@@ -1,5 +1,7 @@
-import {useLoaderData} from 'react-router';
+import {useLoaderData, Link} from 'react-router';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {ScrollReveal} from '~/components/ScrollReveal';
+import {PageHero} from '~/components/PageHero';
 
 /**
  * @type {Route.MetaFunction}
@@ -67,20 +69,31 @@ export default function Page() {
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
+      <PageHero title={page.title} />
+
+      {/* CMS content */}
       <section className="section-padding">
         <div className="max-w-3xl mx-auto">
-          {/* Decorative line */}
-          <div className="w-12 h-px bg-rust mb-8" />
+          <ScrollReveal>
+            <div
+              className="cms-prose"
+              dangerouslySetInnerHTML={{__html: page.body}}
+            />
+          </ScrollReveal>
+        </div>
+      </section>
 
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
-            {page.title}
-          </h1>
-
-          {/* CMS content */}
-          <div
-            className="cms-prose mt-10"
-            dangerouslySetInnerHTML={{__html: page.body}}
-          />
+      {/* Bottom CTA */}
+      <section className="border-t border-charcoal/10">
+        <div className="max-w-3xl mx-auto px-4 py-16 text-center">
+          <ScrollReveal>
+            <p className="text-[10px] tracking-[0.35em] uppercase text-charcoal/40 mb-4">
+              Continue Exploring
+            </p>
+            <Link to="/collections/all" className="btn-secondary inline-block">
+              Shop the Collection
+            </Link>
+          </ScrollReveal>
         </div>
       </section>
     </div>
