@@ -71,7 +71,7 @@ function HeroSection({heroProduct}) {
   const heroImage = heroProduct?.featuredImage;
 
   return (
-    <section className="relative h-screen bg-charcoal overflow-hidden">
+    <section className="relative min-h-screen bg-charcoal overflow-hidden">
       {/* Full-bleed background image */}
       {heroImage && (
         <img
@@ -85,8 +85,8 @@ function HeroSection({heroProduct}) {
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black/70 via-black/40 to-transparent z-[1]" />
       <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/30 to-transparent" />
 
-      {/* Text content — positioned bottom-left */}
-      <div className="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 md:pb-28">
+      {/* Text content — positioned bottom-left, with top padding to clear fixed header */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-end px-8 md:px-16 lg:px-24 pt-40 pb-16 md:pb-24">
         <p className="text-[10px] uppercase tracking-[0.35em] text-bone/50 mb-4">
           Est. 2024
         </p>
