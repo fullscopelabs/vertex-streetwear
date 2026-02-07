@@ -13,7 +13,7 @@ import {PageHero} from '~/components/PageHero';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Cart | VĒRTEX'}];
+  return [{title: 'Cart | VΞRTEX'}];
 };
 
 /**

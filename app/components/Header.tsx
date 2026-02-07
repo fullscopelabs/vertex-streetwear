@@ -70,7 +70,7 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
             to="/"
             className={`font-serif text-2xl tracking-tight transition-colors duration-500 ${textColor}`}
           >
-            VĒRTEX
+            VΞRTEX
           </NavLink>
 
           {/* Desktop Navigation */}

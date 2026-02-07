@@ -47,7 +47,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                 <div>
                   <Link to="/" className="inline-block">
                     <h3 className="font-serif text-2xl tracking-tight">
-                      VĒRTEX
+                      VΞRTEX
                     </h3>
                   </Link>
                   <p className="text-bone/40 text-sm mt-4 leading-relaxed max-w-xs">
@@ -196,7 +196,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
             <div className="border-t border-bone/10">
               <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
                 <p className="text-[11px] text-bone/25 tracking-wider">
-                  &copy; {new Date().getFullYear()} VĒRTEX. All rights reserved.
+                  &copy; {new Date().getFullYear()} VΞRTEX. All rights reserved.
                 </p>
                 <div className="flex items-center gap-6">
                   <Link

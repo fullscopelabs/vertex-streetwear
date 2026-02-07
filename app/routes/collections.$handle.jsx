@@ -12,10 +12,10 @@ import {PageHero} from '~/components/PageHero';
 export const meta = ({data}) => {
   const title = data?.collection?.title ?? 'Collection';
   return [
-    {title: `${title} | VĒRTEX`},
+    {title: `${title} | VΞRTEX`},
     {
       name: 'description',
-      content: data?.collection?.description ?? `Shop the ${title} collection at VĒRTEX.`,
+      content: data?.collection?.description ?? `Shop the ${title} collection at VΞRTEX.`,
     },
   ];
 };

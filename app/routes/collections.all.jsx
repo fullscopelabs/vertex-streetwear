@@ -11,10 +11,10 @@ import {PageHero} from '~/components/PageHero';
  */
 export const meta = () => {
   return [
-    {title: 'All Products | VĒRTEX'},
+    {title: 'All Products | VΞRTEX'},
     {
       name: 'description',
-      content: 'Shop the full VĒRTEX collection — premium streetwear essentials.',
+      content: 'Shop the full VΞRTEX collection — premium streetwear essentials.',
     },
   ];
 };

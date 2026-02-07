@@ -9,7 +9,7 @@ import {ScrollReveal} from '~/components/ScrollReveal';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `VĒRTEX | Search`}];
+  return [{title: `VΞRTEX | Search`}];
 };
 
 /**

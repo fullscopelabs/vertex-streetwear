@@ -28,7 +28,7 @@ export async function loader({context}) {
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'VĒRTEX | Policies'}];
+  return [{title: 'VΞRTEX | Policies'}];
 };
 
 export default function Policies() {

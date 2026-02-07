@@ -54,7 +54,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
           {/* Header: Logo + Close */}
           <div className="flex items-center justify-between px-6 h-[70px] border-b border-charcoal/10">
             <span className="text-xl font-bold tracking-tighter text-charcoal">
-              VĒRTEX
+              VΞRTEX
             </span>
             <button
               onClick={onClose}
