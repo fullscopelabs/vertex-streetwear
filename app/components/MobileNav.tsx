@@ -29,7 +29,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-charcoal/50 z-[70] transition-opacity duration-300 cursor-pointer ${
+        className={`fixed inset-0 bg-charcoal/70 backdrop-blur-sm z-[70] transition-opacity duration-300 cursor-pointer ${
           isOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
@@ -41,7 +41,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-bone z-[80] shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 h-full w-80 bg-charcoal/95 backdrop-blur-2xl z-[80] shadow-2xl border-l border-sand/10 transition-transform duration-300 ease-out grain ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={hiddenStyle}
@@ -52,9 +52,9 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
       >
         <div className="flex flex-col h-full">
           {/* Header: Logo + Close */}
-          <div className="flex items-center justify-between px-6 h-[70px] border-b border-charcoal/10">
+          <div className="flex items-center justify-between px-6 h-[70px] border-b border-sand/10">
             <span
-              className="text-xl font-serif text-charcoal"
+              className="text-xl font-serif text-bone"
               style={{
                 border: '2px solid currentColor',
                 padding: '0.16em 0.48em',
@@ -65,7 +65,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
             </span>
             <button
               onClick={onClose}
-              className="cursor-pointer text-charcoal hover:text-rust transition-colors duration-200"
+              className="cursor-pointer text-bone/60 hover:text-sand transition-colors duration-200"
               aria-label="Close menu"
             >
               <svg
@@ -94,10 +94,10 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
                 prefetch="intent"
                 onClick={onClose}
                 className={({isActive}) =>
-                  `block text-lg uppercase tracking-wider py-4 border-b border-charcoal/10 transition-colors duration-200 ${
+                  `block text-base sm:text-lg uppercase tracking-[0.15em] sm:tracking-wider py-4 border-b border-sand/10 transition-colors duration-300 font-medium ${
                     isActive
-                      ? 'text-rust'
-                      : 'text-charcoal hover:text-rust'
+                      ? 'text-sand'
+                      : 'text-bone/80 hover:text-sand'
                   }`
                 }
               >
@@ -107,14 +107,14 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
           </nav>
 
           {/* Cart Link at Bottom */}
-          <div className="px-6 py-6 border-t border-charcoal/10">
+          <div className="px-6 py-6 border-t border-sand/10">
             <NavLink
               to="/cart"
               prefetch="intent"
               onClick={onClose}
-              className="flex items-center justify-between text-charcoal hover:text-rust transition-colors duration-200"
+              className="flex items-center justify-between text-bone/80 hover:text-sand transition-colors duration-300"
             >
-              <span className="text-sm uppercase tracking-wider font-medium">
+              <span className="text-sm uppercase tracking-[0.15em] font-medium">
                 Cart
               </span>
               <Suspense
