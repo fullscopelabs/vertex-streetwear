@@ -37,6 +37,8 @@ export class AppSession {
         path: '/',
         sameSite: 'lax',
         secrets,
+        // Set secure flag in production to ensure HTTPS-only transmission
+        secure: process.env.NODE_ENV === 'production',
       },
     });
 
