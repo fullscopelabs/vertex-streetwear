@@ -116,13 +116,22 @@ export default function Product() {
       <div className="max-w-[1400px] mx-auto section-feature">
         {/* Two-column layout */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-          {/* LEFT — Image Gallery (55%) */}
-          <div className="w-full lg:w-[55%]">
+          {/* LEFT — Image Gallery (55%) - Desktop only */}
+          <div className="hidden lg:block w-full lg:w-[55%]">
             <ImageGallery images={images} selectedVariant={selectedVariant} />
           </div>
 
           {/* RIGHT — Product Info (45%, sticky) */}
           <div className="w-full lg:w-[45%]">
+            {/* Mobile: First image before title */}
+            <div className="lg:hidden mb-8">
+              <ImageGallery
+                images={images}
+                selectedVariant={selectedVariant}
+                mobileFirstOnly={true}
+              />
+            </div>
+
             <div className="lg:sticky lg:top-24">
               {/* Title */}
               <h1 className="font-serif text-4xl md:text-5xl font-normal tracking-tight text-charcoal">
@@ -189,6 +198,15 @@ export default function Product() {
                 </CollapsibleDetail>
               </div>
             </div>
+
+            {/* Mobile: Additional images after product info */}
+            <div className="lg:hidden mt-12">
+              <ImageGallery
+                images={images}
+                selectedVariant={selectedVariant}
+                mobileRemainingOnly={true}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -248,12 +266,58 @@ export default function Product() {
  *  IMAGE GALLERY
  * ═══════════════════════════════════════════ */
 
-function ImageGallery({images, selectedVariant}) {
+function ImageGallery({images, selectedVariant, mobileFirstOnly, mobileRemainingOnly}) {
   // Stacked vertical gallery (SSENSE / Mr Porter pattern)
   // All images displayed vertically — user scrolls through them
   const allImages =
     images.length > 0 ? images : selectedVariant?.image ? [selectedVariant.image] : [];
 
+  // Mobile: Show only first image above product info
+  if (mobileFirstOnly) {
+    const firstImage = allImages[0];
+    if (!firstImage) return null;
+
+    return (
+      <div className="bg-charcoal/5 overflow-hidden">
+        <Image
+          alt={firstImage.altText || 'Product image'}
+          data={firstImage}
+          aspectRatio="3/4"
+          sizes="100vw"
+          className="w-full h-auto object-cover"
+          loading="eager"
+        />
+      </div>
+    );
+  }
+
+  // Mobile: Show remaining images after product info
+  if (mobileRemainingOnly) {
+    const remainingImages = allImages.slice(1);
+    if (remainingImages.length === 0) return null;
+
+    return (
+      <div className="space-y-2">
+        {remainingImages.map((image, index) => (
+          <div
+            key={image.id || index}
+            className="bg-charcoal/5 overflow-hidden"
+          >
+            <Image
+              alt={image.altText || `Product image ${index + 2}`}
+              data={image}
+              aspectRatio="3/4"
+              sizes="100vw"
+              className="w-full h-auto object-cover"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Desktop: Show all images in vertical stack
   return (
     <div className="space-y-2">
       {allImages.map((image, index) => (
