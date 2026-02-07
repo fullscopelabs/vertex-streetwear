@@ -5,7 +5,7 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
  * @type {Route.MetaFunction}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.page.title ?? ''}`}];
+  return [{title: `VERTEX | ${data?.page.title ?? ''}`}];
 };
 
 /**
@@ -66,11 +66,23 @@ export default function Page() {
   const {page} = useLoaderData();
 
   return (
-    <div className="page">
-      <header>
-        <h1>{page.title}</h1>
-      </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
+    <div className="bg-bone min-h-screen page-fade-in">
+      <section className="section-padding">
+        <div className="max-w-3xl mx-auto">
+          {/* Decorative line */}
+          <div className="w-12 h-px bg-rust mb-8" />
+
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
+            {page.title}
+          </h1>
+
+          {/* CMS content */}
+          <div
+            className="cms-prose mt-10"
+            dangerouslySetInnerHTML={{__html: page.body}}
+          />
+        </div>
+      </section>
     </div>
   );
 }

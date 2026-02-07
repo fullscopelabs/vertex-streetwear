@@ -4,7 +4,7 @@ import {Link, useLoaderData} from 'react-router';
  * @type {Route.MetaFunction}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.policy.title ?? ''}`}];
+  return [{title: `VERTEX | ${data?.policy.title ?? ''}`}];
 };
 
 /**
@@ -44,15 +44,32 @@ export default function Policy() {
   const {policy} = useLoaderData();
 
   return (
-    <div className="policy">
-      <br />
-      <br />
-      <div>
-        <Link to="/policies">← Back to Policies</Link>
-      </div>
-      <br />
-      <h1>{policy.title}</h1>
-      <div dangerouslySetInnerHTML={{__html: policy.body}} />
+    <div className="bg-bone min-h-screen page-fade-in">
+      <section className="section-padding">
+        <div className="max-w-3xl mx-auto">
+          {/* Back nav */}
+          <Link
+            to="/policies"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-charcoal/50 hover:text-charcoal transition-colors duration-200 mb-10"
+          >
+            <span>&larr;</span>
+            <span>All Policies</span>
+          </Link>
+
+          {/* Decorative line */}
+          <div className="w-12 h-px bg-rust mb-8" />
+
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
+            {policy.title}
+          </h1>
+
+          {/* CMS content */}
+          <div
+            className="cms-prose mt-10"
+            dangerouslySetInnerHTML={{__html: policy.body}}
+          />
+        </div>
+      </section>
     </div>
   );
 }

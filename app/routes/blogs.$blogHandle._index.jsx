@@ -7,7 +7,7 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
  * @type {Route.MetaFunction}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.blog.title ?? ''} blog`}];
+  return [{title: `VERTEX | ${data?.blog.title ?? ''}`}];
 };
 
 /**
@@ -72,19 +72,36 @@ export default function Blog() {
   const {articles} = blog;
 
   return (
-    <div className="blog">
-      <h1>{blog.title}</h1>
-      <div className="blog-grid">
-        <PaginatedResourceSection connection={articles}>
-          {({node: article, index}) => (
-            <ArticleItem
-              article={article}
-              key={article.id}
-              loading={index < 2 ? 'eager' : 'lazy'}
-            />
-          )}
-        </PaginatedResourceSection>
-      </div>
+    <div className="bg-bone min-h-screen page-fade-in">
+      <section className="section-padding pb-12">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal uppercase">
+            {blog.title}
+          </h1>
+          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
+            Stories &amp; Editorials
+          </p>
+        </div>
+      </section>
+
+      <div className="border-b border-charcoal/10" />
+
+      <section className="py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <PaginatedResourceSection
+            connection={articles}
+            resourcesClassName="grid grid-cols-1 md:grid-cols-2 gap-8"
+          >
+            {({node: article, index}) => (
+              <ArticleItem
+                article={article}
+                key={article.id}
+                loading={index < 2 ? 'eager' : 'lazy'}
+              />
+            )}
+          </PaginatedResourceSection>
+        </div>
+      </section>
     </div>
   );
 }
@@ -101,24 +118,33 @@ function ArticleItem({article, loading}) {
     month: 'long',
     day: 'numeric',
   }).format(new Date(article.publishedAt));
+
   return (
-    <div className="blog-article" key={article.id}>
-      <Link to={`/blogs/${article.blog.handle}/${article.handle}`}>
-        {article.image && (
-          <div className="blog-article-image">
-            <Image
-              alt={article.image.altText || article.title}
-              aspectRatio="3/2"
-              data={article.image}
-              loading={loading}
-              sizes="(min-width: 768px) 50vw, 100vw"
-            />
-          </div>
-        )}
-        <h3>{article.title}</h3>
-        <small>{publishedAt}</small>
-      </Link>
-    </div>
+    <Link
+      to={`/blogs/${article.blog.handle}/${article.handle}`}
+      className="group block"
+      key={article.id}
+    >
+      {article.image && (
+        <div className="relative aspect-[3/2] overflow-hidden bg-bone-dark mb-4">
+          <Image
+            alt={article.image.altText || article.title}
+            aspectRatio="3/2"
+            data={article.image}
+            loading={loading}
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-0.5 bg-rust scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+        </div>
+      )}
+      <p className="text-[10px] tracking-[0.25em] uppercase text-charcoal/40 mb-2">
+        {publishedAt}
+      </p>
+      <h3 className="text-lg font-semibold tracking-tight text-charcoal group-hover:text-rust transition-colors duration-200">
+        {article.title}
+      </h3>
+    </Link>
   );
 }
 

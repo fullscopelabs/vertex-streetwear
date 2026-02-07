@@ -6,7 +6,7 @@ import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Blogs`}];
+  return [{title: `VERTEX | Journal`}];
 };
 
 /**
@@ -59,22 +59,41 @@ export default function Blogs() {
   const {blogs} = useLoaderData();
 
   return (
-    <div className="blogs">
-      <h1>Blogs</h1>
-      <div className="blogs-grid">
-        <PaginatedResourceSection connection={blogs}>
-          {({node: blog}) => (
-            <Link
-              className="blog"
-              key={blog.handle}
-              prefetch="intent"
-              to={`/blogs/${blog.handle}`}
-            >
-              <h2>{blog.title}</h2>
-            </Link>
-          )}
-        </PaginatedResourceSection>
-      </div>
+    <div className="bg-bone min-h-screen page-fade-in">
+      <section className="section-padding pb-12">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
+            JOURNAL
+          </h1>
+          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
+            Stories &amp; Editorials
+          </p>
+        </div>
+      </section>
+
+      <div className="border-b border-charcoal/10" />
+
+      <section className="py-12 px-4">
+        <div className="max-w-3xl mx-auto">
+          <PaginatedResourceSection connection={blogs}>
+            {({node: blog}) => (
+              <Link
+                key={blog.handle}
+                prefetch="intent"
+                to={`/blogs/${blog.handle}`}
+                className="group block py-8 border-b border-charcoal/10 first:pt-0"
+              >
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-charcoal group-hover:text-rust transition-colors duration-200">
+                  {blog.title}
+                </h2>
+                <span className="inline-block mt-3 text-xs uppercase tracking-[0.15em] text-charcoal/40 group-hover:text-charcoal transition-colors duration-200">
+                  Read More &rarr;
+                </span>
+              </Link>
+            )}
+          </PaginatedResourceSection>
+        </div>
+      </section>
     </div>
   );
 }

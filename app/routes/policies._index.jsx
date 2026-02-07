@@ -22,20 +22,50 @@ export async function loader({context}) {
   return {policies};
 }
 
+/**
+ * @type {Route.MetaFunction}
+ */
+export const meta = () => {
+  return [{title: 'VERTEX | Policies'}];
+};
+
 export default function Policies() {
   /** @type {LoaderReturnData} */
   const {policies} = useLoaderData();
 
   return (
-    <div className="policies">
-      <h1>Policies</h1>
-      <div>
-        {policies.map((policy) => (
-          <fieldset key={policy.id}>
-            <Link to={`/policies/${policy.handle}`}>{policy.title}</Link>
-          </fieldset>
-        ))}
-      </div>
+    <div className="bg-bone min-h-screen page-fade-in">
+      <section className="section-padding">
+        <div className="max-w-3xl mx-auto">
+          {/* Decorative line */}
+          <div className="w-12 h-px bg-rust mb-8" />
+
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
+            POLICIES
+          </h1>
+
+          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3 mb-12">
+            Legal &amp; Store Information
+          </p>
+
+          <div className="divide-y divide-charcoal/10">
+            {policies.map((policy) => (
+              <Link
+                key={policy.id}
+                to={`/policies/${policy.handle}`}
+                className="group flex items-center justify-between py-5 hover:pl-2 transition-all duration-200"
+              >
+                <span className="text-sm font-medium text-charcoal group-hover:text-rust transition-colors duration-200">
+                  {policy.title}
+                </span>
+                <span className="text-charcoal/30 group-hover:text-rust transition-colors duration-200">
+                  &rarr;
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
  * @type {Route.MetaFunction}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.article.title ?? ''} article`}];
+  return [{title: `VERTEX | ${data?.article.title ?? ''}`}];
 };
 
 /**
@@ -84,20 +84,46 @@ export default function Article() {
   }).format(new Date(article.publishedAt));
 
   return (
-    <div className="article">
-      <h1>
-        {title}
-        <div>
-          <time dateTime={article.publishedAt}>{publishedDate}</time> &middot;{' '}
-          <address>{author?.name}</address>
-        </div>
-      </h1>
+    <div className="bg-bone min-h-screen page-fade-in">
+      <article className="section-padding">
+        <div className="max-w-3xl mx-auto">
+          {/* Meta line */}
+          <div className="flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-charcoal/40 mb-6">
+            <time dateTime={article.publishedAt}>{publishedDate}</time>
+            {author?.name && (
+              <>
+                <span>&middot;</span>
+                <address className="not-italic">{author.name}</address>
+              </>
+            )}
+          </div>
 
-      {image && <Image data={image} sizes="90vw" loading="eager" />}
-      <div
-        dangerouslySetInnerHTML={{__html: contentHtml}}
-        className="article"
-      />
+          {/* Title */}
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-charcoal leading-tight">
+            {title}
+          </h1>
+        </div>
+
+        {/* Hero image */}
+        {image && (
+          <div className="max-w-4xl mx-auto mt-10 overflow-hidden">
+            <Image
+              data={image}
+              sizes="(min-width: 768px) 80vw, 100vw"
+              loading="eager"
+              className="w-full h-auto"
+            />
+          </div>
+        )}
+
+        {/* Article body */}
+        <div className="max-w-3xl mx-auto mt-10">
+          <div
+            className="cms-prose"
+            dangerouslySetInnerHTML={{__html: contentHtml}}
+          />
+        </div>
+      </article>
     </div>
   );
 }

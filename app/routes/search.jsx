@@ -8,7 +8,7 @@ import {getEmptyPredictiveSearchResult} from '~/lib/search';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Search`}];
+  return [{title: `VERTEX | Search`}];
 };
 
 /**
@@ -38,37 +38,64 @@ export default function SearchPage() {
   if (type === 'predictive') return null;
 
   return (
-    <div className="search">
-      <h1>Search</h1>
-      <SearchForm>
-        {({inputRef}) => (
-          <>
-            <input
-              defaultValue={term}
-              name="q"
-              placeholder="Search…"
-              ref={inputRef}
-              type="search"
-            />
-            &nbsp;
-            <button type="submit">Search</button>
-          </>
-        )}
-      </SearchForm>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {!term || !result?.total ? (
-        <SearchResults.Empty />
-      ) : (
-        <SearchResults result={result} term={term}>
-          {({articles, pages, products, term}) => (
-            <div>
-              <SearchResults.Products products={products} term={term} />
-              <SearchResults.Pages pages={pages} term={term} />
-              <SearchResults.Articles articles={articles} term={term} />
-            </div>
+    <div className="bg-bone min-h-screen page-fade-in">
+      {/* Hero search area */}
+      <section className="section-padding pb-12">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
+            SEARCH
+          </h1>
+          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
+            Find what you&apos;re looking for
+          </p>
+
+          <SearchForm className="mt-10">
+            {({inputRef}) => (
+              <div className="flex items-stretch border border-charcoal/20 focus-within:border-charcoal transition-colors duration-200">
+                <input
+                  defaultValue={term}
+                  name="q"
+                  placeholder="Search products, articles..."
+                  ref={inputRef}
+                  type="search"
+                  className="flex-1 bg-transparent px-5 py-3.5 text-sm text-charcoal placeholder:text-charcoal/30 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className="bg-charcoal text-bone px-6 text-xs uppercase tracking-[0.15em] font-medium hover:bg-rust transition-colors duration-300"
+                >
+                  Search
+                </button>
+              </div>
+            )}
+          </SearchForm>
+        </div>
+      </section>
+
+      <div className="border-b border-charcoal/10" />
+
+      {/* Results */}
+      <section className="py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          {error && (
+            <p className="text-rust text-sm mb-6">{error}</p>
           )}
-        </SearchResults>
-      )}
+          {!term || !result?.total ? (
+            <SearchResults.Empty />
+          ) : (
+            <SearchResults result={result} term={term}>
+              {({articles, pages, products, term}) => (
+                <div className="space-y-16">
+                  <SearchResults.Products products={products} term={term} />
+                  <SearchResults.Articles articles={articles} term={term} />
+                  <SearchResults.Pages pages={pages} term={term} />
+                </div>
+              )}
+            </SearchResults>
+          )}
+        </div>
+      </section>
+
       <Analytics.SearchView data={{searchTerm: term, searchResults: result}} />
     </div>
   );
