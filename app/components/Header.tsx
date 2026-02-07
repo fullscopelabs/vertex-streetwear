@@ -1,7 +1,8 @@
-import {Suspense} from 'react';
+import {Suspense, useEffect, useRef, useState} from 'react';
 import {Await, NavLink, useAsyncValue} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import {MobileNav} from '~/components/MobileNav';
 import type {CartApiQueryFragment, HeaderQuery} from 'storefrontapi.generated';
 
 const NAV_LINKS = [
@@ -17,43 +18,53 @@ interface HeaderProps {
 }
 
 export function Header({cart}: HeaderProps) {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-50 bg-bone/95 backdrop-blur-md border-b border-charcoal/10">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-[70px]">
-        {/* Logo */}
-        <NavLink
-          prefetch="intent"
-          to="/"
-          className="text-2xl font-bold tracking-tighter text-charcoal"
-        >
-          VΞRTEX
-        </NavLink>
+    <>
+      <header className="sticky top-0 z-50 bg-bone/95 backdrop-blur-md border-b border-charcoal/10">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-[70px]">
+          {/* Logo */}
+          <NavLink
+            prefetch="intent"
+            to="/"
+            className="text-2xl font-bold tracking-tighter text-charcoal"
+          >
+            VΞRTEX
+          </NavLink>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8" role="navigation">
-          {NAV_LINKS.map((link) => (
-            <NavLink
-              key={link.to}
-              prefetch="intent"
-              to={link.to}
-              className={({isActive}) =>
-                `uppercase text-xs tracking-widest transition-colors duration-300 ${
-                  isActive ? 'text-rust' : 'text-charcoal hover:text-rust'
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8" role="navigation">
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                prefetch="intent"
+                to={link.to}
+                className={({isActive}) =>
+                  `uppercase text-xs tracking-widest transition-colors duration-300 ${
+                    isActive ? 'text-rust' : 'text-charcoal hover:text-rust'
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
 
-        {/* Right Side: Cart + Mobile Menu */}
-        <div className="flex items-center gap-4">
-          <CartToggle cart={cart} />
-          <MobileMenuToggle />
+          {/* Right Side: Cart + Mobile Menu */}
+          <div className="flex items-center gap-4">
+            <CartToggle cart={cart} />
+            <MobileMenuToggle onOpen={() => setMobileNavOpen(true)} />
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <MobileNav
+        isOpen={mobileNavOpen}
+        onClose={() => setMobileNavOpen(false)}
+        cart={cart}
+      />
+    </>
   );
 }
 
@@ -76,6 +87,17 @@ function CartBanner() {
 function CartIcon({count}: {count: number}) {
   const {open} = useAside() as {open: (type: string) => void; close: () => void};
   const {publish, shop, cart, prevCart} = useAnalytics();
+  const [bouncing, setBouncing] = useState(false);
+  const prevCount = useRef(count);
+
+  useEffect(() => {
+    if (count > prevCount.current) {
+      setBouncing(true);
+      const timer = setTimeout(() => setBouncing(false), 300);
+      return () => clearTimeout(timer);
+    }
+    prevCount.current = count;
+  }, [count]);
 
   return (
     <button
@@ -106,7 +128,11 @@ function CartIcon({count}: {count: number}) {
         />
       </svg>
       {count > 0 && (
-        <span className="absolute -top-2 -right-2 bg-rust text-bone text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center leading-none">
+        <span
+          className={`absolute -top-2 -right-2 bg-rust text-bone text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center leading-none ${
+            bouncing ? 'animate-cart-bounce' : ''
+          }`}
+        >
           {count}
         </span>
       )}
@@ -114,12 +140,11 @@ function CartIcon({count}: {count: number}) {
   );
 }
 
-function MobileMenuToggle() {
-  const {open} = useAside() as {open: (type: string) => void};
+function MobileMenuToggle({onOpen}: {onOpen: () => void}) {
   return (
     <button
       className="md:hidden text-charcoal hover:text-rust transition-colors duration-300"
-      onClick={() => open('mobile')}
+      onClick={onOpen}
       aria-label="Open menu"
     >
       <svg

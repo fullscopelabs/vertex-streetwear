@@ -38,9 +38,18 @@ export function Aside({children, heading, type}) {
 
   return (
     <div
-      aria-modal
+      aria-modal={expanded}
+      aria-hidden={!expanded}
       className={`overlay ${expanded ? 'expanded' : ''}`}
       role="dialog"
+      /**
+       * Triple FOUC protection:
+       * 1. CSS .overlay { display: none }
+       * 2. Inline style display:none (survives before CSS loads)
+       * 3. hidden attribute (native HTML, strongest guarantee)
+       */
+      hidden={!expanded}
+      style={expanded ? undefined : {display: 'none'}}
     >
       <button className="close-outside" onClick={close} />
       <aside>

@@ -13,7 +13,7 @@ import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
-import {PageLayout} from './components/PageLayout';
+import {Layout as PageLayout} from './components/Layout';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -150,6 +150,15 @@ export function Layout({children}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        {/* Critical inline CSS: hide body until external stylesheets load.
+            Prevents FOUC where raw unstyled HTML flashes on first visit.
+            app.css overrides this with body { opacity: 1 } once loaded. */}
+        <style
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: 'body{opacity:0}',
+          }}
+        />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />

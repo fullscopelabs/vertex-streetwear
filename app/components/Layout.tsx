@@ -3,6 +3,7 @@ import {Await, Link} from 'react-router';
 import {Aside} from '~/components/Aside';
 import {Header, HeaderMenu} from '~/components/Header';
 import {Footer} from '~/components/Footer';
+import {AnnouncementBar} from '~/components/AnnouncementBar';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -34,6 +35,7 @@ export function Layout({
       <CartAside cart={cart} />
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <AnnouncementBar />
       <Header cart={cart} />
       <main>{children}</main>
       <Footer
