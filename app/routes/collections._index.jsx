@@ -45,25 +45,50 @@ function loadDeferredData({context}) {
   return {};
 }
 
+/**
+ * @type {Route.MetaFunction}
+ */
+export const meta = () => {
+  return [{title: 'VERTEX | Collections'}];
+};
+
 export default function Collections() {
   /** @type {LoaderReturnData} */
   const {collections} = useLoaderData();
 
   return (
-    <div className="collections">
-      <h1>Collections</h1>
-      <PaginatedResourceSection
-        connection={collections}
-        resourcesClassName="collections-grid"
-      >
-        {({node: collection, index}) => (
-          <CollectionItem
-            key={collection.id}
-            collection={collection}
-            index={index}
-          />
-        )}
-      </PaginatedResourceSection>
+    <div className="bg-bone min-h-screen page-fade-in">
+      {/* Page header */}
+      <section className="section-padding pb-12">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-charcoal">
+            COLLECTIONS
+          </h1>
+          <p className="text-xs tracking-[0.25em] uppercase text-charcoal/40 mt-3">
+            Explore Our Range
+          </p>
+        </div>
+      </section>
+
+      <div className="border-b border-charcoal/10" />
+
+      {/* Collection grid */}
+      <section className="py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <PaginatedResourceSection
+            connection={collections}
+            resourcesClassName="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {({node: collection, index}) => (
+              <CollectionItem
+                key={collection.id}
+                collection={collection}
+                index={index}
+              />
+            )}
+          </PaginatedResourceSection>
+        </div>
+      </section>
     </div>
   );
 }
@@ -77,21 +102,38 @@ export default function Collections() {
 function CollectionItem({collection, index}) {
   return (
     <Link
-      className="collection-item"
       key={collection.id}
       to={`/collections/${collection.handle}`}
       prefetch="intent"
+      className="group relative block overflow-hidden aspect-[4/3]"
     >
-      {collection?.image && (
+      {collection?.image ? (
         <Image
           alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
           data={collection.image}
           loading={index < 3 ? 'eager' : undefined}
-          sizes="(min-width: 45em) 400px, 100vw"
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
+      ) : (
+        <div className="absolute inset-0 bg-charcoal/10" />
       )}
-      <h5>{collection.title}</h5>
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-charcoal/40 group-hover:bg-charcoal/50 transition-colors duration-300" />
+
+      {/* Text centered */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-bone">
+          {collection.title}
+        </h2>
+        <span className="mt-3 text-[10px] uppercase tracking-[0.3em] text-bone/60 group-hover:text-bone/80 transition-colors duration-200">
+          View Collection
+        </span>
+      </div>
+
+      {/* Bottom accent */}
+      <div className="absolute inset-x-0 bottom-0 h-0.5 bg-rust scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
     </Link>
   );
 }

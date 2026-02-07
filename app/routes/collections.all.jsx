@@ -1,77 +1,104 @@
-import {useLoaderData} from 'react-router';
+import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
-import {ProductItem} from '~/components/ProductItem';
+import {ProductCard} from '~/components/ProductCard';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Products`}];
+  return [
+    {title: 'All Products | VΞRTEX'},
+    {
+      name: 'description',
+      content: 'Shop the full VΞRTEX collection — premium streetwear essentials.',
+    },
+  ];
 };
 
 /**
  * @param {Route.LoaderArgs} args
  */
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
 /**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  * @param {Route.LoaderArgs}
  */
 async function loadCriticalData({context, request}) {
   const {storefront} = context;
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 8,
+    pageBy: 50,
   });
 
   const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {...paginationVariables},
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
   return {products};
 }
 
 /**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
  * @param {Route.LoaderArgs}
  */
 function loadDeferredData({context}) {
   return {};
 }
 
-export default function Collection() {
+export default function AllProducts() {
   /** @type {LoaderReturnData} */
   const {products} = useLoaderData();
+  const productCount = products.nodes.length;
 
   return (
-    <div className="collection">
-      <h1>Products</h1>
-      <PaginatedResourceSection
-        connection={products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        )}
-      </PaginatedResourceSection>
+    <div className="bg-bone min-h-screen page-fade-in">
+      {/* Page Header */}
+      <section className="section-padding pb-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-5xl font-bold tracking-tight text-charcoal">
+            ALL PRODUCTS
+          </h1>
+          <p className="text-sm tracking-widest text-charcoal/40 mt-4 uppercase">
+            {productCount} {productCount === 1 ? 'Product' : 'Products'}
+          </p>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="border-b border-charcoal/10" />
+
+      {/* Product Grid */}
+      <section className="section-padding">
+        <div className="max-w-7xl mx-auto">
+          {productCount > 0 ? (
+            <PaginatedResourceSection
+              connection={products}
+              resourcesClassName="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            >
+              {({node: product, index}) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  loading={index < 8 ? 'eager' : 'lazy'}
+                />
+              )}
+            </PaginatedResourceSection>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-charcoal/50 text-lg mb-6">
+                No products available yet.
+              </p>
+              <Link to="/" className="btn-primary inline-block">
+                Back to Home
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
@@ -103,7 +130,6 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
   }
 `;
 
-// NOTE: https://shopify.dev/docs/api/storefront/latest/objects/product
 const CATALOG_QUERY = `#graphql
   query Catalog(
     $country: CountryCode

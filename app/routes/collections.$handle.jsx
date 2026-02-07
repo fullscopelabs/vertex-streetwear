@@ -1,40 +1,38 @@
-import {redirect, useLoaderData} from 'react-router';
-import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {redirect, useLoaderData, Link} from 'react-router';
+import {Analytics} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
-import {ProductItem} from '~/components/ProductItem';
+import {ProductCard} from '~/components/ProductCard';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
+  const title = data?.collection?.title ?? 'Collection';
+  return [
+    {title: `${title} | VΞRTEX`},
+    {
+      name: 'description',
+      content: data?.collection?.description ?? `Shop the ${title} collection at VΞRTEX.`,
+    },
+  ];
 };
 
 /**
  * @param {Route.LoaderArgs} args
  */
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
 /**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
+ * Load data necessary for rendering content above the fold.
  * @param {Route.LoaderArgs}
  */
 async function loadCriticalData({context, params, request}) {
   const {handle} = params;
   const {storefront} = context;
-  const paginationVariables = getPaginationVariables(request, {
-    pageBy: 8,
-  });
 
   if (!handle) {
     throw redirect('/collections');
@@ -42,8 +40,7 @@ async function loadCriticalData({context, params, request}) {
 
   const [{collection}] = await Promise.all([
     storefront.query(COLLECTION_QUERY, {
-      variables: {handle, ...paginationVariables},
-      // Add other queries here, so that they are loaded in parallel
+      variables: {handle, first: 50},
     }),
   ]);
 
@@ -53,18 +50,13 @@ async function loadCriticalData({context, params, request}) {
     });
   }
 
-  // The API handle might be localized, so redirect to the localized handle
   redirectIfHandleIsLocalized(request, {handle, data: collection});
 
-  return {
-    collection,
-  };
+  return {collection};
 }
 
 /**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
+ * Load data for rendering content below the fold.
  * @param {Route.LoaderArgs}
  */
 function loadDeferredData({context}) {
@@ -74,23 +66,133 @@ function loadDeferredData({context}) {
 export default function Collection() {
   /** @type {LoaderReturnData} */
   const {collection} = useLoaderData();
+  const products = collection.products.nodes;
+  const productCount = products.length;
+
+  const hasImage = !!collection.image;
 
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
-      <PaginatedResourceSection
-        connection={collection.products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
+    <div className="bg-bone min-h-screen page-fade-in">
+      {/* Hero Banner (if collection has an image) */}
+      {hasImage ? (
+        <section className="relative h-[300px] md:h-[400px] overflow-hidden">
+          <img
+            src={collection.image.url}
+            alt={collection.image.altText || collection.title}
+            className="absolute inset-0 w-full h-full object-cover"
           />
-        )}
-      </PaginatedResourceSection>
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-charcoal/60" />
+          {/* Content centered on top */}
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-bone">
+              {collection.title}
+            </h1>
+            {collection.description && (
+              <p className="text-bone/70 mt-3 max-w-xl text-sm leading-relaxed">
+                {collection.description}
+              </p>
+            )}
+            <p className="text-[10px] tracking-[0.3em] text-bone/40 mt-4 uppercase">
+              {productCount} {productCount === 1 ? 'Product' : 'Products'}
+            </p>
+          </div>
+        </section>
+      ) : (
+        /* Text-only header with generous spacing */
+        <section className="section-padding pb-8">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-5xl font-bold tracking-tight text-charcoal">
+              {collection.title}
+            </h1>
+            {collection.description && (
+              <p className="text-lg text-charcoal-light mt-2 max-w-2xl">
+                {collection.description}
+              </p>
+            )}
+            <p className="text-sm tracking-widest text-charcoal/40 mt-4 uppercase">
+              {productCount} {productCount === 1 ? 'Product' : 'Products'}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Subtle border under header */}
+      <div className="border-b border-charcoal/10" />
+
+      {/* Filter / Sort Bar */}
+      <section className="border-y border-charcoal/10">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-charcoal border border-charcoal/20 px-4 py-2 hover:border-charcoal/40 transition-colors duration-200">
+              Filter
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-3.5 h-3.5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs uppercase tracking-widest text-charcoal/50">
+              Sort by
+            </span>
+            <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-charcoal border border-charcoal/20 px-4 py-2 hover:border-charcoal/40 transition-colors duration-200">
+              Featured
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-3.5 h-3.5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Grid or Empty State */}
+      <section className="section-padding">
+        <div className="max-w-7xl mx-auto">
+          {productCount > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {products.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  loading={index < 8 ? 'eager' : 'lazy'}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-charcoal/50 text-lg mb-6">
+                No products in this collection yet.
+              </p>
+              <Link to="/collections/all" className="btn-primary inline-block">
+                Shop All
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
       <Analytics.CollectionView
         data={{
           collection: {
@@ -103,64 +205,57 @@ export default function Collection() {
   );
 }
 
-const PRODUCT_ITEM_FRAGMENT = `#graphql
-  fragment MoneyProductItem on MoneyV2 {
-    amount
-    currencyCode
-  }
-  fragment ProductItem on Product {
+/* ═══════════════════════════════════════════
+ *  GRAPHQL QUERIES
+ * ═══════════════════════════════════════════ */
+
+const COLLECTION_PRODUCT_FRAGMENT = `#graphql
+  fragment CollectionProduct on Product {
     id
-    handle
     title
+    handle
     featuredImage {
       id
-      altText
       url
+      altText
       width
       height
     }
     priceRange {
       minVariantPrice {
-        ...MoneyProductItem
+        amount
+        currencyCode
       }
       maxVariantPrice {
-        ...MoneyProductItem
+        amount
+        currencyCode
       }
     }
   }
 `;
 
-// NOTE: https://shopify.dev/docs/api/storefront/2022-04/objects/collection
 const COLLECTION_QUERY = `#graphql
-  ${PRODUCT_ITEM_FRAGMENT}
-  query Collection(
+  ${COLLECTION_PRODUCT_FRAGMENT}
+  query CollectionByHandle(
     $handle: String!
+    $first: Int!
     $country: CountryCode
     $language: LanguageCode
-    $first: Int
-    $last: Int
-    $startCursor: String
-    $endCursor: String
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       id
       handle
       title
       description
-      products(
-        first: $first,
-        last: $last,
-        before: $startCursor,
-        after: $endCursor
-      ) {
+      image {
+        url
+        altText
+        width
+        height
+      }
+      products(first: $first, sortKey: BEST_SELLING) {
         nodes {
-          ...ProductItem
-        }
-        pageInfo {
-          hasPreviousPage
-          hasNextPage
-          endCursor
-          startCursor
+          ...CollectionProduct
         }
       }
     }
@@ -168,5 +263,4 @@ const COLLECTION_QUERY = `#graphql
 `;
 
 /** @typedef {import('./+types/collections.$handle').Route} Route */
-/** @typedef {import('storefrontapi.generated').ProductItemFragment} ProductItemFragment */
 /** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */

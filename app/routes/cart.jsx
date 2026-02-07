@@ -1,12 +1,17 @@
-import {useLoaderData, data} from 'react-router';
-import {CartForm} from '@shopify/hydrogen';
-import {CartMain} from '~/components/CartMain';
+import {useLoaderData, Link, data} from 'react-router';
+import {
+  CartForm,
+  Image,
+  Money,
+  useOptimisticCart,
+} from '@shopify/hydrogen';
+import {useVariantUrl} from '~/lib/variants';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [{title: 'Cart | VΞRTEX'}];
 };
 
 /**
@@ -21,7 +26,6 @@ export async function action({request, context}) {
   const {cart} = context;
 
   const formData = await request.formData();
-
   const {action, inputs} = CartForm.getFormInput(formData);
 
   if (!action) {
@@ -43,25 +47,15 @@ export async function action({request, context}) {
       break;
     case CartForm.ACTIONS.DiscountCodesUpdate: {
       const formDiscountCode = inputs.discountCode;
-
-      // User inputted discount code
       const discountCodes = formDiscountCode ? [formDiscountCode] : [];
-
-      // Combine discount codes already applied on cart
       discountCodes.push(...inputs.discountCodes);
-
       result = await cart.updateDiscountCodes(discountCodes);
       break;
     }
     case CartForm.ACTIONS.GiftCardCodesUpdate: {
       const formGiftCardCode = inputs.giftCardCode;
-
-      // User inputted gift card code
       const giftCardCodes = formGiftCardCode ? [formGiftCardCode] : [];
-
-      // Combine gift card codes already applied on cart
       giftCardCodes.push(...inputs.giftCardCodes);
-
       result = await cart.updateGiftCardCodes(giftCardCodes);
       break;
     }
@@ -111,14 +105,236 @@ export async function loader({context}) {
   return await cart.get();
 }
 
+/* ═══════════════════════════════════════════
+ *  CART PAGE COMPONENT
+ * ═══════════════════════════════════════════ */
+
 export default function Cart() {
   /** @type {LoaderReturnData} */
-  const cart = useLoaderData();
+  const originalCart = useLoaderData();
+  const cart = useOptimisticCart(originalCart);
+
+  const lines = cart?.lines?.nodes ?? [];
+  const hasItems = lines.length > 0;
+
+  if (!hasItems) {
+    return <CartEmpty />;
+  }
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
-      <CartMain layout="page" cart={cart} />
+    <div className="bg-bone min-h-screen page-fade-in">
+      <div className="max-w-7xl mx-auto section-padding">
+        {/* Page Title */}
+        <h1 className="text-4xl font-bold tracking-tight text-charcoal mb-12">
+          YOUR CART
+        </h1>
+
+        {/* Two-column layout */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+          {/* LEFT — Cart Items (65%) */}
+          <div className="w-full lg:w-[65%]">
+            {/* Column Headers (desktop) */}
+            <div className="hidden md:grid grid-cols-[1fr_auto_auto] gap-8 pb-4 border-b border-charcoal/10 text-xs uppercase tracking-widest text-charcoal/40">
+              <span>Product</span>
+              <span className="w-20 text-center">Qty</span>
+              <span className="w-24 text-right">Total</span>
+            </div>
+
+            {/* Line Items */}
+            <ul className="divide-y divide-charcoal/10">
+              {lines.map((line) => (
+                <CartLineItem key={line.id} line={line} />
+              ))}
+            </ul>
+          </div>
+
+          {/* RIGHT — Order Summary (35%, sticky) */}
+          <div className="w-full lg:w-[35%]">
+            <OrderSummary cart={cart} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  EMPTY CART
+ * ═══════════════════════════════════════════ */
+
+function CartEmpty() {
+  return (
+    <div className="bg-bone min-h-screen page-fade-in">
+      <div className="max-w-7xl mx-auto section-padding">
+        <div className="text-center py-20">
+          <h1 className="text-3xl font-bold tracking-tight text-charcoal uppercase">
+            Your Cart is Empty
+          </h1>
+          <p className="text-charcoal/50 mt-4 text-lg">
+            Continue shopping to add items to your cart.
+          </p>
+          <Link
+            to="/collections/all"
+            className="btn-secondary inline-block mt-8"
+          >
+            Continue Shopping
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  CART LINE ITEM
+ * ═══════════════════════════════════════════ */
+
+function CartLineItem({line}) {
+  const {id, merchandise, quantity, cost} = line;
+  const {product, title, image, selectedOptions} = merchandise;
+  const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
+
+  return (
+    <li className="py-6 md:grid md:grid-cols-[1fr_auto_auto] md:gap-8 md:items-center">
+      {/* Product info */}
+      <div className="flex gap-4">
+        {/* Image */}
+        <Link
+          to={lineItemUrl}
+          prefetch="intent"
+          className="flex-shrink-0 w-[100px] h-[100px] bg-charcoal/5 overflow-hidden"
+        >
+          {image && (
+            <Image
+              alt={title}
+              aspectRatio="1/1"
+              data={image}
+              width={100}
+              height={100}
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          )}
+        </Link>
+
+        {/* Details */}
+        <div className="flex flex-col justify-between py-1 min-w-0">
+          <div>
+            <Link
+              to={lineItemUrl}
+              prefetch="intent"
+              className="font-medium text-sm text-charcoal hover:text-rust transition-colors"
+            >
+              {product.title}
+            </Link>
+            {selectedOptions.length > 0 && (
+              <p className="text-xs text-charcoal/50 mt-1">
+                {selectedOptions
+                  .filter((opt) => opt.value !== 'Default Title')
+                  .map((opt) => opt.value)
+                  .join(' / ')}
+              </p>
+            )}
+          </div>
+
+          {/* Remove Button */}
+          <CartForm
+            fetcherKey={`remove-${id}`}
+            route="/cart"
+            action={CartForm.ACTIONS.LinesRemove}
+            inputs={{lineIds: [id]}}
+          >
+            <button
+              type="submit"
+              className="text-rust uppercase text-xs tracking-wider hover:text-charcoal transition-colors mt-2"
+              disabled={!!line.isOptimistic}
+            >
+              Remove
+            </button>
+          </CartForm>
+        </div>
+      </div>
+
+      {/* Quantity */}
+      <div className="w-20 text-center mt-4 md:mt-0">
+        <span className="md:hidden text-xs uppercase tracking-wider text-charcoal/40 mr-2">
+          Qty:
+        </span>
+        <span className="text-sm text-charcoal">{quantity}</span>
+      </div>
+
+      {/* Line Total */}
+      <div className="w-24 text-right mt-2 md:mt-0">
+        <span className="md:hidden text-xs uppercase tracking-wider text-charcoal/40 mr-2">
+          Total:
+        </span>
+        <span className="text-sm font-medium text-charcoal">
+          <Money data={cost.totalAmount} />
+        </span>
+      </div>
+    </li>
+  );
+}
+
+/* ═══════════════════════════════════════════
+ *  ORDER SUMMARY
+ * ═══════════════════════════════════════════ */
+
+function OrderSummary({cart}) {
+  const subtotal = cart?.cost?.subtotalAmount;
+  const total = cart?.cost?.totalAmount;
+  const checkoutUrl = cart?.checkoutUrl;
+
+  return (
+    <div className="lg:sticky lg:top-24 bg-white p-8 border border-charcoal/10">
+      <h2 className="text-sm uppercase tracking-widest font-bold text-charcoal mb-6">
+        Order Summary
+      </h2>
+
+      {/* Subtotal */}
+      <div className="flex justify-between items-center py-3 border-b border-charcoal/10">
+        <span className="text-sm text-charcoal/70">Subtotal</span>
+        <span className="text-sm text-charcoal">
+          {subtotal ? <Money data={subtotal} /> : '—'}
+        </span>
+      </div>
+
+      {/* Shipping Note */}
+      <div className="flex justify-between items-center py-3 border-b border-charcoal/10">
+        <span className="text-sm text-charcoal/70">Shipping</span>
+        <span className="text-xs text-charcoal/40 italic">
+          Calculated at checkout
+        </span>
+      </div>
+
+      {/* Total */}
+      <div className="flex justify-between items-center py-4">
+        <span className="text-base font-bold text-charcoal uppercase tracking-wider">
+          Total
+        </span>
+        <span className="text-xl font-bold text-charcoal">
+          {total ? <Money data={total} /> : '—'}
+        </span>
+      </div>
+
+      {/* Checkout Button */}
+      {checkoutUrl && (
+        <a
+          href={checkoutUrl}
+          target="_self"
+          className="btn-primary w-full block text-center mt-4"
+        >
+          CHECKOUT
+        </a>
+      )}
+
+      {/* Continue Shopping */}
+      <Link
+        to="/collections/all"
+        className="block text-center text-xs uppercase tracking-wider text-charcoal/50 hover:text-charcoal transition-colors mt-4"
+      >
+        Continue Shopping
+      </Link>
     </div>
   );
 }
