@@ -2,3 +2,10 @@ name = "vertex-streetwear"
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist/client"
+
+[vars]
+PUBLIC_STOREFRONT_API_TOKEN = "b16646b0ff932ab93485a4b6b10beec7"
+PUBLIC_STORE_DOMAIN = "vertex-streetwear.myshopify.com"
+PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID = "95dfc42e-f405-49f5-b9bd-99785da06f23"
+PUBLIC_CUSTOMER_ACCOUNT_API_URL = "https://shopify.com/98899820913"
+PUBLIC_CHECKOUT_DOMAIN = "vertex-streetwear.myshopify.com"
