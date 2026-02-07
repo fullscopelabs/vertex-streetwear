@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "build/client"
+  publish = "dist/client"
   functions = "netlify/functions"
 
 [build.environment]
@@ -19,4 +19,4 @@
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["@shopify/hydrogen", "react-router"]
-  included_files = ["build/server/**"]
+  included_files = ["dist/server/**"]

@@ -1,7 +1,7 @@
 export const handler = async (event, context) => {
   try {
     // Import the server build dynamically
-    const {default: serverExports} = await import('../../build/server/index.js');
+    const {default: serverExports} = await import('../../dist/server/index.js');
     
     // Create a Web API Request from the Netlify event
     const url = new URL(event.rawUrl);
