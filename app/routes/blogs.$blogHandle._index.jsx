@@ -72,6 +72,7 @@ export default function Blog() {
   /** @type {LoaderReturnData} */
   const {blog} = useLoaderData();
   const {articles} = blog;
+  const hasArticles = articles?.nodes?.length > 0;
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
@@ -79,19 +80,38 @@ export default function Blog() {
 
       <section className="section-padding">
         <div className="max-w-7xl mx-auto">
-          <PaginatedResourceSection
-            connection={articles}
-            resourcesClassName="grid grid-cols-1 md:grid-cols-2 gap-8"
-          >
-            {({node: article, index}) => (
-              <ScrollReveal key={article.id} delay={index * 100}>
-                <ArticleItem
-                  article={article}
-                  loading={index < 2 ? 'eager' : 'lazy'}
-                />
-              </ScrollReveal>
-            )}
-          </PaginatedResourceSection>
+          {hasArticles ? (
+            <PaginatedResourceSection
+              connection={articles}
+              resourcesClassName="grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
+              {({node: article, index}) => (
+                <ScrollReveal key={article.id} delay={index * 100}>
+                  <ArticleItem
+                    article={article}
+                    loading={index < 2 ? 'eager' : 'lazy'}
+                  />
+                </ScrollReveal>
+              )}
+            </PaginatedResourceSection>
+          ) : (
+            <ScrollReveal className="text-center py-16">
+              <div className="w-12 h-px bg-rust mx-auto mb-8" />
+              <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal mb-4">
+                Stories Coming Soon
+              </h3>
+              <p className="text-charcoal/50 text-sm leading-relaxed max-w-md mx-auto mb-8">
+                New articles are on the way. In the meantime, explore our
+                latest collections.
+              </p>
+              <Link
+                to="/collections/all"
+                className="btn-secondary inline-block"
+              >
+                Shop the Collection
+              </Link>
+            </ScrollReveal>
+          )}
         </div>
       </section>
     </div>

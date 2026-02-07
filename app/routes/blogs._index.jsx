@@ -8,7 +8,7 @@ import {PageHero} from '~/components/PageHero';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `VERTEX | Journal`}];
+  return [{title: `VΞRTEX | Journal`}];
 };
 
 /**
@@ -59,6 +59,7 @@ function loadDeferredData({context}) {
 export default function Blogs() {
   /** @type {LoaderReturnData} */
   const {blogs} = useLoaderData();
+  const hasBlogs = blogs?.nodes?.length > 0;
 
   return (
     <div className="bg-bone min-h-screen page-fade-in">
@@ -66,34 +67,57 @@ export default function Blogs() {
 
       <section className="section-padding">
         <div className="max-w-3xl mx-auto">
-          <PaginatedResourceSection connection={blogs}>
-            {({node: blog, index}) => (
-              <ScrollReveal key={blog.handle} delay={index * 100}>
-                <Link
-                  prefetch="intent"
-                  to={`/blogs/${blog.handle}`}
-                  className="group flex items-center justify-between py-8 border-b border-charcoal/10 first:pt-0"
-                >
-                  <div>
-                    <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal group-hover:text-rust transition-colors duration-300">
-                      {blog.title}
-                    </h2>
-                    {blog.seo?.description && (
-                      <p className="text-sm text-charcoal/50 mt-2 max-w-lg leading-relaxed">
-                        {blog.seo.description}
-                      </p>
-                    )}
-                    <span className="inline-block mt-3 text-xs uppercase tracking-[0.15em] text-charcoal/40 group-hover:text-rust transition-colors duration-300">
-                      Read More
+          {hasBlogs ? (
+            <PaginatedResourceSection connection={blogs}>
+              {({node: blog, index}) => (
+                <ScrollReveal key={blog.handle} delay={index * 100}>
+                  <Link
+                    prefetch="intent"
+                    to={`/blogs/${blog.handle}`}
+                    className="group flex items-center justify-between py-8 border-b border-charcoal/10 first:pt-0"
+                  >
+                    <div>
+                      <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal group-hover:text-rust transition-colors duration-300">
+                        {blog.title}
+                      </h2>
+                      {blog.seo?.description && (
+                        <p className="text-sm text-charcoal/50 mt-2 max-w-lg leading-relaxed">
+                          {blog.seo.description}
+                        </p>
+                      )}
+                      <span className="inline-block mt-3 text-xs uppercase tracking-[0.15em] text-charcoal/40 group-hover:text-rust transition-colors duration-300">
+                        Read More
+                      </span>
+                    </div>
+                    <span className="text-charcoal/20 group-hover:text-rust group-hover:translate-x-1 transition-all duration-300 text-xl ml-6 flex-shrink-0">
+                      &rarr;
                     </span>
-                  </div>
-                  <span className="text-charcoal/20 group-hover:text-rust group-hover:translate-x-1 transition-all duration-300 text-xl ml-6 flex-shrink-0">
-                    &rarr;
-                  </span>
-                </Link>
-              </ScrollReveal>
-            )}
-          </PaginatedResourceSection>
+                  </Link>
+                </ScrollReveal>
+              )}
+            </PaginatedResourceSection>
+          ) : (
+            <ScrollReveal className="text-center py-16">
+              <div className="w-12 h-px bg-rust mx-auto mb-8" />
+              <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal mb-4">
+                Coming Soon
+              </h3>
+              <p className="text-charcoal/50 text-sm leading-relaxed max-w-md mx-auto mb-2">
+                We&apos;re crafting stories about design, materials, and the
+                process behind each VΞRTEX collection.
+              </p>
+              <p className="text-charcoal/40 text-sm leading-relaxed max-w-md mx-auto mb-8">
+                Check back soon for editorials, behind-the-scenes features, and
+                style guides.
+              </p>
+              <Link
+                to="/collections/all"
+                className="btn-secondary inline-block"
+              >
+                Shop the Collection
+              </Link>
+            </ScrollReveal>
+          )}
         </div>
       </section>
     </div>
