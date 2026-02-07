@@ -73,40 +73,76 @@ export default function OrderRoute() {
     fulfillmentStatus,
   } = useLoaderData();
   return (
-    <div className="account-order">
-      <h2>Order {order.name}</h2>
-      <p>Placed on {new Date(order.processedAt).toDateString()}</p>
-      {order.confirmationNumber && (
-        <p>Confirmation: {order.confirmationNumber}</p>
-      )}
-      <br />
-      <div>
-        <table>
+    <div>
+      {/* Header */}
+      <h2 className="font-serif text-3xl font-light tracking-tight text-charcoal">
+        Order {order.name}
+      </h2>
+      <div className="flex flex-wrap items-center gap-3 mt-2 mb-8">
+        <p className="text-[10px] uppercase tracking-[0.25em] text-charcoal/40">
+          {new Date(order.processedAt).toDateString()}
+        </p>
+        {order.confirmationNumber && (
+          <>
+            <span className="text-charcoal/20">&middot;</span>
+            <p className="text-xs text-charcoal/50">
+              Confirmation: {order.confirmationNumber}
+            </p>
+          </>
+        )}
+      </div>
+
+      {/* Line Items */}
+      <div className="border border-charcoal/10 overflow-hidden">
+        <table className="w-full">
           <thead>
-            <tr>
-              <th scope="col">Product</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Total</th>
+            <tr className="border-b border-charcoal/10 bg-bone-dark">
+              <th
+                scope="col"
+                className="text-left text-[10px] uppercase tracking-[0.2em] text-charcoal/50 px-6 py-3 font-medium"
+              >
+                Product
+              </th>
+              <th
+                scope="col"
+                className="text-right text-[10px] uppercase tracking-[0.2em] text-charcoal/50 px-6 py-3 font-medium hidden md:table-cell"
+              >
+                Price
+              </th>
+              <th
+                scope="col"
+                className="text-center text-[10px] uppercase tracking-[0.2em] text-charcoal/50 px-6 py-3 font-medium hidden md:table-cell"
+              >
+                Quantity
+              </th>
+              <th
+                scope="col"
+                className="text-right text-[10px] uppercase tracking-[0.2em] text-charcoal/50 px-6 py-3 font-medium"
+              >
+                Total
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-charcoal/10">
             {lineItems.map((lineItem, lineItemIndex) => (
               // eslint-disable-next-line react/no-array-index-key
               <OrderLineRow key={lineItemIndex} lineItem={lineItem} />
             ))}
           </tbody>
-          <tfoot>
+          <tfoot className="border-t border-charcoal/10">
             {((discountValue && discountValue.amount) ||
               discountPercentage) && (
-              <tr>
-                <th scope="row" colSpan={3}>
-                  <p>Discounts</p>
-                </th>
-                <th scope="row">
-                  <p>Discounts</p>
-                </th>
-                <td>
+              <tr className="border-b border-charcoal/10">
+                <td
+                  colSpan={3}
+                  className="text-right text-sm text-charcoal/70 px-6 py-3 hidden md:table-cell"
+                >
+                  Discounts
+                </td>
+                <td className="text-right text-sm text-charcoal/70 px-6 py-3 md:hidden">
+                  Discounts
+                </td>
+                <td className="text-right text-sm text-rust px-6 py-3">
                   {discountPercentage ? (
                     <span>-{discountPercentage}% OFF</span>
                   ) : (
@@ -115,72 +151,99 @@ export default function OrderRoute() {
                 </td>
               </tr>
             )}
-            <tr>
-              <th scope="row" colSpan={3}>
-                <p>Subtotal</p>
-              </th>
-              <th scope="row">
-                <p>Subtotal</p>
-              </th>
-              <td>
+            <tr className="border-b border-charcoal/10">
+              <td
+                colSpan={3}
+                className="text-right text-sm text-charcoal/70 px-6 py-3 hidden md:table-cell"
+              >
+                Subtotal
+              </td>
+              <td className="text-right text-sm text-charcoal/70 px-6 py-3 md:hidden">
+                Subtotal
+              </td>
+              <td className="text-right text-sm text-charcoal px-6 py-3">
                 <Money data={order.subtotal} />
               </td>
             </tr>
-            <tr>
-              <th scope="row" colSpan={3}>
+            <tr className="border-b border-charcoal/10">
+              <td
+                colSpan={3}
+                className="text-right text-sm text-charcoal/70 px-6 py-3 hidden md:table-cell"
+              >
                 Tax
-              </th>
-              <th scope="row">
-                <p>Tax</p>
-              </th>
-              <td>
+              </td>
+              <td className="text-right text-sm text-charcoal/70 px-6 py-3 md:hidden">
+                Tax
+              </td>
+              <td className="text-right text-sm text-charcoal px-6 py-3">
                 <Money data={order.totalTax} />
               </td>
             </tr>
             <tr>
-              <th scope="row" colSpan={3}>
+              <td
+                colSpan={3}
+                className="text-right text-sm font-bold text-charcoal uppercase tracking-wider px-6 py-4 hidden md:table-cell"
+              >
                 Total
-              </th>
-              <th scope="row">
-                <p>Total</p>
-              </th>
-              <td>
+              </td>
+              <td className="text-right text-sm font-bold text-charcoal uppercase tracking-wider px-6 py-4 md:hidden">
+                Total
+              </td>
+              <td className="text-right text-lg font-bold text-charcoal px-6 py-4">
                 <Money data={order.totalPrice} />
               </td>
             </tr>
           </tfoot>
         </table>
-        <div>
-          <h3>Shipping Address</h3>
+      </div>
+
+      {/* Shipping & Status */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        <div className="border border-charcoal/10 p-6">
+          <h3 className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-4 font-medium">
+            Shipping Address
+          </h3>
           {order?.shippingAddress ? (
-            <address>
-              <p>{order.shippingAddress.name}</p>
-              {order.shippingAddress.formatted ? (
-                <p>{order.shippingAddress.formatted}</p>
-              ) : (
-                ''
+            <address className="not-italic text-sm text-charcoal leading-relaxed space-y-1">
+              <p className="font-medium">{order.shippingAddress.name}</p>
+              {order.shippingAddress.formatted && (
+                <p className="text-charcoal/70">
+                  {order.shippingAddress.formatted}
+                </p>
               )}
-              {order.shippingAddress.formattedArea ? (
-                <p>{order.shippingAddress.formattedArea}</p>
-              ) : (
-                ''
+              {order.shippingAddress.formattedArea && (
+                <p className="text-charcoal/70">
+                  {order.shippingAddress.formattedArea}
+                </p>
               )}
             </address>
           ) : (
-            <p>No shipping address defined</p>
+            <p className="text-sm text-charcoal/50">
+              No shipping address defined
+            </p>
           )}
-          <h3>Status</h3>
-          <div>
-            <p>{fulfillmentStatus}</p>
-          </div>
+        </div>
+        <div className="border border-charcoal/10 p-6">
+          <h3 className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-4 font-medium">
+            Status
+          </h3>
+          <p className="text-sm font-medium text-charcoal">
+            {fulfillmentStatus}
+          </p>
         </div>
       </div>
-      <br />
-      <p>
-        <a target="_blank" href={order.statusPageUrl} rel="noreferrer">
-          View Order Status →
+
+      {/* External status link */}
+      <div className="mt-8">
+        <a
+          target="_blank"
+          href={order.statusPageUrl}
+          rel="noreferrer"
+          className="text-xs uppercase tracking-[0.15em] text-charcoal/50 hover:text-rust transition-colors"
+        >
+          View Order Status &rarr;
         </a>
-      </p>
+      </div>
     </div>
   );
 }
@@ -191,24 +254,37 @@ export default function OrderRoute() {
 function OrderLineRow({lineItem}) {
   return (
     <tr key={lineItem.id}>
-      <td>
-        <div>
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-4">
           {lineItem?.image && (
-            <div>
-              <Image data={lineItem.image} width={96} height={96} />
+            <div className="w-16 h-16 flex-shrink-0 bg-bone-dark overflow-hidden">
+              <Image
+                data={lineItem.image}
+                width={96}
+                height={96}
+                className="w-full h-full object-cover"
+              />
             </div>
           )}
           <div>
-            <p>{lineItem.title}</p>
-            <small>{lineItem.variantTitle}</small>
+            <p className="text-sm font-medium text-charcoal">
+              {lineItem.title}
+            </p>
+            {lineItem.variantTitle && (
+              <p className="text-xs text-charcoal/50 mt-0.5">
+                {lineItem.variantTitle}
+              </p>
+            )}
           </div>
         </div>
       </td>
-      <td>
+      <td className="text-right text-sm text-charcoal/70 px-6 py-4 hidden md:table-cell">
         <Money data={lineItem.price} />
       </td>
-      <td>{lineItem.quantity}</td>
-      <td>
+      <td className="text-center text-sm text-charcoal/70 px-6 py-4 hidden md:table-cell">
+        {lineItem.quantity}
+      </td>
+      <td className="text-right text-sm font-medium text-charcoal px-6 py-4">
         <Money data={lineItem.totalDiscount} />
       </td>
     </tr>

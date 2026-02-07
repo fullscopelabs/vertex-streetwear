@@ -88,45 +88,62 @@ export default function AccountProfile() {
   const customer = action?.customer ?? account?.customer;
 
   return (
-    <div className="account-profile">
-      <h2>My profile</h2>
-      <br />
-      <Form method="PUT">
-        <legend>Personal information</legend>
-        <fieldset>
-          <label htmlFor="firstName">First name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            autoComplete="given-name"
-            placeholder="First name"
-            aria-label="First name"
-            defaultValue={customer.firstName ?? ''}
-            minLength={2}
-          />
-          <label htmlFor="lastName">Last name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            autoComplete="family-name"
-            placeholder="Last name"
-            aria-label="Last name"
-            defaultValue={customer.lastName ?? ''}
-            minLength={2}
-          />
+    <div className="max-w-xl">
+      <h2 className="font-serif text-3xl font-light tracking-tight text-charcoal mb-8">
+        My Profile
+      </h2>
+      <Form method="PUT" className="space-y-6">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-4">
+          Personal Information
+        </p>
+        <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label
+              htmlFor="firstName"
+              className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-2 block"
+            >
+              First name
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autoComplete="given-name"
+              placeholder="First name"
+              aria-label="First name"
+              defaultValue={customer.firstName ?? ''}
+              minLength={2}
+              className="w-full border border-charcoal/20 bg-transparent px-4 py-3 text-sm text-charcoal focus:border-charcoal/40 focus:outline-none transition-colors"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="lastName"
+              className="text-[10px] uppercase tracking-[0.2em] text-charcoal/50 mb-2 block"
+            >
+              Last name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autoComplete="family-name"
+              placeholder="Last name"
+              aria-label="Last name"
+              defaultValue={customer.lastName ?? ''}
+              minLength={2}
+              className="w-full border border-charcoal/20 bg-transparent px-4 py-3 text-sm text-charcoal focus:border-charcoal/40 focus:outline-none transition-colors"
+            />
+          </div>
         </fieldset>
-        {action?.error ? (
-          <p>
-            <mark>
-              <small>{action.error}</small>
-            </mark>
-          </p>
-        ) : (
-          <br />
+        {action?.error && (
+          <p className="text-rust text-sm">{action.error}</p>
         )}
-        <button type="submit" disabled={state !== 'idle'}>
+        <button
+          type="submit"
+          disabled={state !== 'idle'}
+          className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           {state !== 'idle' ? 'Updating' : 'Update'}
         </button>
       </Form>
