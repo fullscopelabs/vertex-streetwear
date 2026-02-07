@@ -21,12 +21,12 @@ import {ScrollReveal} from '~/components/ScrollReveal';
 export const meta = ({data}) => {
   const title = data?.product?.title ?? 'Product';
   return [
-    {title: `${title} | VΞRTEX`},
+    {title: `${title} | V☰RTEX`},
     {
       name: 'description',
       content:
         data?.product?.description ??
-        `Shop ${title} at VΞRTEX — premium streetwear essentials.`,
+        `Shop ${title} at V☰RTEX — premium streetwear essentials.`,
     },
     {
       rel: 'canonical',
@@ -202,13 +202,14 @@ export default function Product() {
             ) ?? [];
             if (related.length === 0) return null;
             return (
-              <section className="border-t border-charcoal/10 mt-20 pt-16 pb-8 max-w-7xl mx-auto px-4">
+              <section className="mt-20 pt-16 pb-8 max-w-7xl mx-auto px-4">
+                <div className="divider-sand max-w-xs mx-auto mb-14" />
                 <ScrollReveal>
-                  <h2 className="font-serif text-4xl font-light tracking-tight text-charcoal text-center mb-12">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 text-center mb-14">
                     You May Also Like
-                  </h2>
+                  </p>
                 </ScrollReveal>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                   {related.slice(0, 4).map((relProduct, i) => (
                     <ScrollReveal key={relProduct.id} delay={i * 100}>
                       <ProductCard

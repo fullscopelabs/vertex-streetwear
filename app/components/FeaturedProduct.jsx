@@ -46,15 +46,15 @@ export function FeaturedProduct({product}) {
             <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-tight text-bone">
               {product.title}
             </h2>
-            <div className="w-10 h-px bg-rust mt-5 mb-5" />
-            <p className="text-xl font-semibold tracking-wide text-bone">
+            <div className="divider-lux mt-5 mb-5" />
+            <p className="text-[11px] uppercase tracking-[0.15em] text-bone/50">
               <Money data={product.priceRange.minVariantPrice} />
             </p>
             <div className="mt-8">
               <Link
                 to={`/products/${product.handle}`}
                 prefetch="intent"
-                className="inline-block bg-bone text-charcoal px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] hover:bg-rust hover:text-bone transition-all duration-300"
+                className="inline-block border border-sand/30 text-sand px-8 py-4 text-[11px] font-medium uppercase tracking-[0.18em] hover:bg-sand/10 transition-all duration-300"
               >
                 Shop Now
               </Link>

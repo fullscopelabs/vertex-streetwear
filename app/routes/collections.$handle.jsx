@@ -1,8 +1,8 @@
 import {redirect, useLoaderData, Link} from 'react-router';
 import {Analytics, Image} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
-import {ProductCard} from '~/components/ProductCard';
 import {FeaturedProduct} from '~/components/FeaturedProduct';
+import {EditorialGrid} from '~/components/EditorialGrid';
 import {ScrollReveal} from '~/components/ScrollReveal';
 import {PageHero} from '~/components/PageHero';
 
@@ -12,10 +12,10 @@ import {PageHero} from '~/components/PageHero';
 export const meta = ({data}) => {
   const title = data?.collection?.title ?? 'Collection';
   return [
-    {title: `${title} | VΞRTEX`},
+    {title: `${title} | V☰RTEX`},
     {
       name: 'description',
-      content: data?.collection?.description ?? `Shop the ${title} collection at VΞRTEX.`,
+      content: data?.collection?.description ?? `Shop the ${title} collection at V☰RTEX.`,
     },
   ];
 };
@@ -66,6 +66,20 @@ function loadDeferredData({context}) {
   return {};
 }
 
+/** Definition text for known collection handles */
+const COLLECTION_DEFINITIONS = {
+  'core': 'the essential. what everything else is built on.',
+  'core-collection': 'the essential. what everything else is built on.',
+  'limited': 'made once. never again.',
+  'limited-edition': 'made once. never again.',
+  'outerwear': 'the outer layer. protection meets presence.',
+  'accessories': 'the finishing details. where intention lives.',
+};
+
+function getCollectionDefinition(handle) {
+  return COLLECTION_DEFINITIONS[handle] || 'undefined. see for yourself.';
+}
+
 export default function Collection() {
   /** @type {LoaderReturnData} */
   const {collection} = useLoaderData();
@@ -78,7 +92,7 @@ export default function Collection() {
     <div className="bg-bone min-h-screen page-fade-in">
       {/* Hero Banner */}
       {hasImage ? (
-        <section className="relative h-[300px] md:h-[400px] overflow-hidden grain">
+        <section className="relative h-[240px] md:h-[320px] overflow-hidden grain">
           <Image
             data={collection.image}
             sizes="100vw"
@@ -86,17 +100,24 @@ export default function Collection() {
             loading="eager"
           />
           {/* Gradient overlays for depth */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-charcoal/40 to-charcoal/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-charcoal/40 to-charcoal/80" />
+          <div className="absolute inset-0" style={{background: 'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(196,168,124,0.05) 0%, transparent 70%)'}} />
           {/* Content centered on top */}
           <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
             <ScrollReveal>
-              <p className="text-[10px] tracking-[0.35em] uppercase text-bone/40 mb-3">
+              <p className="text-[10px] tracking-[0.35em] uppercase text-sand/50 mb-3">
                 Collection
               </p>
               <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight text-bone">
                 {collection.title}
               </h1>
-              <div className="w-12 h-px bg-rust mx-auto mt-5" />
+              <p className="font-serif italic text-sm text-bone/40 mt-2 tracking-wide">
+                /{collection.title.toLowerCase()}/
+              </p>
+              <p className="text-bone/30 text-xs mt-1 italic">
+                {getCollectionDefinition(collection.handle)}
+              </p>
+              <div className="divider-lux mx-auto mt-5" />
               {collection.description && (
                 <p className="text-bone/60 mt-4 max-w-xl text-sm leading-relaxed">
                   {collection.description}
@@ -110,8 +131,14 @@ export default function Collection() {
         </section>
       ) : (
         <PageHero title={collection.title} subtitle="Collection">
+          <p className="font-serif italic text-sm text-bone/40 mt-2 tracking-wide">
+            /{collection.title.toLowerCase()}/
+          </p>
+          <p className="text-bone/30 text-xs mt-1 italic">
+            {getCollectionDefinition(collection.handle)}
+          </p>
           {collection.description && (
-            <p className="text-bone/60 max-w-xl mx-auto text-sm leading-relaxed">
+            <p className="text-bone/60 max-w-xl mx-auto text-sm leading-relaxed mt-3">
               {collection.description}
             </p>
           )}
@@ -127,33 +154,12 @@ export default function Collection() {
           {/* Featured first product — editorial hero */}
           <FeaturedProduct product={products[0]} />
 
-          {/* Remaining products */}
+          {/* Remaining products — editorial staggered grid */}
           {products.length > 1 && (
-            <section className="section-padding">
-              <div className="max-w-7xl mx-auto">
-                <ScrollReveal className="mb-12">
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 text-center">
-                    More from {collection.title}
-                  </p>
-                </ScrollReveal>
-                <div
-                  className={
-                    products.length <= 3
-                      ? 'grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto'
-                      : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'
-                  }
-                >
-                  {products.slice(1).map((product, index) => (
-                    <ScrollReveal key={product.id} delay={index * 75}>
-                      <ProductCard
-                        product={product}
-                        loading={index < 8 ? 'eager' : 'lazy'}
-                      />
-                    </ScrollReveal>
-                  ))}
-                </div>
-              </div>
-            </section>
+            <EditorialGrid
+              products={products.slice(1)}
+              sectionLabel={`More from ${collection.title}`}
+            />
           )}
         </>
       ) : (

@@ -1,8 +1,7 @@
 import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables} from '@shopify/hydrogen';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
-import {ProductCard} from '~/components/ProductCard';
 import {FeaturedProduct} from '~/components/FeaturedProduct';
+import {EditorialGrid} from '~/components/EditorialGrid';
 import {ScrollReveal} from '~/components/ScrollReveal';
 import {PageHero} from '~/components/PageHero';
 
@@ -11,10 +10,10 @@ import {PageHero} from '~/components/PageHero';
  */
 export const meta = () => {
   return [
-    {title: 'All Products | VΞRTEX'},
+    {title: 'All Products | V☰RTEX'},
     {
       name: 'description',
-      content: 'Shop the full VΞRTEX collection — premium streetwear essentials.',
+      content: 'Shop the full V☰RTEX collection — premium streetwear essentials.',
     },
   ];
 };
@@ -76,33 +75,12 @@ export default function AllProducts() {
             <FeaturedProduct product={featuredProduct} />
           )}
 
-          {/* Remaining products in grid */}
+          {/* Remaining products — editorial staggered grid */}
           {remainingProducts.length > 0 && (
-            <section className="section-padding">
-              <div className="max-w-7xl mx-auto">
-                <ScrollReveal className="mb-12">
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-charcoal/40 text-center">
-                    The Full Range
-                  </p>
-                </ScrollReveal>
-                <div
-                  className={
-                    remainingProducts.length <= 2
-                      ? 'grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto'
-                      : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'
-                  }
-                >
-                  {remainingProducts.map((product, index) => (
-                    <ScrollReveal key={product.id} delay={index * 75}>
-                      <ProductCard
-                        product={product}
-                        loading={index < 8 ? 'eager' : 'lazy'}
-                      />
-                    </ScrollReveal>
-                  ))}
-                </div>
-              </div>
-            </section>
+            <EditorialGrid
+              products={remainingProducts}
+              sectionLabel="The Full Range"
+            />
           )}
         </>
       ) : (
