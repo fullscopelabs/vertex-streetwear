@@ -71,8 +71,14 @@ body {
  * ═══════════════════════════════════════════ */
 @layer base {
   html {
-    scroll-behavior: smooth;
     overflow-x: hidden;
+  }
+
+  /* Smooth scrolling only on desktop — can cause jank on mobile Chromium */
+  @media (min-width: 768px) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -92,6 +98,13 @@ body {
         transparent 85%);
     background-repeat: repeat, no-repeat;
     background-size: 400px 400px, 100% 100%;
+    background-attachment: scroll, scroll;
+  }
+}
+
+/* background-attachment:fixed kills scroll perf on mobile Chromium — desktop only */
+@media (min-width: 768px) {
+  body {
     background-attachment: fixed, fixed;
   }
 }
@@ -177,6 +190,7 @@ body {
     background-size: 256px 256px;
     pointer-events: none;
     z-index: 1;
+    contain: strict;
   }
   /* Warm radial glow — subtle center spotlight + edge vignette with smooth transitions */
   .grain::after {
@@ -197,6 +211,7 @@ body {
         rgba(0, 0, 0, 0.25) 100%);
     pointer-events: none;
     z-index: 1;
+    contain: strict;
   }
 
   /* Subtle texture for light sections - canvas/linen feel */

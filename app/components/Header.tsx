@@ -52,9 +52,11 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
   }, [isHomepage, location.pathname]);
 
   // Dark frosted glass — consistent across all states
+  // Mobile: solid bg (no backdrop-blur) to avoid scroll jank on Chromium-based browsers
+  // Desktop (md+): frosted-glass effect with backdrop-blur
   const headerBg = isScrolled
-    ? 'bg-charcoal/80 backdrop-blur-xl border-b border-white/5'
-    : 'bg-black/20 backdrop-blur-sm border-b border-white/5';
+    ? 'bg-charcoal/95 md:bg-charcoal/80 md:backdrop-blur-xl border-b border-white/5'
+    : 'bg-charcoal/80 md:bg-black/20 md:backdrop-blur-sm border-b border-white/5';
 
   const textColor = 'text-white';
   const hoverColor = 'hover:text-white/60';
@@ -189,7 +191,7 @@ function CartIcon({count, textColor}: {count: number; textColor: string}) {
     <button
       className={`relative cursor-pointer transition-colors duration-300 ${textColor} hover:text-sand`}
       onClick={() => {
-        navigate('/cart');
+        void navigate('/cart');
         (publish as (...args: unknown[]) => void)('cart_viewed', {
           cart,
           prevCart,
