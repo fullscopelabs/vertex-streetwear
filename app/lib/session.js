@@ -50,25 +50,25 @@ export class AppSession {
   }
 
   get has() {
-    return this.#session.has;
+    return this.#session.has.bind(this.#session);
   }
 
   get get() {
-    return this.#session.get;
+    return this.#session.get.bind(this.#session);
   }
 
   get flash() {
-    return this.#session.flash;
+    return this.#session.flash.bind(this.#session);
   }
 
   get unset() {
     this.isPending = true;
-    return this.#session.unset;
+    return this.#session.unset.bind(this.#session);
   }
 
   get set() {
     this.isPending = true;
-    return this.#session.set;
+    return this.#session.set.bind(this.#session);
   }
 
   destroy() {
