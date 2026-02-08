@@ -25,8 +25,11 @@ Performance audits, Lighthouse reports, and score history for Vertex Streetwear 
 performance/
 ├── README.md                                           # This file
 │
+├── plans/                                               # Remediation plans per report
+│   └── YYYY-MM-DDTHH-MM-SSZ-*-remediation.md            # e.g. 2026-02-08T16-19-36Z-vertex-live-remediation.md
+│
 ├── reports/                                             # Lighthouse JSON & HTML
-│   └── YYYY-MM-DDTHH-MM-SSZ-lighthouse.[json|html]     # Full report artifacts
+│   └── [hostname]-YYYYMMDDTHHMMSS.json                 # Full report artifacts
 │
 └── scores/                                              # Extracted scores & summaries
     └── YYYY-MM-DDTHH-MM-SSZ-scores.json                # Optional score-only snapshot
@@ -38,9 +41,13 @@ performance/
 
 All files use **ISO 8601** timestamps (UTC).
 
+### Plans
+
+Remediation plans for specific Lighthouse runs live in `plans/`. Name format: `YYYY-MM-DDTHH-MM-SSZ-{context}-remediation.md` (ISO 8601 timestamp + context; e.g. `2026-02-08T16-19-36Z-vertex-live-remediation.md`).
+
 ### Reports
 
-**Format:** `YYYY-MM-DDTHH-MM-SSZ-lighthouse.[json|html]`
+**Format:** `[hostname]-YYYYMMDDTHHMMSS.json` or `YYYY-MM-DDTHH-MM-SSZ-lighthouse.[json|html]`
 
 - Example: `2026-02-08T20-00-00Z-lighthouse.json`
 - Example: `2026-02-08T20-00-00Z-lighthouse.html`
@@ -54,6 +61,8 @@ All files use **ISO 8601** timestamps (UTC).
 ---
 
 ## 🔄 Running Lighthouse
+
+**Run context:** A Lighthouse run against the **local dev server** is not representative of production (unminified bundles, HMR). For meaningful performance scores, run against a **production build** (e.g. `npm run build && npm run preview`) or the **live/staging** URL.
 
 ### Option 1: Chrome DevTools
 
@@ -84,12 +93,20 @@ For CI/CD, use [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) an
 ### Committed to Git
 
 ✅ `performance/README.md`  
+✅ `performance/plans/*.md` (remediation plans)  
 ✅ `performance/reports/*.json` (compact; good for diffing)  
 ✅ `performance/scores/*.json` (if used)
 
 ### Optional: Ignore in .gitignore
 
 ❌ `performance/reports/*.html` (large; add to `.gitignore` if you prefer not to commit HTML)
+
+---
+
+## ⚠️ Known issues (live / platform)
+
+- **robots.txt invalid (SEO):** On the live site, `robots.txt` may contain a platform-injected line (e.g. `Content-Signal: search=yes,ai-train=no`) that Lighthouse flags as an "Unknown directive." The app does not emit this; remediation is with the platform team.
+- **Render-blocking:** App and reset CSS contribute to render-blocking time (~350 ms in recent runs). Reducing this further would require critical-CSS or deferral with FOUC/hydration testing.
 
 ---
 
