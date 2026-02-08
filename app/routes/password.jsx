@@ -1,26 +1,90 @@
-import {useLoaderData, Link, useSearchParams} from 'react-router';
+import {useLoaderData, Link} from 'react-router';
+
+/**
+ * Allowed path prefixes for return_to values.
+ * Only these paths are considered valid redirect targets after authentication.
+ * This prevents open redirect attacks via cookie or query param manipulation.
+ */
+const ALLOWED_RETURN_PATHS = [
+  '/checkouts/',
+  '/cart/c/',
+  '/collections/',
+  '/products/',
+  '/account',
+];
+
+/**
+ * Validates and sanitizes a return URL to prevent open redirect attacks.
+ * Only allows relative paths matching known safe prefixes.
+ * 
+ * @param {string|null} value - The raw return URL value
+ * @returns {string|null} - Sanitized relative path or null if invalid
+ */
+function sanitizeReturnTo(value) {
+  if (!value || typeof value !== 'string') return null;
+  
+  let decoded;
+  try {
+    decoded = decodeURIComponent(value.trim());
+  } catch {
+    return null;
+  }
+  
+  // Block absolute URLs, protocol-relative URLs, and data URIs
+  if (
+    decoded.includes('://') ||
+    decoded.startsWith('//') ||
+    decoded.startsWith('data:') ||
+    decoded.startsWith('javascript:') ||
+    decoded.includes('\\')
+  ) {
+    return null;
+  }
+  
+  // Must start with /
+  if (!decoded.startsWith('/')) return null;
+  
+  // Must match an allowed path prefix
+  const isAllowed = ALLOWED_RETURN_PATHS.some((prefix) => 
+    decoded.startsWith(prefix)
+  );
+  
+  return isAllowed ? decoded : null;
+}
 
 /**
  * Password page for password-protected stores.
- * Displays a password form that submits to Shopify's password verification.
+ * Reads checkout URL from cookie (set by checkout redirect routes) so users
+ * are sent directly to checkout after successful authentication.
+ *
+ * Security measures:
+ * - Cookie is HttpOnly + Secure + SameSite=Lax (set by checkout routes)
+ * - return_to values are validated against an allowlist of safe path prefixes
+ * - Absolute URLs, protocol-relative URLs, and data URIs are blocked
  *
  * @param {Route.LoaderArgs}
  */
 export async function loader({request, context}) {
   const url = new URL(request.url);
   
-  // Get return URL - preserve checkout URLs
-  const returnTo = url.searchParams.get('return_to') || 
-                   url.searchParams.get('checkout_url') || 
-                   url.pathname.includes('checkout') ? url.pathname + url.search : '/';
+  // Read checkout return URL from cookie (set by checkout redirect routes)
+  const cookieHeader = request.headers.get('Cookie') || '';
+  const cookieMatch = cookieHeader.match(/checkout_return_to=([^;]*)/);
+  const rawCookieValue = cookieMatch ? cookieMatch[1] : null;
   
-  // Check if this is an error redirect (wrong password)
-  const error = url.searchParams.get('error');
+  // Validate all potential return_to sources against allowlist
+  const returnTo = sanitizeReturnTo(rawCookieValue) || 
+                   sanitizeReturnTo(url.searchParams.get('return_to')) || 
+                   sanitizeReturnTo(url.searchParams.get('checkout_url')) || 
+                   '/';
+  
+  const isCheckout = returnTo.startsWith('/checkouts/') || 
+                     returnTo.startsWith('/cart/c/');
   
   return {
     storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     returnTo,
-    error: error === 'password' ? 'Incorrect password. Please try again.' : null,
+    isCheckout,
   };
 }
 
@@ -32,11 +96,7 @@ export const meta = () => {
 };
 
 export default function Password() {
-  const {storeDomain, returnTo, error} = useLoaderData();
-  const [searchParams] = useSearchParams();
-  
-  // Determine if user is trying to checkout
-  const isCheckout = returnTo.includes('checkout') || returnTo.includes('cart');
+  const {storeDomain, returnTo, isCheckout} = useLoaderData();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-charcoal via-charcoal/95 to-charcoal/90 px-4 py-12">
@@ -71,18 +131,6 @@ export default function Password() {
               }
             </p>
           </div>
-
-          {/* Error Message */}
-          {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
-              <div className="flex items-start">
-                <svg className="w-5 h-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-                <p className="text-sm text-red-800 font-medium">{error}</p>
-              </div>
-            </div>
-          )}
 
           {/* Password Form - submits to Shopify's password endpoint */}
           <form
