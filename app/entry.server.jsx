@@ -56,6 +56,10 @@ export default async function handleRequest(
 
   responseHeaders.set('Content-Type', 'text/html');
   responseHeaders.set('Content-Security-Policy', header);
+  
+  // Additional security headers (addresses StackHawk findings)
+  // Note: X-Content-Type-Options and other headers are set globally in server.js
+  // CSP is already configured via Hydrogen's createContentSecurityPolicy above
 
   return new Response(body, {
     headers: responseHeaders,
