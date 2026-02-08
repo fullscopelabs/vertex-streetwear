@@ -1,0 +1,78 @@
+# StackHawk Configuration for Vertex Streetwear
+# https://docs.stackhawk.com/hawkscan/configuration/
+
+app:
+  # Application ID from StackHawk platform
+  applicationId: bd5d46c2-200f-4915-97c8-71f31e13fcfe
+  
+  # Environment (dev, staging, production)
+  env: dev
+  
+  # Application host URL
+  # For local: http://localhost:3000
+  # For production: https://your-production-url.com
+  host: http://localhost:3000
+
+# Web application configuration
+hawk:
+  # Spider configuration - how HawkScan discovers your app
+  spider:
+    # Base path to start crawling
+    base: true
+    
+    # Maximum depth to crawl
+    maxDepth: 10
+    
+    # URL patterns to include
+    # include:
+    #   - ".*"
+    
+    # URL patterns to exclude
+    exclude:
+      - ".*/api/.*graphql.*"  # Exclude GraphQL introspection
+      - ".*/account/logout.*"  # Avoid logging out during scan
+      - ".*/cart/.*"  # Avoid cart modifications
+
+# Authentication configuration (if needed)
+# auth:
+#   type: cookie
+#   cookieName: session
+#   cookieValue: ${SESSION_COOKIE}
+
+# API scanning configuration
+# graphql:
+#   enabled: true
+#   schemaPath: /api/graphql
+#   queryDepth: 5
+
+# Custom headers (if needed)
+# customHeaders:
+#   - name: X-Custom-Header
+#     value: ${HEADER_VALUE}
+
+# Scan configuration
+scanConfig:
+  # What to test for
+  tests:
+    - categoryId: INJECTION
+    - categoryId: BROKEN_AUTHENTICATION
+    - categoryId: SENSITIVE_DATA_EXPOSURE
+    - categoryId: XXE
+    - categoryId: BROKEN_ACCESS_CONTROL
+    - categoryId: SECURITY_MISCONFIGURATION
+    - categoryId: XSS
+    - categoryId: INSECURE_DESERIALIZATION
+    - categoryId: USING_COMPONENTS_WITH_KNOWN_VULNERABILITIES
+    - categoryId: INSUFFICIENT_LOGGING_AND_MONITORING
+
+# Tags for organization
+tags:
+  - name: project
+    value: vertex-streetwear
+  - name: framework
+    value: hydrogen
+  - name: language
+    value: javascript
+
+# Reporting
+# failureThreshold: medium  # Fail scan if medium or higher vulnerabilities found
