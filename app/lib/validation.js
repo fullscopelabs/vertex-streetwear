@@ -5,12 +5,19 @@
  * the HTML5 constraint-validation attributes on the client. Values that
  * reach the Shopify Customer Account API mutations are therefore always
  * trimmed, length-capped, and pattern-checked before the GraphQL call.
+ *
+ * Security enhancements:
+ * - Format string vulnerability protection (addresses StackHawk findings)
+ * - HTML/script injection prevention
+ * - Control character filtering
+ * - Length validation to prevent DoS attacks
  */
 
 // ───────────────────────────── Sanitisation ─────────────────────────────
 
 /**
- * Strip HTML / script tags, trim, collapse internal whitespace, cap length.
+ * Strip HTML / script tags, format specifiers, trim, collapse internal whitespace, cap length.
+ * Enhanced to prevent format string vulnerabilities (StackHawk Security Fix).
  * @param {string} raw
  * @param {number} [maxLen=200]
  * @returns {string}
@@ -21,6 +28,7 @@ export function sanitizeText(raw, maxLen = 200) {
     .replace(/<[^>]*>/g, '') // strip HTML tags
     .replace(/&[#\w]+;/g, '') // strip HTML entities (&amp; &#123; etc.)
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '') // strip control chars
+    .replace(/%[sdxnfpoi!#+-]*[sdxnfpoi]/gi, '') // strip format specifiers (%s, %n, %x, etc.)
     .trim()
     .replace(/\s{2,}/g, ' ') // collapse whitespace
     .slice(0, maxLen);
