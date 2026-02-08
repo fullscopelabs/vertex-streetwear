@@ -157,7 +157,8 @@ export function Layout({children}) {
             The html background-color is set as an element attribute above
             so the page is bone from the very first byte — never white. */}
         <style
-          nonce={nonce}
+          nonce={nonce || undefined}
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{__html: 'body{opacity:0}'}}
         />
         <Links />
