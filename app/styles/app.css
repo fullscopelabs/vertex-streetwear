@@ -191,6 +191,20 @@ body {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--color-sand), transparent);
   }
+
+  /* Trigram styling for V☰RTEX brand mark
+     Ensures consistent height matching across all browsers,
+     even with ad-blockers and script blockers in Firefox */
+  .trigram {
+    display: inline;
+    font-size: 0.85em !important;
+    line-height: inherit !important;
+    vertical-align: baseline !important;
+    font-family: inherit !important;
+    /* Prevent any browser extension interference */
+    font-style: inherit !important;
+    font-weight: inherit !important;
+  }
 }
 
 /* ═══════════════════════════════════════════

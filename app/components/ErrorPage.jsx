@@ -56,17 +56,7 @@ export function ErrorPage({
             style={{letterSpacing: '0.12em'}}
             aria-label="Return to V☰RTEX homepage"
           >
-            V
-            <span
-              style={{
-                fontSize: '0.85em',
-                lineHeight: 1,
-                verticalAlign: 'baseline',
-              }}
-            >
-              ☰
-            </span>
-            RTEX
+                V<span className="trigram">☰</span>RTEX
           </Link>
         </div>
 

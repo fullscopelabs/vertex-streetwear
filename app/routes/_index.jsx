@@ -98,7 +98,7 @@ function HeroSection({heroProduct}) {
           style={{letterSpacing: '0.12em'}}
         >
           <span className="inline-block" style={{letterSpacing: '0.15em'}}>
-            V<span style={{fontSize: '0.85em', lineHeight: 1, verticalAlign: 'baseline'}}>☰</span>RTEX
+            V<span className="trigram">☰</span>RTEX
           </span>
         </h1>
         <div className="divider-lux mt-4 mb-4 md:mt-6 md:mb-6" />
@@ -176,7 +176,7 @@ function EditorialHero({heroProduct}) {
             </h2>
             <div className="divider-lux mt-6 mb-6" />
             <p className="text-bone/60 text-sm leading-relaxed">
-              A cornerstone piece of the <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span> collection. Designed for those
+              A cornerstone piece of the <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> collection. Designed for those
               who demand precision in every detail.
             </p>
             <p className="text-xl font-semibold mt-6 tracking-wide text-bone">
@@ -250,7 +250,7 @@ function BrandStory() {
         </h2>
         <div className="divider-lux mx-auto mb-10" />
         <p className="text-bone/80 leading-relaxed text-lg">
-          Every <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span> piece begins with intention. We source premium fabrics and
+          Every <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> piece begins with intention. We source premium fabrics and
           work with skilled artisans to create streetwear that stands the test of
           time — both in durability and design. Our collections are rooted in the
           belief that contemporary style should be accessible, sustainable, and

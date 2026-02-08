@@ -61,7 +61,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
                 letterSpacing: '0.2em',
               }}
             >
-              V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX
+              V<span className="trigram">☰</span>RTEX
             </span>
             <button
               onClick={onClose}

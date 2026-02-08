@@ -47,7 +47,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                 <div className="pb-6 border-b border-bone/10 md:border-b-0 md:pb-0">
                   <Link to="/" className="inline-block">
                     <h3 className="font-serif text-xl sm:text-2xl" style={{letterSpacing: '0.2em'}}>
-                      V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX
+                      V<span className="trigram">☰</span>RTEX
                     </h3>
                   </Link>
                   <p className="text-bone/40 text-xs sm:text-sm mt-3 sm:mt-4 leading-relaxed max-w-xs">
@@ -199,7 +199,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
             <div className="border-t border-bone/10">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
                 <p className="text-[10px] sm:text-[11px] text-bone/25 tracking-wide sm:tracking-wider text-center md:text-left">
-                  &copy; {new Date().getFullYear()} <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span>. All rights reserved.
+                  &copy; {new Date().getFullYear()} <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span>. All rights reserved.
                 </p>
                 <div className="flex items-center gap-4 sm:gap-6">
                   <Link

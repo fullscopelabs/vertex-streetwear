@@ -75,7 +75,7 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
               letterSpacing: '0.2em',
             }}
           >
-            V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX
+            V<span className="trigram">☰</span>RTEX
           </NavLink>
 
           {/* Desktop Navigation */}
