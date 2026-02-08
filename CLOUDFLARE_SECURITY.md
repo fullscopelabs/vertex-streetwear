@@ -133,7 +133,7 @@ Cloudflare provides automatic DDoS protection at L3/L4 (network layer) and L7 (a
 Use **Cloudflare Access** (Zero Trust) to add an authentication layer before your app:
 
 1. Dashboard → **Zero Trust** → **Access** → **Applications**
-2. Create application for `vertex.sites.fullscopelabs.com/admin/*` (if you add admin routes)
+2. Create application for `your-store.pages.dev/admin/*` (if you add admin routes)
 3. Require authentication (email OTP, Google OAuth, etc.)
 
 ---
@@ -195,7 +195,7 @@ Use **Cloudflare Access** (Zero Trust) to add an authentication layer before you
 ```bash
 # Send 20 rapid requests to account endpoint
 for i in {1..20}; do
-  curl https://vertex.sites.fullscopelabs.com/account/orders
+  curl https://your-store.pages.dev/account/orders
 done
 # Expected: First 10 succeed, next 10 get rate limited
 ```
@@ -208,7 +208,7 @@ Try submitting `<script>alert('xss')</script>` in form fields → Should be stri
 
 ```bash
 # Try POST from different origin
-curl -X POST https://vertex.sites.fullscopelabs.com/account/profile \
+curl -X POST https://your-store.pages.dev/account/profile \
   -H "Origin: https://evil.com" \
   -d "firstName=Hacker"
 # Expected: Blocked by CORS/SameSite
