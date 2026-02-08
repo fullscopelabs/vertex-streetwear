@@ -36,7 +36,7 @@ export default function Policies() {
   const {policies} = useLoaderData();
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       <PageHero title="Policies" subtitle="Legal & Store Information" />
 
       <section className="section-padding">

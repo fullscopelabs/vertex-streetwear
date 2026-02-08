@@ -39,7 +39,7 @@ export default function SearchPage() {
   if (type === 'predictive') return null;
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       {/* Dark hero search area */}
       <section className="relative bg-gradient-to-br from-charcoal via-tobacco to-forest overflow-hidden grain dark-accent-border">
         <div className="relative z-10 max-w-3xl mx-auto px-6 py-14 md:py-20 text-center">

@@ -106,7 +106,7 @@ export default function Collections() {
   }
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       <PageHero title="Collections" subtitle="Explore Our Range" />
 
       {/* Table-of-contents index strip */}

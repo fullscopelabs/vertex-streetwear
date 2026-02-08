@@ -63,7 +63,7 @@ export default function Blogs() {
 
   return (
     <div className="min-h-screen page-fade-in">
-      <div className="bg-gradient-to-b from-bone-dark via-bone to-bone">
+      <div className="gradient-warm-seamless texture-canvas">
         <PageHero title="Journal" subtitle="Stories & Editorials" />
 
         <section className="py-16 md:py-20">
@@ -77,7 +77,7 @@ export default function Blogs() {
                       to={`/blogs/${blog.handle}`}
                       className="group block mb-8"
                     >
-                      <article className="bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-8 md:p-10 hover:border-sand/30 transition-all duration-500 hover:shadow-lg">
+                      <article className="card-premium-light p-8 md:p-10">
                         <div className="flex items-start justify-between gap-6">
                           <div className="flex-1">
                             <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal group-hover:text-rust transition-colors duration-300 mb-4">
@@ -112,7 +112,7 @@ export default function Blogs() {
               </PaginatedResourceSection>
             ) : (
               <div className="max-w-2xl mx-auto">
-                <ScrollReveal className="text-center py-20 bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-12">
+                <ScrollReveal className="text-center py-20 card-premium-light p-12">
                   <div className="divider-sand max-w-xs mx-auto mb-8" />
                   <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal mb-4">
                     Coming Soon

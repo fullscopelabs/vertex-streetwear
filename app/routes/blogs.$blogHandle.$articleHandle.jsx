@@ -120,14 +120,14 @@ export default function Article() {
         </div>
       </section>
 
-      {/* Content wrapper with gradient */}
-      <div className="bg-gradient-to-b from-bone to-bone-dark">
+      {/* Content wrapper with warm gradient */}
+      <div className="gradient-warm-seamless texture-canvas">
         <article>
           {/* Hero image with premium framing */}
           {image && (
             <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
               <ScrollReveal>
-                <div className="relative overflow-hidden border border-charcoal/10 bg-bone-dark/40 backdrop-blur-sm p-4 md:p-6">
+                <div className="relative overflow-hidden card-premium-light p-4 md:p-6">
                   <Image
                     data={image}
                     sizes="(min-width: 768px) 80vw, 100vw"
@@ -142,7 +142,7 @@ export default function Article() {
           {/* Article body with premium card */}
           <div className="max-w-4xl mx-auto px-4 pb-16 md:pb-20">
             <ScrollReveal>
-              <div className="bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-8 md:p-12 lg:p-16">
+              <div className="card-premium-light p-8 md:p-12 lg:p-16">
                 <div
                   className="cms-prose text-base md:text-lg leading-relaxed"
                   dangerouslySetInnerHTML={{__html: contentHtml}}
@@ -153,7 +153,7 @@ export default function Article() {
         </article>
 
         {/* Back to journal CTA with premium styling */}
-        <section className="border-t border-charcoal/10 bg-bone">
+        <section className="border-t border-charcoal/10 bg-cream/40">
           <div className="max-w-4xl mx-auto px-4 py-16 md:py-20 text-center">
             <ScrollReveal>
               <div className="divider-sand max-w-xs mx-auto mb-8" />

@@ -89,7 +89,7 @@ export default function Collection() {
   const hasImage = !!collection.image;
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       {/* Hero Banner */}
       {hasImage ? (
         <section className="relative h-[240px] md:h-[320px] overflow-hidden grain">

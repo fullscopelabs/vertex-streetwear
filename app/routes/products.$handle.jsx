@@ -113,8 +113,8 @@ export default function Product() {
 
   return (
     <div className="min-h-screen page-fade-in">
-      {/* Hero gradient background */}
-      <div className="bg-gradient-to-b from-bone-dark via-bone to-bone">
+      {/* Warm gradient background with subtle tonal shifts */}
+      <div className="gradient-warm-seamless texture-canvas">
         <div className="max-w-[1400px] mx-auto py-12 md:py-16 px-4">
           {/* Two-column layout */}
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
@@ -126,8 +126,8 @@ export default function Product() {
             {/* RIGHT — Product Info (45%, sticky) */}
             <div className="w-full lg:w-[45%]">
               <div className="lg:sticky lg:top-24">
-                {/* Premium info card */}
-                <div className="bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-8 md:p-10">
+                  {/* Premium info card with warm tones */}
+                  <div className="card-premium-light p-8 md:p-10">
                   {/* Title */}
                   <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight text-charcoal leading-tight">
                     {title}
@@ -231,7 +231,7 @@ export default function Product() {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                     {related.slice(0, 4).map((relProduct, i) => (
                       <ScrollReveal key={relProduct.id} delay={i * 100}>
-                        <div className="bg-bone-dark/90 backdrop-blur-sm border border-sand/20 p-4 hover:border-sand/40 transition-all duration-300">
+                        <div className="card-product-accent p-4">
                           <ProductCard
                             product={relProduct}
                             loading={i < 2 ? 'eager' : 'lazy'}

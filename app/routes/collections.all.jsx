@@ -60,7 +60,7 @@ export default function AllProducts() {
   const remainingProducts = allNodes.slice(1);
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       {/* Dark Hero Band */}
       <PageHero title="All Products" subtitle="The Full Collection">
         <p className="text-[10px] tracking-[0.3em] text-bone/40 uppercase">

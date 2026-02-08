@@ -93,7 +93,7 @@ export default function AccountLayout() {
     : 'Account Details';
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       <PageHero title={heading} subtitle="Your Account" />
 
       {/* Preview banner */}

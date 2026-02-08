@@ -68,7 +68,7 @@ export default function Page() {
   const {page} = useLoaderData();
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       <PageHero title={page.title} />
 
       {/* CMS content */}

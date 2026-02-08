@@ -76,8 +76,7 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen page-fade-in">
-      {/* Premium gradient background */}
-      <div className="bg-gradient-to-b from-bone-dark via-bone to-bone">
+      <div className="gradient-warm-seamless texture-canvas">
         <PageHero title={blog.title} subtitle="Stories & Editorials" />
 
         <section className="py-16 md:py-20">
@@ -97,8 +96,8 @@ export default function Blog() {
                 )}
               </PaginatedResourceSection>
             ) : (
-              <div className="max-w-2xl mx-auto">
-                <ScrollReveal className="text-center py-20 bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-12">
+                <div className="max-w-2xl mx-auto">
+                  <ScrollReveal className="text-center py-20 card-premium-light p-12">
                   <div className="divider-sand max-w-xs mx-auto mb-8" />
                   <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal mb-4">
                     Stories Coming Soon
@@ -142,7 +141,7 @@ function ArticleItem({article, loading}) {
       className="group block h-full"
       key={article.id}
     >
-      <article className="h-full flex flex-col bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 overflow-hidden hover:border-sand/30 transition-all duration-500 hover:shadow-lg">
+      <article className="h-full flex flex-col card-premium-light overflow-hidden">
         {article.image && (
           <div className="relative aspect-[4/3] overflow-hidden bg-charcoal/5">
             <Image

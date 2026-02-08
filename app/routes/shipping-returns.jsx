@@ -11,7 +11,7 @@ export const meta = () => {
 
 export default function ShippingReturns() {
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       <PageHero title="Shipping & Returns" subtitle="Everything You Need to Know" />
 
       {/* Quick summary cards */}

@@ -124,7 +124,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       <PageHero title="Your Cart" subtitle="Review Your Selection">
         <p className="text-[10px] tracking-[0.3em] text-bone/40 uppercase">
           {lines.length} {lines.length === 1 ? 'Item' : 'Items'}
@@ -171,7 +171,7 @@ export default function Cart() {
 
 function CartEmpty() {
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
+    <div className="min-h-screen page-fade-in texture-canvas">
       <PageHero title="Your Cart" subtitle="Review Your Selection" />
       <div className="max-w-7xl mx-auto section-padding">
         <div className="text-center py-12">
