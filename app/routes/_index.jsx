@@ -1,5 +1,5 @@
 import {useLoaderData, Link} from 'react-router';
-import {Money} from '@shopify/hydrogen';
+import {Image, Money} from '@shopify/hydrogen';
 import {ScrollReveal} from '~/components/ScrollReveal';
 
 /**
@@ -130,9 +130,12 @@ function HeroSection({heroProduct}) {
     <section className="relative min-h-screen bg-charcoal overflow-hidden">
       {/* Full-bleed background image */}
       {heroImage && (
-        <img
-          src={heroImage.url}
+        <Image
+          data={heroImage}
           alt={heroImage.altText || 'V☰RTEX hero'}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
       )}
@@ -212,9 +215,10 @@ function EditorialHero({heroProduct}) {
         {/* Image — 60% */}
         {image && (
           <div className="w-full md:w-[60%] relative overflow-hidden">
-            <img
-              src={image.url}
+            <Image
+              data={image}
               alt={image.altText || heroProduct.title}
+              sizes="(min-width: 768px) 60vw, 100vw"
               className="w-full h-full object-cover min-h-[400px] md:min-h-0"
             />
           </div>
