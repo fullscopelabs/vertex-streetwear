@@ -30,6 +30,9 @@ export default async function handleRequest(
     styleSrc: ['https://fonts.googleapis.com'],
     fontSrc: ['https://fonts.gstatic.com'],
     connectSrc: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+    // Allow Cloudflare Insights beacon when injected by hosting (avoids console CSP error).
+    // CSP requires 'self' (quoted); include app scripts, Shopify (e.g. consent-tracking), and Cloudflare.
+    scriptSrc: ["'self'", 'https://cdn.shopify.com', 'https://static.cloudflareinsights.com'],
     // Allow data: URIs for inline SVG textures (grain, texture-canvas, body bg).
     // Added to defaultSrc (not imgSrc) so it extends the existing directive
     // without creating a separate img-src that would override the fallback.
@@ -60,7 +63,7 @@ export default async function handleRequest(
 
   responseHeaders.set('Content-Type', 'text/html');
   responseHeaders.set('Content-Security-Policy', header);
-  
+
   // Additional security headers (addresses StackHawk findings)
   // Note: X-Content-Type-Options and other headers are set globally in server.js
   // CSP is already configured via Hydrogen's createContentSecurityPolicy above
