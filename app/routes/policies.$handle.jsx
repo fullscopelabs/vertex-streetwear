@@ -4,6 +4,28 @@ import {PageHero} from '~/components/PageHero';
 
 /** Static fallback content for policies that aren't configured in Shopify CMS */
 const FALLBACK_POLICIES = {
+  'privacy-policy': {
+    title: 'Privacy Policy',
+    body: `
+      <h2>Information We Collect</h2>
+      <p>We collect information you provide (e.g. account, orders, contact forms) and usage data to operate and improve our store.</p>
+
+      <h2>How We Use Your Information</h2>
+      <p>We use your information to process orders, communicate with you, and improve our services. We do not sell your personal information.</p>
+
+      <h2>Data Retention &amp; Security</h2>
+      <p>We retain your data as needed for the purposes above and for legal compliance. We use appropriate technical and organizational measures to protect your data.</p>
+
+      <h2>Recognized Transfer Mechanisms</h2>
+      <p>Where we transfer data outside your jurisdiction, we use recognized transfer mechanisms (e.g. European Commission Standard Contractual Clauses, UK equivalents) where required.</p>
+
+      <h2>Changes to This Privacy Policy</h2>
+      <p>We may update this policy from time to time. Revisions will be posted on this page with an updated &quot;Last updated&quot; date.</p>
+
+      <h2>Contact</h2>
+      <p>If you have questions about our privacy practices or this Privacy Policy, or wish to exercise your rights, please contact us at <a href="mailto:support@vertexstreetwear.com">support@vertexstreetwear.com</a>.</p>
+    `,
+  },
   'terms-of-service': {
     title: 'Terms of Service',
     body: `
