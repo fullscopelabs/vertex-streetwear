@@ -147,11 +147,11 @@ export function Layout({children}) {
   const nonce = useNonce();
 
   return (
-    <html lang="en" style={{backgroundColor: '#F5F5F0'}}>
+    <html lang="en" style={{backgroundColor: '#F2EFE9'}}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="theme-color" content="#F5F5F0" />
+        <meta name="theme-color" content="#F2EFE9" />
         <meta name="color-scheme" content="light" />
         {/* Hide body until app.css loads and sets opacity:1.
             The html background-color is set as an element attribute above
