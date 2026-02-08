@@ -72,25 +72,25 @@ This report documents fixes and triage applied after the StackHawk scan and audi
 
 ## Triage only (no code change)
 
-| Finding | Count | Action |
-|--------|-------|--------|
-| **SQL Injection (CWE-89)** | 10 | False positive. App uses Shopify GraphQL only; no raw SQL. Document in audit/report; optionally triage in StackHawk. |
-| **Information Leak – Email** | 11 | Accepted. Public contact/policy emails; no change. |
-| **Information Leak – IBAN** | 10 | False positive. Product codes/locale strings; no change. |
-| **CSP Notices** | 14 | No change. CSP already set in `app/entry.server.jsx` via Hydrogen. |
-| **Cross-Domain JavaScript** | 1 | Accepted. Trusted CDN (e.g. Google Fonts); no change. |
-| **Cookie (session)** | – | Verified. `app/lib/session.js` already uses `httpOnly`, `sameSite: 'lax'`, `secure` in production. |
+| Finding                      | Count | Action                                                                                                               |
+| ---------------------------- | ----- | -------------------------------------------------------------------------------------------------------------------- |
+| **SQL Injection (CWE-89)**   | 10    | False positive. App uses Shopify GraphQL only; no raw SQL. Document in audit/report; optionally triage in StackHawk. |
+| **Information Leak – Email** | 11    | Accepted. Public contact/policy emails; no change.                                                                   |
+| **Information Leak – IBAN**  | 10    | False positive. Product codes/locale strings; no change.                                                             |
+| **CSP Notices**              | 14    | No change. CSP already set in `app/entry.server.jsx` via Hydrogen.                                                   |
+| **Cross-Domain JavaScript**  | 1     | Accepted. Trusted CDN (e.g. Google Fonts); no change.                                                                |
+| **Cookie (session)**         | –     | Verified. `app/lib/session.js` already uses `httpOnly`, `sameSite: 'lax'`, `secure` in production.                   |
 
 ---
 
 ## Files modified
 
-| File | Change |
-|------|--------|
-| `server.js` | `applySecurityHeaders()`; `sanitizeRequestUrl()`; headers on redirect; use sanitized request for context and handler. |
-| `scripts/build-worker.js` | Apply security headers to asset response clone before return. |
-| `app/routes/api.$version.[graphql.json].jsx` | Security headers and CORS on proxied response; do not forward `Set-Cookie`. |
-| `app/root.jsx` | ErrorBoundary: generic `errorMessage` for 500 in production. |
+| File                                         | Change                                                                                                                |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `server.js`                                  | `applySecurityHeaders()`; `sanitizeRequestUrl()`; headers on redirect; use sanitized request for context and handler. |
+| `scripts/build-worker.js`                    | Apply security headers to asset response clone before return.                                                         |
+| `app/routes/api.$version.[graphql.json].jsx` | Security headers and CORS on proxied response; do not forward `Set-Cookie`.                                           |
+| `app/root.jsx`                               | ErrorBoundary: generic `errorMessage` for 500 in production.                                                          |
 
 ---
 
