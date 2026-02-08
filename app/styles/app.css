@@ -8,6 +8,9 @@
   --color-charcoal-light: #4A4A4A;
   --color-bone: #F5F5F0;
   --color-bone-dark: #E8E8E3;
+  --color-cream: #F8F6F3;
+  --color-taupe: #EBE7E0;
+  --color-parchment: #F2EFE9;
   --color-forest: #2A1F17;
   --color-tobacco: #352B22;
   --color-sand: #C4A87C;
@@ -72,10 +75,23 @@ body {
   }
 
   body {
-    @apply bg-bone text-charcoal antialiased;
+    @apply bg-parchment text-charcoal antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    /* Subtle canvas texture for luxury feel - using very gentle radial gradient to avoid banding */
+    background-image: 
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='5' result='noise' seed='2'/%3E%3CfeColorMatrix in='noise' type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.018'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse 90% 70% at 50% 40%, 
+        rgba(196, 168, 124, 0.025) 0%, 
+        rgba(196, 168, 124, 0.020) 20%,
+        rgba(196, 168, 124, 0.015) 40%,
+        rgba(196, 168, 124, 0.010) 55%,
+        rgba(196, 168, 124, 0.005) 70%,
+        transparent 85%);
+    background-repeat: repeat, no-repeat;
+    background-size: 400px 400px, 100% 100%;
+    background-attachment: fixed, fixed;
   }
 }
 
@@ -161,16 +177,96 @@ body {
     pointer-events: none;
     z-index: 1;
   }
-  /* Warm radial glow — subtle center spotlight + edge vignette */
+  /* Warm radial glow — subtle center spotlight + edge vignette with smooth transitions */
   .grain::after {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 70% 60% at 50% 45%, rgba(196, 168, 124, 0.06) 0%, transparent 70%),
-      radial-gradient(ellipse 100% 100% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
+      radial-gradient(ellipse 70% 60% at 50% 45%, 
+        rgba(196, 168, 124, 0.06) 0%, 
+        rgba(196, 168, 124, 0.04) 25%,
+        rgba(196, 168, 124, 0.02) 45%,
+        rgba(196, 168, 124, 0.01) 60%,
+        transparent 75%),
+      radial-gradient(ellipse 100% 100% at 50% 50%, 
+        transparent 40%, 
+        rgba(0, 0, 0, 0.08) 60%,
+        rgba(0, 0, 0, 0.15) 80%,
+        rgba(0, 0, 0, 0.25) 100%);
     pointer-events: none;
     z-index: 1;
+  }
+
+  /* Subtle texture for light sections - canvas/linen feel */
+  .texture-canvas {
+    position: relative;
+    background-image: 
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='canvas'%3E%3CfeTurbulance type='fractalNoise' baseFrequency='0.5' numOctaves='4' seed='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23canvas)' opacity='0.015'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 400px 400px;
+  }
+  .texture-canvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 40%, 
+      rgba(196, 168, 124, 0.025) 0%, 
+      rgba(196, 168, 124, 0.018) 25%,
+      rgba(196, 168, 124, 0.012) 45%,
+      rgba(196, 168, 124, 0.006) 60%,
+      transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  /* Smooth warm gradient - no banding, seamless transitions */
+  .gradient-warm-seamless {
+    background: linear-gradient(
+      to bottom,
+      #F8F6F3 0%,
+      #F6F4F1 15%,
+      #F4F2EF 30%,
+      #F2EFE9 50%,
+      #EFEDE7 70%,
+      #EBE7E0 100%
+    );
+  }
+
+  /* ═══════════════════════════════════════════
+   *  PREMIUM CARD UTILITIES — Reusable frosted cards
+   * ═══════════════════════════════════════════ */
+  
+  /* Light premium card - soft frosted glass effect */
+  .card-premium-light {
+    @apply bg-cream/50 backdrop-blur-md border border-charcoal/4 rounded-lg shadow-sm;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-premium-light:hover {
+    @apply border-sand/25 shadow-md;
+    transform: translateY(-2px);
+  }
+  
+  /* Dark premium card - for use on light backgrounds with more contrast */
+  .card-premium-dark {
+    @apply bg-taupe/60 backdrop-blur-md border border-charcoal/6 rounded-lg shadow-sm;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-premium-dark:hover {
+    @apply border-sand/30 shadow-md;
+    transform: translateY(-2px);
+  }
+  
+  /* Product card wrapper - for "You May Also Like" sections */
+  .card-product-accent {
+    @apply bg-cream/60 backdrop-blur-md border border-sand/15 rounded-md shadow-sm;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-product-accent:hover {
+    @apply border-sand/35 shadow-md;
   }
 
   /* Thin warm accent border on dark sections */
