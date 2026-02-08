@@ -3,10 +3,13 @@ compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist/client"
 
+# Environment variables should be set via Wrangler CLI, CI/CD, or Cloudflare Dashboard
+# Never commit sensitive values to version control
+# Example: wrangler secret put PUBLIC_STOREFRONT_API_TOKEN
 [vars]
-PUBLIC_STOREFRONT_API_TOKEN = "b16646b0ff932ab93485a4b6b10beec7"
-PUBLIC_STORE_DOMAIN = "vertex-streetwear.myshopify.com"
-PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID = "95dfc42e-f405-49f5-b9bd-99785da06f23"
-PUBLIC_CUSTOMER_ACCOUNT_API_URL = "https://shopify.com/98899820913"
-SHOP_ID = "98899820913"
-PUBLIC_CHECKOUT_DOMAIN = "vertex-streetwear.myshopify.com"
+# PUBLIC_STOREFRONT_API_TOKEN = "" # Set via: wrangler secret put PUBLIC_STOREFRONT_API_TOKEN
+# PUBLIC_STORE_DOMAIN = "" # Set via environment
+# PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID = "" # Set via: wrangler secret put PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID
+# PUBLIC_CUSTOMER_ACCOUNT_API_URL = "" # Set via environment
+# SHOP_ID = "" # Set via environment
+# PUBLIC_CHECKOUT_DOMAIN = "" # Set via environment
