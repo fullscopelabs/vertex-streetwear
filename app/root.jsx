@@ -161,10 +161,11 @@ export function Layout({children}) {
           dangerouslySetInnerHTML={{__html: 'body{opacity:0}'}}
         />
         {/* Google Fonts: Cormorant Garamond (serif display face).
-            • display=optional — on reload the font is already cached so it
-              loads instantly with zero swap.  On a cold first visit the
-              fallback is used gracefully (no jarring swap) and the font
-              is cached for next time.
+            • Single font family - no unnecessary fonts to prevent flashing
+            • display=block — waits for font to load (up to ~3s), shows custom font
+              immediately when ready. Only shows fallback if font fails to load.
+            • Prevents font flashing by blocking until Cormorant is ready
+            • Preconnect for faster font loading
             • Render-blocking intentionally so the font CSS (not the files)
               is ready before first paint. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -174,7 +175,7 @@ export function Layout({children}) {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=EB+Garamond:wght@400;500&display=optional"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=block"
           rel="stylesheet"
         />
         <link rel="stylesheet" href={resetStyles}></link>
@@ -258,7 +259,7 @@ export function ErrorBoundary() {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=EB+Garamond:wght@400;500&display=optional"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=block"
           rel="stylesheet"
         />
         <link rel="stylesheet" href={resetStyles}></link>
