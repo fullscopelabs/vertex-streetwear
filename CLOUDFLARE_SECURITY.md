@@ -24,7 +24,8 @@ This guide shows how to configure additional security features in Cloudflare Pag
 Create rate limiting rules to prevent abuse:
 
 #### Rule 1: Account Mutations (High Protection)
-```
+
+```text
 Path: /account/*
 Methods: POST, PUT, DELETE
 Rate: 10 requests per minute per IP
@@ -32,7 +33,8 @@ Action: Block for 10 minutes
 ```
 
 #### Rule 2: Account Page Views (Medium Protection)
-```
+
+```text
 Path: /account/*
 Methods: GET
 Rate: 30 requests per minute per IP
@@ -40,13 +42,15 @@ Action: Challenge (CAPTCHA)
 ```
 
 #### Rule 3: Login Endpoint (Critical Protection)
-```
+
+```text
 Path: /account/authorize
 Rate: 5 requests per 5 minutes per IP
 Action: Block for 30 minutes
 ```
 
 ### Configuration Steps
+
 1. Dashboard → **Security** → **WAF** → **Rate limiting rules**
 2. Click **Create rule**
 3. Set matching criteria (path, method)
@@ -61,7 +65,7 @@ Action: Block for 30 minutes
 
 Add these via Cloudflare **Transform Rules** → **HTTP Response Headers**:
 
-```
+```text
 Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 X-Frame-Options: DENY
 X-Content-Type-Options: nosniff
@@ -85,6 +89,7 @@ Permissions-Policy: geolocation=(), microphone=(), camera=()
    - ⚠️ Likely automated (challenge)
 
 ### Challenge Pages
+
 - `/account/*` → Definitely challenge suspicious traffic
 - `/checkout/*` → High protection
 - `/cart` → Medium protection
@@ -96,6 +101,7 @@ Permissions-Policy: geolocation=(), microphone=(), camera=()
 Cloudflare provides automatic DDoS protection at L3/L4 (network layer) and L7 (application layer).
 
 ### Additional Configuration
+
 1. Dashboard → **Security** → **DDoS**
 2. Enable **HTTP DDoS Attack Protection** (on by default)
 3. Set sensitivity: **High** for account routes
@@ -114,6 +120,7 @@ Cloudflare provides automatic DDoS protection at L3/L4 (network layer) and L7 (a
    - Rate limit triggers
 
 ### Log Analysis
+
 - Export security events to **Logpush** (paid feature)
 - Integrate with SIEM tools (Splunk, Datadog, etc.)
 
@@ -136,21 +143,25 @@ Use **Cloudflare Access** (Zero Trust) to add an authentication layer before you
 ### Paid Features (Pro/Business/Enterprise)
 
 #### 1. **Advanced Rate Limiting**
+
 - Per-session limits (not just per-IP)
 - Burst handling (10 req/sec, 100 req/min)
 - Custom rules by user agent, country, API endpoint
 
 #### 2. **Page Shield** (Pro+)
+
 - Detects malicious third-party scripts
 - Alerts on suspicious JavaScript behavior
 - Monitors for Magecart/supply chain attacks
 
 #### 3. **WAF Custom Rules** (Pro+)
+
 - Block specific attack patterns
 - GeoIP blocking (e.g., block traffic from certain countries)
 - Custom regex matching on request body
 
 #### 4. **Advanced DDoS** (Enterprise)
+
 - Adaptive rate limiting
 - Custom thresholds per endpoint
 - Real-time attack mitigation
@@ -160,6 +171,7 @@ Use **Cloudflare Access** (Zero Trust) to add an authentication layer before you
 ## ⚙️ Configuration Checklist
 
 ### Essential (Free Tier)
+
 - [ ] Enable WAF OWASP Core Ruleset
 - [ ] Enable Cloudflare Managed Ruleset
 - [ ] Create rate limiting rule for `/account/*` (10 req/min)
@@ -168,6 +180,7 @@ Use **Cloudflare Access** (Zero Trust) to add an authentication layer before you
 - [ ] Set up email alerts for security events
 
 ### Recommended (Pro Tier)
+
 - [ ] Enable Page Shield
 - [ ] Create custom WAF rules for your API
 - [ ] Advanced rate limiting with burst control
@@ -178,6 +191,7 @@ Use **Cloudflare Access** (Zero Trust) to add an authentication layer before you
 ## 🧪 Testing Your Configuration
 
 ### 1. Rate Limiting Test
+
 ```bash
 # Send 20 rapid requests to account endpoint
 for i in {1..20}; do
@@ -187,9 +201,11 @@ done
 ```
 
 ### 2. XSS Test
+
 Try submitting `<script>alert('xss')</script>` in form fields → Should be stripped
 
 ### 3. CSRF Test
+
 ```bash
 # Try POST from different origin
 curl -X POST https://vertex.sites.fullscopelabs.com/account/profile \
@@ -199,6 +215,7 @@ curl -X POST https://vertex.sites.fullscopelabs.com/account/profile \
 ```
 
 ### 4. Bot Test
+
 Use automated tools (Selenium, Puppeteer) → Should be challenged
 
 ---
@@ -206,15 +223,17 @@ Use automated tools (Selenium, Puppeteer) → Should be challenged
 ## 📞 Support
 
 **Cloudflare Support:**
+
 - Free: Community forums
 - Pro: Email support (24–48h)
 - Business: Chat support (8h response)
 - Enterprise: 24/7 phone support
 
 **Documentation:**
-- https://developers.cloudflare.com/fundamentals/security/
-- https://developers.cloudflare.com/waf/
-- https://developers.cloudflare.com/ddos-protection/
+
+- <https://developers.cloudflare.com/fundamentals/security/>
+- <https://developers.cloudflare.com/waf/>
+- <https://developers.cloudflare.com/ddos-protection/>
 
 ---
 

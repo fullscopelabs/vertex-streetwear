@@ -1,6 +1,7 @@
 # Security Documentation
 
 ## Overview
+
 Security audits, scan results, and remediation reports for Vertex Streetwear application.
 
 ---
@@ -21,7 +22,7 @@ Security audits, scan results, and remediation reports for Vertex Streetwear app
 
 ## 📁 Folder Structure
 
-```
+```text
 security/
 ├── README.md                                        # This file
 │
@@ -41,6 +42,7 @@ security/
 ## 🔍 Recent Audits
 
 ### 2026-02-07T23:38:44Z - StackHawk DAST Audit
+
 - **Tool:** StackHawk v5.2.0
 - **Type:** Dynamic Application Security Testing
 - **Coverage:** 212 URLs, OWASP Top 10
@@ -67,15 +69,21 @@ security/
 All files follow **ISO 8601** format with timestamps:
 
 ### Audits
+
 **Format:** `YYYY-MM-DDTHH-MM-SSZ-[tool]-audit.md`
+
 - Example: `2026-02-07T23-38-44Z-stackhawk-audit.md`
 
 ### Reports
+
 **Format:** `YYYY-MM-DDTHH-MM-SSZ-[type]-report.md`
+
 - Example: `2026-02-08T00-46-00Z-remediation-report.md`
 
 ### Scans
+
 **Format:** `YYYY-MM-DDTHH-MM-SSZ-[tool]-[type].[ext]`
+
 - Example: `2026-02-08T00-39-59Z-stackhawk.sarif`
 - Logs: `.log` files (gitignored, 3.8 MB each)
 - SARIF: `.sarif` files (committed, 69 KB)
@@ -85,6 +93,7 @@ All files follow **ISO 8601** format with timestamps:
 ## 🔄 Running Scans
 
 ### StackHawk DAST
+
 ```bash
 # Ensure app is running on localhost:3000
 npm run dev
@@ -94,6 +103,7 @@ hawk scan stackhawk.yml --sarif-artifact
 ```
 
 ### Results Location
+
 - Logs: `security/scans/YYYY-MM-DDTHH-MM-SSZ-stackhawk-scan-N.log`
 - SARIF: `security/scans/YYYY-MM-DDTHH-MM-SSZ-stackhawk.sarif`
 
@@ -102,16 +112,19 @@ hawk scan stackhawk.yml --sarif-artifact
 ## 📦 Version Control
 
 ### Committed to Git
+
 ✅ `security/README.md`  
 ✅ `security/audits/*.md`  
 ✅ `security/reports/*.md`  
 ✅ `security/scans/*.sarif`
 
 ### Ignored (via .gitignore)
+
 ❌ `security/scans/*.log` (large scan logs)  
 ❌ `security/scans/*summary.txt` (redundant)
 
 ### Storage Size
+
 - **Total:** 3.9 MB (mostly logs)
 - **In Git:** ~100 KB (docs + SARIF only)
 

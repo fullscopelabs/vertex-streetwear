@@ -1,6 +1,7 @@
 # Security Fixes Applied - February 7, 2026
 
 ## Overview
+
 This document tracks security improvements implemented based on StackHawk audit findings.
 
 ---
@@ -8,11 +9,13 @@ This document tracks security improvements implemented based on StackHawk audit 
 ## ✅ Implemented Fixes
 
 ### 1. Security Headers (LOW RISK) - FIXED
+
 **Issue:** Missing X-Content-Type-Options and other security headers  
 **Severity:** Low  
 **Status:** ✅ Fixed
 
 **Changes:**
+
 - **File:** `server.js`
 - **Action:** Added global security headers to all HTTP responses:
   - `X-Content-Type-Options: nosniff` - Prevents MIME-sniffing attacks
@@ -25,11 +28,13 @@ This document tracks security improvements implemented based on StackHawk audit 
 ---
 
 ### 2. Format String Vulnerability Protection (MEDIUM RISK) - FIXED
+
 **Issue:** Format string errors in query parameters and form inputs  
 **Severity:** Medium  
 **Status:** ✅ Fixed
 
 **Changes:**
+
 - **File:** `app/lib/validation.js`
 - **Action:** Enhanced `sanitizeText()` function to strip format specifiers:
   - Removes `%s`, `%n`, `%x`, `%d`, `%f`, `%p`, `%o`, `%i` and variants
@@ -37,6 +42,7 @@ This document tracks security improvements implemented based on StackHawk audit 
   - Maintains existing HTML/script sanitization
 
 **Affected Routes (Now Protected):**
+
 - ✅ `POST /account/logout`
 - ✅ `GET/POST /account/addresses` (address form fields)
 - ✅ `GET /account/orders` (confirmation_number parameter)
@@ -48,9 +54,11 @@ This document tracks security improvements implemented based on StackHawk audit 
 ---
 
 ### 3. Input Sanitization Library (DEFENSIVE) - ADDED
+
 **Status:** ✅ Added
 
 **Changes:**
+
 - **File:** `app/lib/sanitize.js` (NEW)
 - **Action:** Created comprehensive security utilities for future use:
   - `sanitizeFormatString()` - Remove format specifiers
@@ -67,13 +75,16 @@ This document tracks security improvements implemented based on StackHawk audit 
 ## ✅ Already Secure (No Changes Needed)
 
 ### 4. Cookie Security (LOW RISK) - ALREADY CONFIGURED
+
 **Issue:** Cookie without SameSite and HttpOnly flags  
 **Severity:** Low  
 **Status:** ✅ Already secure (False positive)
 
 **Verification:**
+
 - **File:** `app/lib/session.js`
 - **Configuration:**
+
   ```javascript
   cookie: {
     httpOnly: true,           // ✅ Prevents JavaScript access
@@ -87,11 +98,13 @@ This document tracks security improvements implemented based on StackHawk audit 
 ---
 
 ### 5. Content Security Policy (LOW RISK) - ALREADY CONFIGURED
+
 **Issue:** CSP could be strengthened  
 **Severity:** Low  
 **Status:** ✅ Already configured via Hydrogen
 
 **Verification:**
+
 - **File:** `app/entry.server.jsx`
 - **Configuration:** Uses Hydrogen's `createContentSecurityPolicy()` with:
   - Default CSP directives
@@ -121,10 +134,12 @@ This document tracks security improvements implemented based on StackHawk audit 
 ## 🔒 Security Posture
 
 **Before Fixes:**
+
 - Medium Risk: 10 issues
 - Low Risk: 49 issues
 
 **After Fixes:**
+
 - Medium Risk: 0 issues ✅
 - Low Risk: 4 best-practice improvements remaining (acceptable)
 
@@ -157,7 +172,7 @@ These are low-priority improvements that can be addressed in future updates:
 ## 🔗 References
 
 - **Security Audit Report:** `security-audit-2026-02-07.md`
-- **StackHawk Scan:** https://app.stackhawk.com/scans/dee5c01a-e117-454e-b229-1abed47be5c8
+- **StackHawk Scan:** <https://app.stackhawk.com/scans/dee5c01a-e117-454e-b229-1abed47be5c8>
 - **SARIF Report:** `stackhawk.sarif`
 
 ---

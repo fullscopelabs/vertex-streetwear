@@ -1,8 +1,9 @@
 # StackHawk Security Audit Report
+
 **Date:** February 7, 2026  
 **Application:** Vertex Streetwear (Hydrogen Storefront)  
 **Scan ID:** dee5c01a-e117-454e-b229-1abed47be5c8  
-**Platform:** https://app.stackhawk.com/scans/dee5c01a-e117-454e-b229-1abed47be5c8
+**Platform:** <https://app.stackhawk.com/scans/dee5c01a-e117-454e-b229-1abed47be5c8>
 
 ---
 
@@ -13,6 +14,7 @@
 **Total Findings:** 59 security issues
 
 ### Vulnerability Breakdown
+
 | Severity | Count | Status |
 |----------|-------|--------|
 | 🔴 **High** | 0 | ✅ None found |
@@ -24,6 +26,7 @@
 ## 🚨 MEDIUM RISK FINDINGS (10 Issues)
 
 ### 1. Format String Error
+
 **Risk Level:** Medium  
 **CVE:** CWE-134 (Format String Vulnerability)  
 **WASC:** WASC-6  
@@ -33,6 +36,7 @@
 Format string errors occur when submitted input is evaluated as a command by the application. This can potentially lead to information disclosure or denial of service.
 
 **Affected Paths:**
+
 1. `POST /account/logout`
 2. `GET /*?*oseid=HSTE %1!s%2!s...` (query parameter injection)
 3. `GET /*/*?*ls=*&ls=HSTE%n%s...` (list parameter injection)
@@ -41,6 +45,7 @@ Format string errors occur when submitted input is evaluated as a command by the
 6. +5 additional paths
 
 **Impact:**
+
 - Information disclosure
 - Potential denial of service
 - Input validation bypass
@@ -48,18 +53,20 @@ Format string errors occur when submitted input is evaluated as a command by the
 **Remediation Priority:** HIGH
 
 **Recommended Fix:**
+
 - Implement strict input validation
 - Sanitize query parameters
 - Use parameterized queries
 - Escape format specifiers in user input
 
-**Reference:** https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Input_Validation_Cheat_Sheet.md
+**Reference:** <https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Input_Validation_Cheat_Sheet.md>
 
 ---
 
 ## 🟡 LOW RISK FINDINGS (49 Issues)
 
 ### 2. X-Content-Type-Options Header Missing
+
 **Risk Level:** Low  
 **CVE:** CWE-693  
 **Count:** 18+ affected endpoints
@@ -68,6 +75,7 @@ Format string errors occur when submitted input is evaluated as a command by the
 Missing `X-Content-Type-Options: nosniff` header allows MIME-sniffing attacks in older browsers.
 
 **Affected Assets:**
+
 - Static files: `/app/styles/reset.css`, `/app/styles/app.css`
 - Entry points: `/app/entry.client.jsx`
 - Assets: `/app/assets/favicon.svg`
@@ -76,6 +84,7 @@ Missing `X-Content-Type-Options: nosniff` header allows MIME-sniffing attacks in
 
 **Recommended Fix:**
 Add to server configuration or middleware:
+
 ```javascript
 response.headers.set('X-Content-Type-Options', 'nosniff');
 ```
@@ -83,6 +92,7 @@ response.headers.set('X-Content-Type-Options', 'nosniff');
 ---
 
 ### 3. Cookie without SameSite Attribute
+
 **Risk Level:** Low  
 **CVE:** CWE-1275  
 **Count:** 1 endpoint
@@ -91,9 +101,11 @@ response.headers.set('X-Content-Type-Options', 'nosniff');
 Cookies lack SameSite attribute, making them vulnerable to CSRF attacks.
 
 **Affected Path:**
+
 - `POST /cart`
 
 **Current Session Cookie Config (app/lib/session.js):**
+
 ```javascript
 sameSite: 'lax'  // ✅ Already configured correctly
 ```
@@ -104,6 +116,7 @@ sameSite: 'lax'  // ✅ Already configured correctly
 ---
 
 ### 4. Cookie No HttpOnly Flag
+
 **Risk Level:** Low  
 **CVE:** CWE-1004  
 **Count:** 1 endpoint
@@ -112,9 +125,11 @@ sameSite: 'lax'  // ✅ Already configured correctly
 Cookie accessible via JavaScript, increasing session hijacking risk.
 
 **Affected Path:**
+
 - `POST /cart`
 
 **Current Session Cookie Config:**
+
 ```javascript
 httpOnly: true  // ✅ Already configured correctly
 ```
@@ -125,6 +140,7 @@ httpOnly: true  // ✅ Already configured correctly
 ---
 
 ### 5. Content Security Policy (CSP) Notices
+
 **Risk Level:** Low  
 **CVE:** CWE-693  
 **Count:** 8+ pages
@@ -133,6 +149,7 @@ httpOnly: true  // ✅ Already configured correctly
 CSP headers could be improved to better mitigate XSS and injection attacks.
 
 **Affected Pages:**
+
 - `/` (Homepage)
 - `/cart`
 - `/shipping-returns`
@@ -142,6 +159,7 @@ CSP headers could be improved to better mitigate XSS and injection attacks.
 
 **Recommended Fix:**
 Add CSP headers to server.js or root.jsx:
+
 ```javascript
 'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"
 ```
@@ -149,6 +167,7 @@ Add CSP headers to server.js or root.jsx:
 ---
 
 ### 6. Cross-Domain JavaScript Source File Inclusion
+
 **Risk Level:** Low  
 **CVE:** CWE-829  
 **Count:** 1 page
@@ -157,9 +176,11 @@ Add CSP headers to server.js or root.jsx:
 Page includes third-party JavaScript files (Google Fonts).
 
 **Affected Path:**
+
 - `/pages/data-sharing-opt-out`
 
 **Current Implementation:**
+
 - Google Fonts loaded from `fonts.googleapis.com`
 
 **Status:** ✅ Acceptable - Using trusted CDN (Google)  
@@ -168,6 +189,7 @@ Page includes third-party JavaScript files (Google Fonts).
 ---
 
 ### 7. Information Leak - Email Address
+
 **Risk Level:** Low  
 **CVE:** CWE-311  
 **Count:** 11 pages
@@ -176,6 +198,7 @@ Page includes third-party JavaScript files (Google Fonts).
 Email addresses exposed in page responses (likely contact information).
 
 **Affected Pages:**
+
 - `/shipping-returns`
 - `/policies/refund-policy`
 - `/policies/terms-of-service`
@@ -189,6 +212,7 @@ Email addresses exposed in page responses (likely contact information).
 ---
 
 ### 8. Information Leak - IBAN
+
 **Risk Level:** Low  
 **CVE:** CWE-200  
 **Count:** 6 pages
@@ -197,6 +221,7 @@ Email addresses exposed in page responses (likely contact information).
 Potential IBAN patterns detected (likely false positive - product codes or SKUs).
 
 **Affected Pages:**
+
 - `/FR-CA/products/vanguard-technical-crossbody`
 - `/FR-CA/collections/core-collection`
 - `/EN-US/collections/accessories`
@@ -210,6 +235,7 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ## ✅ POSITIVE FINDINGS
 
 ### Security Strengths
+
 1. ✅ **No Critical Vulnerabilities** detected
 2. ✅ **No High-Risk SQLi or XSS** vulnerabilities found
 3. ✅ **Session cookies properly configured** (httpOnly, secure, sameSite)
@@ -223,7 +249,9 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ## 🎯 PRIORITIZED REMEDIATION PLAN
 
 ### Priority 1: MEDIUM RISK (Immediate)
+
 **Fix Format String Errors**
+
 - [ ] Implement input validation for all query parameters
 - [ ] Sanitize format specifiers (`%s`, `%n`, etc.)
 - [ ] Add WAF rules to block format string patterns
@@ -235,7 +263,9 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ---
 
 ### Priority 2: LOW RISK (Short-term)
+
 **Add Security Headers**
+
 - [ ] Add `X-Content-Type-Options: nosniff` to all responses
 - [ ] Implement Content Security Policy (CSP) headers
 - [ ] Review and configure CSP for inline scripts and styles
@@ -246,7 +276,9 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ---
 
 ### Priority 3: VERIFICATION (Short-term)
+
 **Verify Cookie Configuration**
+
 - [ ] Confirm cart cookies have SameSite attribute
 - [ ] Verify all cookies use HttpOnly where appropriate
 - [ ] Test cookie security in production environment
@@ -257,7 +289,9 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ---
 
 ### Priority 4: FALSE POSITIVES (Review)
+
 **Review Information Leaks**
+
 - [ ] Confirm IBAN detections are product codes (not real IBANs)
 - [ ] Verify email addresses are intentional (contact info)
 - [ ] Document expected vs. unexpected data exposure
@@ -270,6 +304,7 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ## 📈 SCAN STATISTICS
 
 ### Route Coverage
+
 - **Total URLs:** 212 discovered
 - **Scan Duration:** 1,263 seconds (~21 minutes)
 - **Spider Depth:** 10 levels
@@ -283,6 +318,7 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
   - API endpoints ⚠️ (GraphQL excluded per config)
 
 ### Test Categories Executed
+
 ✅ SQL Injection  
 ✅ XSS (Cross-Site Scripting)  
 ✅ Broken Authentication  
@@ -299,6 +335,7 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ## 🔒 COMPLIANCE NOTES
 
 ### OWASP Top 10 2021 Status
+
 | Risk | Status | Notes |
 |------|--------|-------|
 | A01:2021 - Broken Access Control | ✅ Pass | No issues found |
@@ -319,26 +356,29 @@ Potential IBAN patterns detected (likely false positive - product codes or SKUs)
 ## 📝 RECOMMENDATIONS
 
 ### Immediate Actions
+
 1. Fix format string validation (Medium risk)
 2. Add X-Content-Type-Options headers
 3. Enhance CSP configuration
 
 ### Short-term Improvements
+
 4. Review and test cookie configurations
-5. Audit information disclosure (emails, IBANs)
-6. Add automated security scanning to CI/CD
+2. Audit information disclosure (emails, IBANs)
+3. Add automated security scanning to CI/CD
 
 ### Long-term Strategy
+
 7. Implement Web Application Firewall (WAF)
-8. Add rate limiting on sensitive endpoints
-9. Schedule quarterly security audits
-10. Monitor StackHawk dashboard for new findings
+2. Add rate limiting on sensitive endpoints
+3. Schedule quarterly security audits
+4. Monitor StackHawk dashboard for new findings
 
 ---
 
 ## 🔗 LINKS
 
-- **Full Scan Results:** https://app.stackhawk.com/scans/dee5c01a-e117-454e-b229-1abed47be5c8
+- **Full Scan Results:** <https://app.stackhawk.com/scans/dee5c01a-e117-454e-b229-1abed47be5c8>
 - **SARIF Report:** `stackhawk.sarif`
 - **Detailed Logs:** `hawkscan2.log`
 - **Summary:** `hawkscan-summary.txt`

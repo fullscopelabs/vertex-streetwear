@@ -9,6 +9,7 @@ This document outlines the security measures implemented in the Vertex Streetwea
 ## 🔐 Authentication & Authorization
 
 ### Implementation
+
 - **OAuth 2.0 + PKCE** via Shopify Customer Account API
 - Session-based authentication with signed, HTTPOnly cookies
 - All account routes protected with `customerAccount.handleAuthStatus()`
@@ -16,6 +17,7 @@ This document outlines the security measures implemented in the Vertex Streetwea
 - Explicit `isLoggedIn()` verification before mutations
 
 ### Session Security
+
 - **HTTPOnly**: `true` (prevents XSS cookie theft)
 - **SameSite**: `lax` (CSRF protection)
 - **Secure**: `true` in production (HTTPS-only)
@@ -23,6 +25,7 @@ This document outlines the security measures implemented in the Vertex Streetwea
 - **Short-lived tokens**: Shopify handles token refresh automatically
 
 ### Preview Mode
+
 - Mock data only available in `NODE_ENV=development`
 - Never bypasses authentication in production
 - Warning banner displayed when active
@@ -32,9 +35,11 @@ This document outlines the security measures implemented in the Vertex Streetwea
 ## 🛡️ Input Validation & Sanitization
 
 ### Defense-in-Depth Approach
+
 All user input passes through **three layers** of validation:
 
 #### Layer 1: Client-Side (HTML5)
+
 - `required`, `minLength`, `maxLength` attributes
 - `pattern` validation with browser-compatible regex
 - `title` attributes with user-friendly error messages
@@ -42,9 +47,11 @@ All user input passes through **three layers** of validation:
 - `autocomplete` attributes for autofill security
 
 #### Layer 2: Server-Side Sanitization
+
 **Module**: `app/lib/validation.js`
 
 All inputs sanitized via `sanitizeText()`:
+
 - Strips HTML tags (`<script>`, `<img>`, etc.)
 - Removes HTML entities (`&amp;`, `&#123;`)
 - Removes control characters (0x00–0x1F, 0x7F)
@@ -53,7 +60,9 @@ All inputs sanitized via `sanitizeText()`:
 - Enforces maximum length per field
 
 #### Layer 3: Server-Side Validation
+
 Field-specific validators:
+
 - **Names**: 1–50 chars, letters + spaces/hyphens/apostrophes/periods, no excessive consecutive special chars
 - **Company**: 0–100 chars, business-safe punctuation
 - **Address lines**: 1–200 chars, all printable characters
@@ -64,6 +73,7 @@ Field-specific validators:
 - **Phone**: 7–15 digits, E.164 normalization, optional field
 
 ### Whitespace Protection
+
 All required fields reject whitespace-only input (e.g., "   ").
 
 ---
@@ -71,12 +81,14 @@ All required fields reject whitespace-only input (e.g., "   ").
 ## 🚫 Injection Attack Prevention
 
 ### GraphQL Injection
+
 - ✅ **Parameterized queries only** — never string concatenation
 - ✅ All variables passed via GraphQL `variables` object
 - ✅ Shopify API provides additional query sanitization
 - ✅ Order search: `sanitizeFilterValue()` strips unsafe characters
 
 **Example (SECURE):**
+
 ```javascript
 await customerAccount.mutate(UPDATE_ADDRESS_MUTATION, {
   variables: { address }  // ✅ Parameterized
@@ -84,11 +96,13 @@ await customerAccount.mutate(UPDATE_ADDRESS_MUTATION, {
 ```
 
 **Anti-pattern (NOT USED):**
+
 ```javascript
 `mutation { update(name: "${userInput}") }`  // ❌ Never do this
 ```
 
 ### XSS Prevention
+
 - ✅ React Router auto-escapes all dynamic content
 - ✅ No `dangerouslySetInnerHTML` anywhere
 - ✅ HTML tag stripping in `sanitizeText()`
@@ -100,12 +114,14 @@ await customerAccount.mutate(UPDATE_ADDRESS_MUTATION, {
 ## 🛡️ CSRF Protection
 
 ### Built-in Protections
+
 - ✅ React Router same-origin policy enforcement
 - ✅ Session cookies with `SameSite=lax`
 - ✅ All mutations use POST/PUT/DELETE (never GET)
 - ✅ Forms require valid session tokens
 
 ### Form Security
+
 - All forms use React Router `<Form>` component
 - Automatic CSRF token injection by framework
 - Server validates session before processing mutations
@@ -115,6 +131,7 @@ await customerAccount.mutate(UPDATE_ADDRESS_MUTATION, {
 ## 🔒 Secure Session Management
 
 ### Cookie Configuration
+
 ```javascript
 {
   name: 'session',
@@ -127,6 +144,7 @@ await customerAccount.mutate(UPDATE_ADDRESS_MUTATION, {
 ```
 
 ### Session Lifecycle
+
 - Short-lived sessions (managed by Shopify)
 - Automatic token refresh on expiry
 - Secure logout with session destruction
@@ -137,6 +155,7 @@ await customerAccount.mutate(UPDATE_ADDRESS_MUTATION, {
 ## 🚨 Error Handling & Information Disclosure
 
 ### Production Hardening
+
 - Generic error messages returned to client in production
 - Detailed errors logged server-side only
 - No stack traces exposed to users
@@ -144,13 +163,16 @@ await customerAccount.mutate(UPDATE_ADDRESS_MUTATION, {
 - Development mode: detailed errors for debugging
 
 **Example:**
+
 ```javascript
 // Production: "Unable to update profile. Please try again or contact support."
 // Development: "Customer not found (error code: UNAUTHORIZED)"
 ```
 
 ### Logging
+
 All errors logged with context:
+
 ```javascript
 console.error('[account.profile] Action error:', error);
 ```
@@ -160,12 +182,15 @@ console.error('[account.profile] Action error:', error);
 ## ⚡ DoS & Abuse Prevention
 
 ### Request Throttling
+
 - **Order search**: 300ms debounce prevents rapid-fire submissions
 - **FormData size limits**: Max 10–15 fields per form (prevents memory exhaustion)
 - **Field length caps**: All inputs capped at reasonable limits
 
 ### Cloudflare Protection (Edge-Level)
+
 Your deployment on Cloudflare Pages provides additional protections:
+
 - DDoS mitigation at the edge
 - Rate limiting (configurable)
 - Bot detection
@@ -173,6 +198,7 @@ Your deployment on Cloudflare Pages provides additional protections:
 - WAF (Web Application Firewall)
 
 ### Recommendations
+
 1. **Enable Cloudflare rate limiting rules**:
    - Limit `/account/*` routes to 30 requests/minute per IP
    - Limit mutations to 10/minute per session
@@ -183,13 +209,16 @@ Your deployment on Cloudflare Pages provides additional protections:
 ## 🌐 Transport Security
 
 ### HTTPS Enforcement
+
 - ✅ Production cookies set with `secure: true` flag
 - ✅ Shopify Customer Account API requires HTTPS
 - ✅ OAuth callbacks require HTTPS
 - ✅ Development bypasses for local testing only
 
 ### Content Security Policy
+
 Configured in `app/root.jsx` via Hydrogen's `createContentSecurityPolicy`:
+
 - Restricts script sources
 - Prevents inline scripts (nonce-based)
 - Blocks mixed content (HTTP on HTTPS pages)
@@ -199,6 +228,7 @@ Configured in `app/root.jsx` via Hydrogen's `createContentSecurityPolicy`:
 ## 📋 Security Checklist
 
 ### ✅ Implemented
+
 - [x] OAuth 2.0 + PKCE authentication
 - [x] Session-based auth with HTTPOnly, Secure, SameSite cookies
 - [x] Comprehensive input validation (client + server)
@@ -217,12 +247,14 @@ Configured in `app/root.jsx` via Hydrogen's `createContentSecurityPolicy`:
 - [x] ISO 3166-1 country code validation
 
 ### 🔄 Recommended (Cloudflare Configuration)
+
 - [ ] Enable rate limiting (30 req/min per IP for `/account/*`)
 - [ ] Configure WAF rules for common attack patterns
 - [ ] Enable Bot Fight Mode
 - [ ] Set up security headers (HSTS, X-Frame-Options, etc.)
 
 ### 🔄 Future Enhancements
+
 - [ ] Add CAPTCHA for sensitive operations
 - [ ] Implement IP-based rate limiting in application layer
 - [ ] Add audit logging for security events
@@ -233,6 +265,7 @@ Configured in `app/root.jsx` via Hydrogen's `createContentSecurityPolicy`:
 ## 🔍 Testing
 
 ### Manual Security Testing
+
 1. **XSS**: Try submitting `<script>alert('xss')</script>` in all form fields → Should be stripped
 2. **SQL Injection**: Try `'; DROP TABLE--` → Should be sanitized
 3. **CSRF**: Try form submission from different origin → Should be blocked
@@ -241,6 +274,7 @@ Configured in `app/root.jsx` via Hydrogen's `createContentSecurityPolicy`:
 6. **Whitespace**: Try "   " in required fields → Should be rejected
 
 ### Automated Testing
+
 - Use OWASP ZAP or Burp Suite for comprehensive scanning
 - Run `npm audit` regularly for dependency vulnerabilities
 - Monitor Shopify security advisories
@@ -250,8 +284,9 @@ Configured in `app/root.jsx` via Hydrogen's `createContentSecurityPolicy`:
 ## 📞 Security Contacts
 
 **Report Security Issues:**
+
 - **Internal**: Contact your security team
-- **Shopify API**: https://shopify.com/security
+- **Shopify API**: <https://shopify.com/security>
 - **Dependencies**: Use `npm audit` or Dependabot
 
 ---
