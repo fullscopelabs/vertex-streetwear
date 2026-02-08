@@ -1,4 +1,4 @@
-import {useLoaderData, Link} from 'react-router';
+import {useLoaderData, Link, redirect} from 'react-router';
 import {Money} from '@shopify/hydrogen';
 import {ScrollReveal} from '~/components/ScrollReveal';
 
@@ -10,9 +10,51 @@ export const meta = () => {
 };
 
 /**
+ * Allowed checkout path prefixes for cookie-based redirect.
+ * Must match the allowlist in password.jsx.
+ */
+const CHECKOUT_PATH_PREFIXES = ['/checkouts/', '/cart/c/'];
+
+/**
  * @param {Route.LoaderArgs} args
  */
 export async function loader(args) {
+  // Check for checkout_return_to cookie — if present, the user just
+  // authenticated via the password page and should be sent to checkout
+  const cookieHeader = args.request.headers.get('Cookie') || '';
+  const match = cookieHeader.match(/checkout_return_to=([^;]*)/);
+  
+  if (match) {
+    let checkoutPath;
+    try {
+      checkoutPath = decodeURIComponent(match[1]).trim();
+    } catch {
+      checkoutPath = null;
+    }
+    
+    // Validate: must be a relative checkout path (no open redirect)
+    if (
+      checkoutPath &&
+      checkoutPath.startsWith('/') &&
+      !checkoutPath.includes('://') &&
+      !checkoutPath.startsWith('//') &&
+      CHECKOUT_PATH_PREFIXES.some((p) => checkoutPath.startsWith(p))
+    ) {
+      const checkoutDomain = args.context.env.PUBLIC_CHECKOUT_DOMAIN || 
+                             args.context.env.PUBLIC_STORE_DOMAIN;
+      const checkoutUrl = `https://${checkoutDomain}${checkoutPath}`;
+      
+      // Clear the cookie and redirect to checkout
+      return new Response(null, {
+        status: 307,
+        headers: {
+          Location: checkoutUrl,
+          'Set-Cookie': 'checkout_return_to=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax',
+        },
+      });
+    }
+  }
+
   const deferredData = loadDeferredData(args);
   const criticalData = await loadCriticalData(args);
   return {...deferredData, ...criticalData};

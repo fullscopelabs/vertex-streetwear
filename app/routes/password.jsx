@@ -16,20 +16,20 @@ const ALLOWED_RETURN_PATHS = [
 /**
  * Validates and sanitizes a return URL to prevent open redirect attacks.
  * Only allows relative paths matching known safe prefixes.
- * 
+ *
  * @param {string|null} value - The raw return URL value
  * @returns {string|null} - Sanitized relative path or null if invalid
  */
 function sanitizeReturnTo(value) {
   if (!value || typeof value !== 'string') return null;
-  
+
   let decoded;
   try {
     decoded = decodeURIComponent(value.trim());
   } catch {
     return null;
   }
-  
+
   // Block absolute URLs, protocol-relative URLs, and data URIs
   if (
     decoded.includes('://') ||
@@ -40,15 +40,15 @@ function sanitizeReturnTo(value) {
   ) {
     return null;
   }
-  
+
   // Must start with /
   if (!decoded.startsWith('/')) return null;
-  
+
   // Must match an allowed path prefix
-  const isAllowed = ALLOWED_RETURN_PATHS.some((prefix) => 
-    decoded.startsWith(prefix)
+  const isAllowed = ALLOWED_RETURN_PATHS.some((prefix) =>
+    decoded.startsWith(prefix),
   );
-  
+
   return isAllowed ? decoded : null;
 }
 
@@ -66,21 +66,22 @@ function sanitizeReturnTo(value) {
  */
 export async function loader({request, context}) {
   const url = new URL(request.url);
-  
+
   // Read checkout return URL from cookie (set by checkout redirect routes)
   const cookieHeader = request.headers.get('Cookie') || '';
   const cookieMatch = cookieHeader.match(/checkout_return_to=([^;]*)/);
   const rawCookieValue = cookieMatch ? cookieMatch[1] : null;
-  
+
   // Validate all potential return_to sources against allowlist
-  const returnTo = sanitizeReturnTo(rawCookieValue) || 
-                   sanitizeReturnTo(url.searchParams.get('return_to')) || 
-                   sanitizeReturnTo(url.searchParams.get('checkout_url')) || 
-                   '/';
-  
-  const isCheckout = returnTo.startsWith('/checkouts/') || 
-                     returnTo.startsWith('/cart/c/');
-  
+  const returnTo =
+    sanitizeReturnTo(rawCookieValue) ||
+    sanitizeReturnTo(url.searchParams.get('return_to')) ||
+    sanitizeReturnTo(url.searchParams.get('checkout_url')) ||
+    '/';
+
+  const isCheckout =
+    returnTo.startsWith('/checkouts/') || returnTo.startsWith('/cart/c/');
+
   return {
     storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     returnTo,
@@ -117,18 +118,27 @@ export default function Password() {
         <div className="bg-white/95 backdrop-blur-sm p-10 shadow-2xl border border-white/20">
           <div className="mb-8 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-charcoal/5 rounded-full mb-4">
-              <svg className="w-8 h-8 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              <svg
+                className="w-8 h-8 text-charcoal"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
               </svg>
             </div>
             <h2 className="text-2xl font-bold text-charcoal mb-2">
               {isCheckout ? 'Complete Your Purchase' : 'Enter Store'}
             </h2>
             <p className="text-sm text-charcoal/60">
-              {isCheckout 
+              {isCheckout
                 ? 'Enter password to proceed to secure checkout'
-                : 'This store is password protected'
-              }
+                : 'This store is password protected'}
             </p>
           </div>
 
@@ -138,11 +148,14 @@ export default function Password() {
             action={`https://${storeDomain}/password`}
             className="space-y-6"
           >
+            {/* Required Shopify form fields */}
+            <input type="hidden" name="form_type" value="storefront_password" />
+            <input type="hidden" name="utf8" value="✓" />
             <input type="hidden" name="return_to" value={returnTo} />
-            
+
             <div>
-              <label 
-                htmlFor="password" 
+              <label
+                htmlFor="password"
                 className="block text-sm font-bold text-charcoal mb-3 uppercase tracking-wider"
               >
                 Store Password
@@ -171,7 +184,8 @@ export default function Password() {
           {isCheckout && (
             <div className="mt-6 p-4 bg-charcoal/5 rounded-md">
               <p className="text-xs text-charcoal/60 text-center leading-relaxed">
-                Your cart is secure. After authentication, you'll be directed straight to checkout to complete your order.
+                Your cart is secure. After authentication, you'll be directed
+                straight to checkout to complete your order.
               </p>
             </div>
           )}
@@ -182,8 +196,18 @@ export default function Password() {
               to="/"
               className="inline-flex items-center text-sm text-charcoal/60 hover:text-charcoal transition-colors uppercase tracking-wider font-medium"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <svg
+                className="w-4 h-4 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
               </svg>
               Back to Store
             </Link>
