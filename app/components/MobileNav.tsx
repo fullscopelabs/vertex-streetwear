@@ -1,5 +1,4 @@
-import {Suspense} from 'react';
-import {Await, NavLink, useAsyncValue} from 'react-router';
+import {NavLink} from 'react-router';
 import {useOptimisticCart} from '@shopify/hydrogen';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 
@@ -16,7 +15,7 @@ const NAV_LINKS = [
 interface MobileNavProps {
   isOpen: boolean;
   onClose: () => void;
-  cart: Promise<CartApiQueryFragment | null>;
+  cart: CartApiQueryFragment | null;
 }
 
 export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
@@ -119,15 +118,7 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
               <span className="text-sm uppercase tracking-[0.15em] font-medium">
                 Cart
               </span>
-              <Suspense
-                fallback={
-                  <CartBadge count={0} />
-                }
-              >
-                <Await resolve={cart}>
-                  <CartCount />
-                </Await>
-              </Suspense>
+              <MobileNavCartBadge cart={cart} />
             </NavLink>
           </div>
         </div>
@@ -136,10 +127,9 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
   );
 }
 
-function CartCount() {
-  const originalCart = useAsyncValue() as CartApiQueryFragment | null;
-  const cart = useOptimisticCart(originalCart);
-  return <CartBadge count={cart?.totalQuantity ?? 0} />;
+function MobileNavCartBadge({cart}: {cart: CartApiQueryFragment | null}) {
+  const optimisticCart = useOptimisticCart(cart);
+  return <CartBadge count={optimisticCart?.totalQuantity ?? 0} />;
 }
 
 function CartBadge({count}: {count: number}) {

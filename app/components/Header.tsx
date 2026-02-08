@@ -1,5 +1,5 @@
-import {Suspense, useCallback, useEffect, useRef, useState} from 'react';
-import {Await, NavLink, useAsyncValue, useLocation, useNavigate} from 'react-router';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {NavLink, useLocation, useNavigate} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {MobileNav} from '~/components/MobileNav';
@@ -15,7 +15,7 @@ const NAV_LINKS = [
 ];
 
 interface HeaderProps {
-  cart: Promise<CartApiQueryFragment | null>;
+  cart: CartApiQueryFragment | null;
   announcementVisible?: boolean;
 }
 
@@ -96,9 +96,7 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
                 to={link.to}
                 className={({isActive}) =>
                   `uppercase text-[11px] tracking-[0.15em] font-medium transition-colors duration-300 ${
-                    isActive
-                      ? 'text-sand'
-                      : `${textColor} ${hoverColor}`
+                    isActive ? 'text-sand' : `${textColor} ${hoverColor}`
                   }`
                 }
               >
@@ -154,22 +152,12 @@ function CartToggle({
   cart,
   textColor,
 }: {
-  cart: Promise<CartApiQueryFragment | null>;
+  cart: CartApiQueryFragment | null;
   textColor: string;
 }) {
-  return (
-    <Suspense fallback={<CartIcon count={0} textColor={textColor} />}>
-      <Await resolve={cart}>
-        <CartBanner textColor={textColor} />
-      </Await>
-    </Suspense>
-  );
-}
-
-function CartBanner({textColor}: {textColor: string}) {
-  const originalCart = useAsyncValue() as CartApiQueryFragment | null;
-  const cart = useOptimisticCart(originalCart);
-  return <CartIcon count={cart?.totalQuantity ?? 0} textColor={textColor} />;
+  const optimisticCart = useOptimisticCart(cart);
+  const count = optimisticCart?.totalQuantity ?? 0;
+  return <CartIcon count={count} textColor={textColor} />;
 }
 
 function CartIcon({count, textColor}: {count: number; textColor: string}) {

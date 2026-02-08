@@ -10,7 +10,6 @@ import {
   useRouteLoaderData,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
-import cormorantLatin from '~/assets/fonts/cormorant-garamond-latin.woff2';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
@@ -58,16 +57,10 @@ export function links() {
  * @param {Route.LoaderArgs} args
  */
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   const {storefront, env} = args.context;
 
   return {
-    ...deferredData,
     ...criticalData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     shop: getShopAnalytics({
@@ -86,52 +79,45 @@ export async function loader(args) {
 }
 
 /**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
+ * Load data necessary for rendering the shell. Cart and footer are awaited here
+ * (not deferred) to avoid Suspense boundaries in the shell, which prevents
+ * "Suspense boundary received an update before it finished hydrating" when
+ * the user refreshes or navigates quickly. Trade-off: TTFB may increase
+ * slightly; stability under rapid refresh/navigation is preferred.
  * @param {Route.LoaderArgs}
  */
 async function loadCriticalData({context}) {
-  const {storefront} = context;
-
-  const [header] = await Promise.all([
-    storefront.query(HEADER_QUERY, {
-      cache: storefront.CacheLong(),
-      variables: {
-        headerMenuHandle: 'main-menu', // Adjust to your header menu handle
-      },
-    }),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
-
-  return {header};
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- * @param {Route.LoaderArgs}
- */
-function loadDeferredData({context}) {
   const {storefront, customerAccount, cart} = context;
 
-  // defer the footer query (below the fold)
-  const footer = storefront
+  const footerPromise = storefront
     .query(FOOTER_QUERY, {
       cache: storefront.CacheLong(),
       variables: {
-        footerMenuHandle: 'footer', // Adjust to your footer menu handle
+        footerMenuHandle: 'footer',
       },
     })
     .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
       console.error(error);
       return null;
     });
+
+  const [header, cartData, footerData, isLoggedIn] = await Promise.all([
+    storefront.query(HEADER_QUERY, {
+      cache: storefront.CacheLong(),
+      variables: {
+        headerMenuHandle: 'main-menu',
+      },
+    }),
+    cart.get(),
+    footerPromise,
+    Promise.resolve(customerAccount.isLoggedIn()),
+  ]);
+
   return {
-    cart: cart.get(),
-    isLoggedIn: customerAccount.isLoggedIn(),
-    footer,
+    header,
+    cart: cartData,
+    footer: footerData,
+    isLoggedIn: Boolean(isLoggedIn),
   };
 }
 
@@ -164,16 +150,6 @@ export function Layout({children}) {
           dangerouslySetInnerHTML={{
             __html: `document.addEventListener('DOMContentLoaded',function(){document.body.style.opacity='1';});`,
           }}
-        />
-        {/* Preload the hero-critical font (weight 300) so it starts downloading
-            before the CSS parser discovers the @font-face src. Eliminates the
-            old Google Fonts CSS → woff2 two-hop waterfall. */}
-        <link
-          rel="preload"
-          href={cormorantLatin}
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
         />
         <Links />
         {/* Preload critical CSS so the browser starts fetching before parser reaches link rel=stylesheet (improves FCP/LCP). */}

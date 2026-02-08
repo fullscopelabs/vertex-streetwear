@@ -1,15 +1,11 @@
-import {Suspense} from 'react';
-import {Await, NavLink, Link} from 'react-router';
+import {NavLink, Link} from 'react-router';
 
 /**
  * @param {FooterProps}
  */
-export function Footer({footer: footerPromise, header, publicStoreDomain}) {
+export function Footer({footer, header, publicStoreDomain}) {
   return (
-    <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="bg-gradient-to-b from-charcoal to-forest text-bone grain">
+    <footer className="bg-gradient-to-b from-charcoal to-forest text-bone grain">
             {/* Newsletter — integrated into footer instead of separate section */}
             <div className="border-b border-sand/8">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16 lg:py-20">
@@ -227,14 +223,11 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
               </div>
             </div>
           </footer>
-        )}
-      </Await>
-    </Suspense>
   );
 }
 
 /** @typedef {Object} FooterProps */
-/** @property {Promise<FooterQuery|null>} footer */
+/** @property {FooterQuery|null} footer */
 /** @property {HeaderQuery} header */
 /** @property {string} publicStoreDomain */
 

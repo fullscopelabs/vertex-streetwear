@@ -1,5 +1,5 @@
-import {Await, Link} from 'react-router';
-import {Suspense, useId} from 'react';
+import {Link} from 'react-router';
+import {useId} from 'react';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
@@ -50,13 +50,7 @@ export function PageLayout({
 function CartAside({cart}) {
   return (
     <Aside type="cart" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await resolve={cart}>
-          {(cart) => {
-            return <CartMain cart={cart} layout="aside" />;
-          }}
-        </Await>
-      </Suspense>
+      <CartMain cart={cart} layout="aside" />
     </Aside>
   );
 }
@@ -168,10 +162,10 @@ function MobileMenuAside({header, publicStoreDomain}) {
 
 /**
  * @typedef {Object} PageLayoutProps
- * @property {Promise<CartApiQueryFragment|null>} cart
- * @property {Promise<FooterQuery|null>} footer
+ * @property {CartApiQueryFragment|null} cart
+ * @property {FooterQuery|null} footer
  * @property {HeaderQuery} header
- * @property {Promise<boolean>} isLoggedIn
+ * @property {boolean} isLoggedIn
  * @property {string} publicStoreDomain
  * @property {React.ReactNode} [children]
  */

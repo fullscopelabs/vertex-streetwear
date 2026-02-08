@@ -1,5 +1,5 @@
-import {Suspense, useState} from 'react';
-import {Await, Link} from 'react-router';
+import {useState} from 'react';
+import {Link} from 'react-router';
 import {Aside} from '~/components/Aside';
 import {Header, HeaderMenu} from '~/components/Header';
 import {Footer} from '~/components/Footer';
@@ -13,11 +13,11 @@ import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import type {HeaderQuery, FooterQuery} from 'storefrontapi.generated';
 
 interface LayoutProps {
-  cart: Promise<CartApiQueryFragment | null>;
+  cart: CartApiQueryFragment | null;
   children?: React.ReactNode;
-  footer: Promise<FooterQuery | null>;
+  footer: FooterQuery | null;
   header: HeaderQuery;
-  isLoggedIn: Promise<boolean>;
+  isLoggedIn: boolean;
   publicStoreDomain: string;
 }
 
