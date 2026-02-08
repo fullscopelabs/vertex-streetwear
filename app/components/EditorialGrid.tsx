@@ -61,12 +61,12 @@ export function EditorialGrid({products, sectionLabel}: EditorialGridProps) {
         )}
 
         {/* Feature row — 2 large cards */}
-        <div className="grid grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto place-items-start">
+        <div className="grid grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto place-items-center">
           {featureProducts.map((product, index) => (
             <ScrollReveal 
               key={product.id} 
               delay={index * 100}
-              className={featureProducts.length === 1 ? 'col-start-1 col-span-1 justify-self-center' : ''}
+              className={featureProducts.length === 1 ? 'col-start-1 col-span-1' : ''}
             >
               <ProductCard
                 product={product}
