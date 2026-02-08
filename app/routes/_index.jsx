@@ -1,6 +1,7 @@
 import {useLoaderData, Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 import {ScrollReveal} from '~/components/ScrollReveal';
+import cormorantLatin from '~/assets/fonts/cormorant-garamond-latin.woff2';
 
 /**
  * @type {Route.MetaFunction}
@@ -15,6 +16,24 @@ export const meta = () => {
     },
   ];
 };
+
+/**
+ * Preload the hero-critical font on the homepage only (LCP is the "V☰RTEX" text).
+ * Other routes do not preload to avoid the "preloaded but not used" warning.
+ * That warning can still appear after the tab has been idle and you refresh—it's
+ * a browser timing heuristic and is acceptable; removing this preload would hurt LCP.
+ */
+export function links() {
+  return [
+    {
+      rel: 'preload',
+      href: cormorantLatin,
+      as: 'font',
+      type: 'font/woff2',
+      crossOrigin: 'anonymous',
+    },
+  ];
+}
 
 /**
  * Allowed checkout path prefixes for cookie-based redirect.
