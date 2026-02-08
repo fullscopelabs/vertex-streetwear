@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Fallback serif with size-adjust so font-display:swap causes minimal CLS when Cormorant loads */
+@font-face {
+  font-family: 'Cormorant Fallback';
+  src: local('Georgia');
+  size-adjust: 97%;
+  ascent-override: 90%;
+  descent-override: 22%;
+}
+
 /* ═══════════════════════════════════════════
  *  THEME (replaces tailwind.config.ts for v4)
  * ═══════════════════════════════════════════ */
@@ -17,7 +26,7 @@
   --color-rust: #C1440E;
 
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+  --font-serif: 'Cormorant Garamond', 'Cormorant Fallback', Georgia, serif;
 
   --letter-spacing-tighter: -0.05em;
   --letter-spacing-wider: 0.1em;
@@ -173,7 +182,8 @@ body {
      to opacity:0.  Scroll-triggered animations via ScrollReveal still
      provide the visual polish on each section as users scroll down. */
   .page-fade-in {
-    /* intentionally empty — class kept in markup for easy re-enabling */
+    /* Intentionally no styles — class kept in markup for easy re-enabling */
+    content: normal;
   }
 
   /* Film grain texture overlay for dark sections — adds tactile depth */

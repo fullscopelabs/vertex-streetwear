@@ -47,13 +47,13 @@ export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
  */
 export function links() {
   return [
+    {rel: 'preconnect', href: 'https://cdn.shopify.com'},
+    {rel: 'preconnect', href: 'https://shop.app'},
+    {rel: 'preconnect', href: 'https://fonts.googleapis.com'},
     {
       rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
+      href: 'https://fonts.gstatic.com',
+      crossOrigin: 'anonymous',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
@@ -160,28 +160,16 @@ export function Layout({children}) {
           nonce={nonce}
           dangerouslySetInnerHTML={{__html: 'body{opacity:0}'}}
         />
-        {/* Google Fonts: Cormorant Garamond (serif display face).
-            • Single font family - no unnecessary fonts to prevent flashing
-            • display=block — waits for font to load (up to ~3s), shows custom font
-              immediately when ready. Only shows fallback if font fails to load.
-            • Prevents font flashing by blocking until Cormorant is ready
-            • Preconnect for faster font loading
-            • Render-blocking intentionally so the font CSS (not the files)
-              is ready before first paint. */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <Links />
+        {/* Google Fonts: Cormorant Garamond. Preconnect is in links() for earliest connection.
+            font-display=swap so text shows immediately (fallback) then swaps — better LCP. */}
         <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=block"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
           rel="stylesheet"
         />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
-        <Links />
       </head>
       <body>
         {children}
@@ -252,20 +240,14 @@ export function ErrorBoundary() {
         <title>
           {errorStatus} - V☰RTEX
         </title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <Links />
         <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=block"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
           rel="stylesheet"
         />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
-        <Links />
       </head>
       <body>
         <ErrorPage

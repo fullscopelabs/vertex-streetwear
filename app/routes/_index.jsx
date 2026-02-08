@@ -219,6 +219,9 @@ function EditorialHero({heroProduct}) {
               data={image}
               alt={image.altText || heroProduct.title}
               sizes="(min-width: 768px) 60vw, 100vw"
+              loading="eager"
+              fetchPriority="high"
+              srcSetOptions={{startingWidth: 400, incrementSize: 200, intervals: 5}}
               className="w-full h-full object-cover min-h-[400px] md:min-h-0"
             />
           </div>
