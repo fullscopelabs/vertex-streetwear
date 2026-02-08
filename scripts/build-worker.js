@@ -19,6 +19,13 @@ writeFileSync(
   'dist/client/_worker.js',
   `import server from './_server.js';
 
+function applySecurityHeaders(headers) {
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('X-Frame-Options', 'SAMEORIGIN');
+  headers.set('X-XSS-Protection', '1; mode=block');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+}
+
 export default {
   async fetch(request, env, ctx) {
     // Serve static assets (CSS, JS, images, etc.) from the Pages asset store
@@ -26,7 +33,13 @@ export default {
       const assetUrl = new URL(request.url);
       const assetResponse = await env.ASSETS.fetch(assetUrl);
       if (assetResponse.ok || assetResponse.status === 304) {
-        return assetResponse;
+        const headers = new Headers(assetResponse.headers);
+        applySecurityHeaders(headers);
+        return new Response(assetResponse.body, {
+          status: assetResponse.status,
+          statusText: assetResponse.statusText,
+          headers,
+        });
       }
     } catch {
       // ASSETS binding unavailable or error — fall through to SSR

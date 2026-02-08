@@ -229,6 +229,11 @@ export function ErrorBoundary() {
     errorMessage = error.message;
   }
 
+  // Application error disclosure: never expose internal messages on 500 in production
+  if (errorStatus === 500 && process.env.NODE_ENV !== 'development') {
+    errorMessage = 'An unexpected error occurred';
+  }
+
   const errorDetails = getErrorDetails(errorStatus);
   const showDeveloperInfo = process.env.NODE_ENV === 'development';
 
