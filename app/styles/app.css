@@ -237,36 +237,96 @@ body {
    *  PREMIUM CARD UTILITIES — Reusable frosted cards
    * ═══════════════════════════════════════════ */
   
-  /* Light premium card - soft frosted glass effect */
+  /* Light premium card - soft frosted glass effect with warm tones */
   .card-premium-light {
-    @apply bg-cream/50 backdrop-blur-md border border-charcoal/4 rounded-lg shadow-sm;
+    @apply backdrop-blur-md rounded-lg shadow-md;
+    background: linear-gradient(
+      to bottom,
+      rgba(248, 246, 243, 0.75) 0%,
+      rgba(242, 239, 233, 0.65) 100%
+    );
+    border: 1px solid rgba(196, 168, 124, 0.15);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .card-premium-light:hover {
-    @apply border-sand/25 shadow-md;
+    border-color: rgba(196, 168, 124, 0.3);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
   }
   
-  /* Dark premium card - for use on light backgrounds with more contrast */
+  /* Dark premium card - for use on light backgrounds with richer warmth */
   .card-premium-dark {
-    @apply bg-taupe/60 backdrop-blur-md border border-charcoal/6 rounded-lg shadow-sm;
+    @apply backdrop-blur-md rounded-lg shadow-md;
+    background: linear-gradient(
+      to bottom,
+      rgba(235, 231, 224, 0.85) 0%,
+      rgba(232, 232, 227, 0.75) 100%
+    );
+    border: 1px solid rgba(196, 168, 124, 0.2);
+    box-shadow: 
+      0 2px 6px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .card-premium-dark:hover {
-    @apply border-sand/30 shadow-md;
+    border-color: rgba(196, 168, 124, 0.35);
+    box-shadow: 
+      0 6px 16px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
   }
   
   /* Product card wrapper - for "You May Also Like" sections */
   .card-product-accent {
-    @apply bg-cream/60 backdrop-blur-md border border-sand/15 rounded-md shadow-sm;
+    position: relative;
+    @apply backdrop-blur-md border rounded-md shadow-lg;
+    background: linear-gradient(
+      135deg,
+      rgba(248, 246, 243, 0.95) 0%,
+      rgba(235, 231, 224, 0.90) 100%
+    );
+    border-color: rgba(196, 168, 124, 0.25);
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.2),
+      0 2px 4px -1px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 0 rgba(196, 168, 124, 0.1);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
+  .card-product-accent::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at top left,
+      rgba(196, 168, 124, 0.08) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
   .card-product-accent:hover {
-    @apply border-sand/35 shadow-md;
+    border-color: rgba(196, 168, 124, 0.5);
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.25),
+      0 4px 6px -2px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 0 rgba(196, 168, 124, 0.2),
+      0 0 0 1px rgba(196, 168, 124, 0.1);
+    transform: translateY(-3px);
+  }
+  
+  .card-product-accent:hover::before {
+    opacity: 1;
   }
 
   /* Thin warm accent border on dark sections */
