@@ -17,14 +17,6 @@ export default defineConfig({
     // Allow a strict Content-Security-Policy
     // without inlining assets as base64:
     assetsInlineLimit: 0,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router'],
-          'vendor-hydrogen': ['@shopify/hydrogen'],
-        },
-      },
-    },
   },
   ssr: {
     optimizeDeps: {
