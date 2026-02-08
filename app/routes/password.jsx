@@ -100,53 +100,41 @@ export default function Password() {
   const {storeDomain, returnTo, isCheckout} = useLoaderData();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-charcoal via-charcoal/95 to-charcoal/90 px-4 py-12">
-      <div className="max-w-lg w-full">
-        {/* Brand Header */}
-        <div className="text-center mb-10">
-          <Link to="/" className="inline-block group">
-            <h1 className="text-5xl font-bold text-white mb-3 tracking-tight group-hover:opacity-80 transition-opacity">
-              V☰RTEX
-            </h1>
-          </Link>
-          <p className="text-sm uppercase tracking-widest text-white/50 font-medium">
-            Contemporary Streetwear
-          </p>
-        </div>
-
-        {/* Password Card */}
-        <div className="bg-white/95 backdrop-blur-sm p-10 shadow-2xl border border-white/20">
-          <div className="mb-8 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-charcoal/5 rounded-full mb-4">
-              <svg
-                className="w-8 h-8 text-charcoal"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+    <div className="min-h-screen texture-canvas page-fade-in">
+      <div className="flex flex-col items-center justify-center min-h-screen section-padding">
+        <div className="max-w-md w-full">
+          {/* Brand */}
+          <div className="text-center mb-16">
+            <Link to="/" className="inline-block group">
+              <span
+                className="text-4xl md:text-5xl font-serif font-light text-charcoal group-hover:text-rust transition-colors duration-300"
+                style={{letterSpacing: '0.15em'}}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-charcoal mb-2">
-              {isCheckout ? 'Complete Your Purchase' : 'Enter Store'}
-            </h2>
-            <p className="text-sm text-charcoal/60">
+                V<span className="trigram">☰</span>RTEX
+              </span>
+            </Link>
+          </div>
+
+          {/* Divider */}
+          <div className="divider-lux mx-auto mb-12" />
+
+          {/* Heading */}
+          <div className="text-center mb-10">
+            <h1 className="font-serif text-3xl md:text-4xl font-light text-charcoal mb-4">
+              {isCheckout ? 'Continue to Checkout' : 'Store Access'}
+            </h1>
+            <p className="text-sm text-charcoal/50 leading-relaxed max-w-xs mx-auto">
               {isCheckout
-                ? 'Enter password to proceed to secure checkout'
-                : 'This store is password protected'}
+                ? <>Enter the store password provided by <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> to complete your purchase.</>
+                : <>This <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> store is password protected. Enter the store password to browse and shop.</>}
             </p>
           </div>
 
-          {/* Password Form - submits to Shopify's password endpoint */}
+          {/* Password Form */}
           <form
             method="post"
             action={`https://${storeDomain}/password`}
-            className="space-y-6"
+            className="space-y-8"
           >
             {/* Required Shopify form fields */}
             <input type="hidden" name="form_type" value="storefront_password" />
@@ -156,7 +144,7 @@ export default function Password() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-bold text-charcoal mb-3 uppercase tracking-wider"
+                className="block text-[10px] uppercase tracking-[0.2em] text-charcoal/35 mb-3"
               >
                 Store Password
               </label>
@@ -167,58 +155,38 @@ export default function Password() {
                 required
                 autoFocus
                 autoComplete="current-password"
-                className="w-full px-5 py-4 text-lg border-2 border-charcoal/20 rounded-sm focus:outline-none focus:ring-0 focus:border-charcoal transition-colors bg-white"
-                placeholder="••••••••"
+                className="w-full py-3 border-b border-charcoal/15 bg-transparent text-charcoal text-base placeholder:text-charcoal/25 focus:outline-none focus:border-charcoal/40 transition-colors duration-300"
+                placeholder="Enter store password"
               />
             </div>
 
             <button
               type="submit"
-              className="btn-primary w-full text-lg py-4 hover:bg-charcoal/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="btn-primary w-full"
             >
-              {isCheckout ? 'PROCEED TO CHECKOUT' : 'UNLOCK STORE'}
+              {isCheckout ? 'Proceed to Checkout' : 'Enter Store'}
             </button>
           </form>
 
-          {/* Info message for checkout */}
+          {/* Checkout note */}
           {isCheckout && (
-            <div className="mt-6 p-4 bg-charcoal/5 rounded-md">
-              <p className="text-xs text-charcoal/60 text-center leading-relaxed">
-                Your cart is secure. After authentication, you'll be directed
-                straight to checkout to complete your order.
-              </p>
-            </div>
+            <p className="mt-6 text-[11px] text-charcoal/35 text-center leading-relaxed tracking-wide">
+              Your cart is saved. You&apos;ll proceed directly to checkout once verified.
+            </p>
           )}
 
-          {/* Back to shopping */}
-          <div className="mt-8 pt-6 border-t border-charcoal/10 text-center">
+          {/* Divider */}
+          <div className="divider-lux mx-auto mt-12 mb-8" />
+
+          {/* Back link */}
+          <div className="text-center">
             <Link
               to="/"
-              className="inline-flex items-center text-sm text-charcoal/60 hover:text-charcoal transition-colors uppercase tracking-wider font-medium"
+              className="text-[11px] uppercase tracking-[0.15em] text-charcoal/40 hover:text-charcoal transition-colors duration-300"
             >
-              <svg
-                className="w-4 h-4 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              Back to Store
+              &larr; Back to Store
             </Link>
           </div>
-        </div>
-
-        {/* Security badge */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-white/40 uppercase tracking-widest">
-            Secured by Shopify
-          </p>
         </div>
       </div>
     </div>
