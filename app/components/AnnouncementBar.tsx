@@ -1,16 +1,23 @@
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 
 interface AnnouncementBarProps {
   onDismiss?: () => void;
 }
 
+const ANNOUNCEMENT_TEXT =
+  'IF YOU KNOW  •  ANTI-ALGORITHM  •  FORM OVER FAME  •  CRAFT OBSESSION  •  QUIET POWER  •  MADE IN MARGINS  •  WORN BY MAKERS  •  DETAILS MATTER  •  FUNCTION FIRST  •  NO SHORTCUTS  •  INTENTIONAL ALWAYS  •  PRECISION CULTURE  •  SUBSTANCE ONLY  •  BUILT TO LAST  •  DESIGNED TO ENDURE  •  NOT FOR EVERYONE  •  '.repeat(
+    3,
+  );
+
 export function AnnouncementBar({onDismiss}: AnnouncementBarProps) {
   const [dismissed, setDismissed] = useState(false);
 
-  if (dismissed) return null;
+  const handleDismiss = useCallback(() => {
+    setDismissed(true);
+    onDismiss?.();
+  }, [onDismiss]);
 
-  const text = 'IF YOU KNOW  •  ANTI-ALGORITHM  •  FORM OVER FAME  •  CRAFT OBSESSION  •  QUIET POWER  •  MADE IN MARGINS  •  WORN BY MAKERS  •  DETAILS MATTER  •  FUNCTION FIRST  •  NO SHORTCUTS  •  INTENTIONAL ALWAYS  •  PRECISION CULTURE  •  SUBSTANCE ONLY  •  BUILT TO LAST  •  DESIGNED TO ENDURE  •  NOT FOR EVERYONE  •  ';
-  const repeated = text.repeat(3);
+  if (dismissed) return null;
 
   return (
     <div className="fixed top-0 left-0 right-0 bg-charcoal text-bone overflow-hidden z-[60]">
@@ -18,20 +25,17 @@ export function AnnouncementBar({onDismiss}: AnnouncementBarProps) {
         {/* Marquee track - slower speed to prevent blur */}
         <div className="animate-marquee-slow whitespace-nowrap flex-shrink-0">
           <span className="text-[11px] uppercase tracking-[0.3em] font-medium">
-            {repeated}
+            {ANNOUNCEMENT_TEXT}
           </span>
           <span className="text-[11px] uppercase tracking-[0.3em] font-medium">
-            {repeated}
+            {ANNOUNCEMENT_TEXT}
           </span>
         </div>
       </div>
 
       {/* Dismiss button */}
       <button
-        onClick={() => {
-          setDismissed(true);
-          onDismiss?.();
-        }}
+        onClick={handleDismiss}
         className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-bone/60 hover:text-bone transition-colors duration-200"
         aria-label="Dismiss announcement"
       >

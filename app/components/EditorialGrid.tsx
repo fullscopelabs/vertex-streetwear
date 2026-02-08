@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import {ProductCard} from '~/components/ProductCard';
 import {ScrollReveal} from '~/components/ScrollReveal';
 
@@ -103,41 +104,41 @@ function GridSection({
   products: Product[];
   startIndex: number;
 }) {
-  // Mobile: 2 columns - check for single orphan
-  const remainderMobile = products.length % 2;
-  const hasMobileOrphan = remainderMobile === 1 && products.length >= 3;
-  
-  // Desktop: 3 columns - check for 1-2 orphans
-  const remainderDesktop = products.length % 3;
-  const hasDesktopOrphans = remainderDesktop > 0 && products.length >= 4;
-  
-  // Calculate products for main grid vs orphans
-  // Use desktop logic as base since it's more restrictive
-  const orphanCountDesktop = hasDesktopOrphans ? remainderDesktop : 0;
-  
-  let fullGridProducts = products;
-  let mobileOrphanProducts = [];
-  let desktopOrphanProducts = [];
-  
-  if (orphanCountDesktop > 0) {
-    // Desktop has orphans - separate them
-    fullGridProducts = products.slice(0, -orphanCountDesktop);
-    desktopOrphanProducts = products.slice(-orphanCountDesktop);
-    
-    // Check if these desktop orphans also need centering on mobile
-    const remainingForMobile = desktopOrphanProducts.length % 2;
-    if (remainingForMobile === 1) {
-      // Desktop orphans have 1 odd item, center it on mobile too
-      mobileOrphanProducts = desktopOrphanProducts.slice(-1);
-    } else {
-      // Desktop orphans are even (2 items), they'll fill mobile row naturally
-      mobileOrphanProducts = [];
-    }
-  } else if (hasMobileOrphan) {
-    // No desktop orphans, but mobile has one
-    fullGridProducts = products.slice(0, -1);
-    mobileOrphanProducts = products.slice(-1);
-  }
+  const {fullGridProducts, mobileOrphanProducts, desktopOrphanProducts} =
+    useMemo(() => {
+      // Mobile: 2 columns - check for single orphan
+      const remainderMobile = products.length % 2;
+      const hasMobileOrphan = remainderMobile === 1 && products.length >= 3;
+
+      // Desktop: 3 columns - check for 1-2 orphans
+      const remainderDesktop = products.length % 3;
+      const hasDesktopOrphans = remainderDesktop > 0 && products.length >= 4;
+
+      // Use desktop logic as base since it's more restrictive
+      const orphanCountDesktop = hasDesktopOrphans ? remainderDesktop : 0;
+
+      let full: Product[] = products;
+      let mobileOrphans: Product[] = [];
+      let desktopOrphans: Product[] = [];
+
+      if (orphanCountDesktop > 0) {
+        full = products.slice(0, -orphanCountDesktop);
+        desktopOrphans = products.slice(-orphanCountDesktop);
+        const remainingForMobile = desktopOrphans.length % 2;
+        if (remainingForMobile === 1) {
+          mobileOrphans = desktopOrphans.slice(-1);
+        }
+      } else if (hasMobileOrphan) {
+        full = products.slice(0, -1);
+        mobileOrphans = products.slice(-1);
+      }
+
+      return {
+        fullGridProducts: full,
+        mobileOrphanProducts: mobileOrphans,
+        desktopOrphanProducts: desktopOrphans,
+      };
+    }, [products]);
 
   return (
     <div>

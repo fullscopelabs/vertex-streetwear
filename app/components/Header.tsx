@@ -1,4 +1,4 @@
-import {Suspense, useEffect, useRef, useState} from 'react';
+import {Suspense, useCallback, useEffect, useRef, useState} from 'react';
 import {Await, NavLink, useAsyncValue, useLocation, useNavigate} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
@@ -35,8 +35,15 @@ export function Header({cart, announcementVisible = true}: HeaderProps) {
       return;
     }
 
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 80);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     handleScroll(); // Check initial position

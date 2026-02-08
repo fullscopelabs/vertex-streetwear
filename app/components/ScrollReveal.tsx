@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import {useScrollReveal} from '~/hooks/useScrollReveal';
 
 interface ScrollRevealProps {
@@ -22,18 +23,19 @@ export function ScrollReveal({
 }: ScrollRevealProps) {
   const {ref, isVisible} = useScrollReveal();
 
+  const style = useMemo(
+    () => ({
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
+      transition: `opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+      willChange: isVisible ? 'auto' : ('opacity, transform' as const),
+    }),
+    [isVisible, delay],
+  );
+
   return (
     // @ts-expect-error -- dynamic tag with ref
-    <Tag
-      ref={ref}
-      className={className}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
-        transition: `opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-        willChange: isVisible ? 'auto' : 'opacity, transform',
-      }}
-    >
+    <Tag ref={ref} className={className} style={style}>
       {children}
     </Tag>
   );

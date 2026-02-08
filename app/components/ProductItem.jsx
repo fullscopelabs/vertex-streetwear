@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
@@ -11,7 +12,7 @@ import {useVariantUrl} from '~/lib/variants';
  *   loading?: 'eager' | 'lazy';
  * }}
  */
-export function ProductItem({product, loading}) {
+export const ProductItem = memo(function ProductItem({product, loading}) {
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
   return (
@@ -36,7 +37,7 @@ export function ProductItem({product, loading}) {
       </small>
     </Link>
   );
-}
+});
 
 /** @typedef {import('storefrontapi.generated').ProductItemFragment} ProductItemFragment */
 /** @typedef {import('storefrontapi.generated').CollectionItemFragment} CollectionItemFragment */

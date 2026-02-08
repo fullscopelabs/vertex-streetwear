@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {memo, useState} from 'react';
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 
@@ -24,7 +24,7 @@ interface ProductCardProps {
   loading?: 'eager' | 'lazy';
 }
 
-export function ProductCard({product, loading}: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({product, loading}: ProductCardProps) {
   const image = product.featuredImage;
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -77,4 +77,4 @@ export function ProductCard({product, loading}: ProductCardProps) {
       </div>
     </Link>
   );
-}
+});
