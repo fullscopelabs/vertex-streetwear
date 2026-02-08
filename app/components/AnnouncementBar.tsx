@@ -1,11 +1,5 @@
 import {useState} from 'react';
 
-const MESSAGES = [
-  'FREE SHIPPING ON ORDERS OVER $200',
-  'NEW DROPS EVERY SEASON',
-  'PREMIUM STREETWEAR ESSENTIALS',
-];
-
 interface AnnouncementBarProps {
   onDismiss?: () => void;
 }
@@ -15,21 +9,19 @@ export function AnnouncementBar({onDismiss}: AnnouncementBarProps) {
 
   if (dismissed) return null;
 
-  // Double the content so the marquee loops seamlessly
-  const tickerContent = [...MESSAGES, ...MESSAGES]
-    .map((msg) => `${msg}  \u2022  `)
-    .join('');
+  const text = 'IF YOU KNOW  •  ANTI-ALGORITHM  •  FORM OVER FAME  •  CRAFT OBSESSION  •  QUIET POWER  •  MADE IN MARGINS  •  WORN BY MAKERS  •  DETAILS MATTER  •  FUNCTION FIRST  •  NO SHORTCUTS  •  INTENTIONAL ALWAYS  •  PRECISION CULTURE  •  SUBSTANCE ONLY  •  BUILT TO LAST  •  DESIGNED TO ENDURE  •  NOT FOR EVERYONE  •  ';
+  const repeated = text.repeat(3);
 
   return (
     <div className="fixed top-0 left-0 right-0 bg-charcoal text-bone overflow-hidden z-[60]">
       <div className="flex items-center h-9">
-        {/* Marquee track */}
-        <div className="animate-marquee whitespace-nowrap flex-shrink-0">
-          <span className="text-[10px] uppercase tracking-[0.25em] font-medium">
-            {tickerContent}
+        {/* Marquee track - slower speed to prevent blur */}
+        <div className="animate-marquee-slow whitespace-nowrap flex-shrink-0">
+          <span className="text-[11px] uppercase tracking-[0.3em] font-medium">
+            {repeated}
           </span>
-          <span className="text-[10px] uppercase tracking-[0.25em] font-medium">
-            {tickerContent}
+          <span className="text-[11px] uppercase tracking-[0.3em] font-medium">
+            {repeated}
           </span>
         </div>
       </div>
