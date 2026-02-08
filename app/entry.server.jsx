@@ -30,6 +30,10 @@ export default async function handleRequest(
     styleSrc: ['https://fonts.googleapis.com'],
     fontSrc: ['https://fonts.gstatic.com'],
     connectSrc: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+    // Allow data: URIs for inline SVG textures (grain, texture-canvas, body bg).
+    // Added to defaultSrc (not imgSrc) so it extends the existing directive
+    // without creating a separate img-src that would override the fallback.
+    defaultSrc: ['data:'],
   });
 
   const body = await renderToReadableStream(
