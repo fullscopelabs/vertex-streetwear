@@ -136,6 +136,7 @@ function HeroSection({heroProduct}) {
           sizes="100vw"
           loading="eager"
           fetchpriority="high"
+          srcSetOptions={{startingWidth: 240, incrementSize: 160, intervals: 7}}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
       )}
@@ -221,7 +222,7 @@ function EditorialHero({heroProduct}) {
               sizes="(min-width: 768px) 60vw, 100vw"
               loading="eager"
               fetchpriority="high"
-              srcSetOptions={{startingWidth: 400, incrementSize: 200, intervals: 5}}
+              srcSetOptions={{startingWidth: 240, incrementSize: 160, intervals: 7}}
               className="w-full h-full object-cover min-h-[400px] md:min-h-0"
             />
           </div>
