@@ -5,6 +5,10 @@ node_modules
 /dist
 /build
 /.cache
+/.react-router
+
+# Auto-generated type definitions
+*.generated.d.ts
 
 # Environment variables
 .env
