@@ -32,6 +32,15 @@ export default {
 
       const response = await handleRequest(request);
 
+      // Add security headers to all responses
+      response.headers.set('X-Content-Type-Options', 'nosniff');
+      response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+      response.headers.set('X-XSS-Protection', '1; mode=block');
+      response.headers.set(
+        'Referrer-Policy',
+        'strict-origin-when-cross-origin',
+      );
+
       if (hydrogenContext.session.isPending) {
         response.headers.set(
           'Set-Cookie',
