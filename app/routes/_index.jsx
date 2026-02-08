@@ -122,7 +122,7 @@ function HeroSection({heroProduct}) {
  *  1b. MARQUEE DIVIDER BAND
  * ═══════════════════════════════════════════ */
 function MarqueeBand() {
-  const text = 'PREMIUM STREETWEAR  •  EST. 2024  •  DESIGNED WITH INTENTION  •  BUILT TO ENDURE  •  ';
+  const text = 'PRECISION CRAFTED  •  INTENTIONALLY DESIGNED  •  BUILT TO ENDURE  •  WEAR YOUR VISION  •  WHERE AMBITION MEETS EXECUTION  •  EST. 2024  •  ';
   const repeated = text.repeat(4);
 
   return (
