@@ -39,16 +39,18 @@ export function MobileNav({isOpen, onClose, cart}: MobileNavProps) {
         aria-hidden={!isOpen}
       />
 
-      {/* Drawer */}
+      {/* Drawer — use `inert` when closed instead of `aria-hidden` so that
+          descendant links cannot retain focus while the panel is hidden. */}
       <div
         className={`fixed top-0 right-0 h-full w-80 bg-charcoal/95 backdrop-blur-2xl z-[80] shadow-2xl border-l border-sand/10 transition-transform duration-300 ease-out grain ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={hiddenStyle}
         role="dialog"
-        aria-modal={isOpen}
-        aria-hidden={!isOpen}
+        aria-modal={isOpen || undefined}
         aria-label="Mobile navigation"
+        // @ts-expect-error — inert is a standard HTML attribute, React types may lag
+        inert={isOpen ? undefined : ''}
       >
         <div className="flex flex-col h-full">
           {/* Header: Logo + Close */}

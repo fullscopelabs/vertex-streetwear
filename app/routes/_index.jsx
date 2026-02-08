@@ -6,7 +6,14 @@ import {ScrollReveal} from '~/components/ScrollReveal';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'V☰RTEX | Contemporary Streetwear'}];
+  return [
+    {title: 'V☰RTEX | Contemporary Streetwear'},
+    {
+      name: 'description',
+      content:
+        'V☰RTEX — contemporary streetwear essentials. Designed with intention, built to endure. Shop premium hoodies, outerwear, and accessories.',
+    },
+  ];
 };
 
 /**
@@ -170,10 +177,10 @@ function MarqueeBand() {
   return (
     <section className="bg-charcoal overflow-hidden py-5 border-y border-charcoal">
       <div className="animate-marquee whitespace-nowrap flex-shrink-0">
-        <span className="text-bone/30 text-[11px] uppercase tracking-[0.3em] font-medium">
+        <span className="text-bone/50 text-[11px] uppercase tracking-[0.3em] font-medium">
           {repeated}
         </span>
-        <span className="text-bone/30 text-[11px] uppercase tracking-[0.3em] font-medium">
+        <span className="text-bone/50 text-[11px] uppercase tracking-[0.3em] font-medium">
           {repeated}
         </span>
       </div>
@@ -221,9 +228,9 @@ function EditorialHero({heroProduct}) {
               A cornerstone piece of the <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> collection. Designed for those
               who demand precision in every detail.
             </p>
-            <p className="text-xl font-light mt-6 tracking-wide text-bone tabular-nums">
+            <div className="text-xl font-light mt-6 tracking-wide text-bone tabular-nums">
               <Money data={heroProduct.priceRange.minVariantPrice} />
-            </p>
+            </div>
             <div className="mt-8">
               <Link
                 to={`/products/${heroProduct.handle}`}
@@ -266,7 +273,7 @@ function BrandValues() {
               <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-bone/80">
                 {item.number}
               </p>
-              <p className="text-[9px] uppercase tracking-[0.2em] text-bone/30 mt-1">
+              <p className="text-[9px] uppercase tracking-[0.2em] text-bone/50 mt-1">
                 {item.label}
               </p>
             </div>

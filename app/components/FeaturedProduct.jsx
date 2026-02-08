@@ -47,9 +47,9 @@ export function FeaturedProduct({product}) {
               {product.title}
             </h2>
             <div className="divider-lux mt-5 mb-5" />
-            <p className="text-[11px] uppercase tracking-[0.15em] text-bone/50">
+            <div className="text-[11px] uppercase tracking-[0.15em] text-bone/50">
               <Money data={product.priceRange.minVariantPrice} />
-            </p>
+            </div>
             <div className="mt-8">
               <Link
                 to={`/products/${product.handle}`}
