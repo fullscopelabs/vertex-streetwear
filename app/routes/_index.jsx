@@ -179,7 +179,7 @@ function EditorialHero({heroProduct}) {
               A cornerstone piece of the <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> collection. Designed for those
               who demand precision in every detail.
             </p>
-            <p className="text-xl font-semibold mt-6 tracking-wide text-bone">
+            <p className="text-xl font-light mt-6 tracking-wide text-bone tabular-nums">
               <Money data={heroProduct.priceRange.minVariantPrice} />
             </p>
             <div className="mt-8">
