@@ -22,14 +22,8 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
-    // Allow Google Fonts stylesheets and font files so the render-blocking
-    // <link> in the <head> isn't rejected by CSP (which caused a brief
-    // flash of unstyled / default-purple-link text).
-    // NOTE: Hydrogen spreads these as top-level keys — NOT nested under
-    // a "directives" key — and merges them with its built-in defaults.
-    styleSrc: ['https://fonts.googleapis.com'],
-    fontSrc: ['https://fonts.gstatic.com'],
-    connectSrc: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+    // Fonts are now self-hosted (woff2 files in app/assets/fonts/),
+    // so no external styleSrc / fontSrc / connectSrc for Google Fonts needed.
     // Allow Cloudflare Insights beacon when injected by hosting (avoids console CSP error).
     // CSP requires 'self' (quoted); include app scripts, Shopify (e.g. consent-tracking), and Cloudflare.
     scriptSrc: ["'self'", 'https://cdn.shopify.com', 'https://static.cloudflareinsights.com'],
