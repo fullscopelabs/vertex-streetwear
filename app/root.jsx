@@ -171,6 +171,9 @@ export function Layout({children}) {
           }}
         />
         <Links />
+        {/* Preload critical CSS so the browser starts fetching before parser reaches link rel=stylesheet (improves FCP/LCP). */}
+        <link rel="preload" href={appStyles} as="style" />
+        <link rel="preload" href={resetStyles} as="style" />
         {/* Preload font stylesheet so it's fetched early and applied before paint. */}
         <link
           rel="preload"
@@ -183,8 +186,8 @@ export function Layout({children}) {
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
           rel="stylesheet"
         />
-        <link rel="stylesheet" href={resetStyles}></link>
-        <link rel="stylesheet" href={appStyles}></link>
+        <link rel="stylesheet" href={resetStyles} />
+        <link rel="stylesheet" href={appStyles} />
         <Meta />
       </head>
       <body suppressHydrationWarning>

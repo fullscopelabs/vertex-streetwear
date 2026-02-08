@@ -186,10 +186,10 @@ function MarqueeBand() {
   return (
     <section className="bg-charcoal overflow-hidden py-5 border-y border-charcoal">
       <div className="animate-marquee whitespace-nowrap flex-shrink-0">
-        <span className="text-bone/50 text-[11px] uppercase tracking-[0.3em] font-medium">
+        <span className="text-bone/60 text-[11px] uppercase tracking-[0.3em] font-medium">
           {MARQUEE_TEXT}
         </span>
-        <span className="text-bone/50 text-[11px] uppercase tracking-[0.3em] font-medium">
+        <span className="text-bone/60 text-[11px] uppercase tracking-[0.3em] font-medium">
           {MARQUEE_TEXT}
         </span>
       </div>
@@ -288,7 +288,7 @@ function BrandValues() {
               <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-bone/80">
                 {item.number}
               </p>
-              <p className="text-[9px] uppercase tracking-[0.2em] text-bone/50 mt-1">
+              <p className="text-[9px] uppercase tracking-[0.2em] text-bone/60 mt-1">
                 {item.label}
               </p>
             </div>
