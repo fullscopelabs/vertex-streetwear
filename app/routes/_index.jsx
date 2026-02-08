@@ -30,7 +30,7 @@ export async function loader(args) {
   // authenticated via the password page and should be sent to checkout
   const cookieHeader = args.request.headers.get('Cookie') || '';
   const match = cookieHeader.match(/checkout_return_to=([^;]*)/);
-  
+
   if (match) {
     let checkoutPath;
     try {
@@ -38,7 +38,7 @@ export async function loader(args) {
     } catch {
       checkoutPath = null;
     }
-    
+
     // Validate: must be a relative checkout path (no open redirect)
     if (
       checkoutPath &&
@@ -47,16 +47,18 @@ export async function loader(args) {
       !checkoutPath.startsWith('//') &&
       CHECKOUT_PATH_PREFIXES.some((p) => checkoutPath.startsWith(p))
     ) {
-      const checkoutDomain = args.context.env.PUBLIC_CHECKOUT_DOMAIN || 
-                             args.context.env.PUBLIC_STORE_DOMAIN;
+      const checkoutDomain =
+        args.context.env.PUBLIC_CHECKOUT_DOMAIN ||
+        args.context.env.PUBLIC_STORE_DOMAIN;
       const checkoutUrl = `https://${checkoutDomain}${checkoutPath}`;
-      
+
       // Clear the cookie and redirect to checkout
       return new Response(null, {
         status: 307,
         headers: {
           Location: checkoutUrl,
-          'Set-Cookie': 'checkout_return_to=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax',
+          'Set-Cookie':
+            'checkout_return_to=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax',
         },
       });
     }
@@ -142,7 +144,7 @@ function HeroSection({heroProduct}) {
         <p className="text-[10px] uppercase tracking-[0.35em] text-bone/50 mb-3 md:mb-4">
           Est. 2024
         </p>
-        <h1 
+        <h1
           className="font-serif text-[4rem] sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] font-light text-bone leading-none"
           style={{letterSpacing: '0.12em'}}
         >
@@ -171,7 +173,8 @@ function HeroSection({heroProduct}) {
  *  1b. MARQUEE DIVIDER BAND
  * ═══════════════════════════════════════════ */
 function MarqueeBand() {
-  const text = 'PRECISION CRAFTED  •  INTENTIONALLY DESIGNED  •  BUILT TO ENDURE  •  WEAR YOUR VISION  •  WHERE AMBITION MEETS EXECUTION  •  EST. 2024  •  ';
+  const text =
+    'PRECISION CRAFTED  •  INTENTIONALLY DESIGNED  •  BUILT TO ENDURE  •  WEAR YOUR VISION  •  WHERE AMBITION MEETS EXECUTION  •  EST. 2024  •  ';
   const repeated = text.repeat(4);
 
   return (
@@ -225,8 +228,12 @@ function EditorialHero({heroProduct}) {
             </h2>
             <div className="divider-lux mt-6 mb-6" />
             <p className="text-bone/60 text-sm leading-relaxed">
-              A cornerstone piece of the <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> collection. Designed for those
-              who demand precision in every detail.
+              A cornerstone piece of the{' '}
+              <span style={{letterSpacing: '0.2em'}}>
+                V<span className="trigram">☰</span>RTEX
+              </span>{' '}
+              collection. Designed for those who demand precision in every
+              detail.
             </p>
             <div className="text-xl font-light mt-6 tracking-wide text-bone tabular-nums">
               <Money data={heroProduct.priceRange.minVariantPrice} />
@@ -265,9 +272,7 @@ function BrandValues() {
             <div
               key={item.label}
               className={`text-center ${
-                i < VALUES.length - 1
-                  ? 'md:border-r md:border-sand/10'
-                  : ''
+                i < VALUES.length - 1 ? 'md:border-r md:border-sand/10' : ''
               }`}
             >
               <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-bone/80">
@@ -299,15 +304,19 @@ function BrandStory() {
         </h2>
         <div className="divider-lux mx-auto mb-10" />
         <p className="text-bone/80 leading-relaxed text-lg">
-          Every <span style={{letterSpacing: '0.2em'}}>V<span className="trigram">☰</span>RTEX</span> piece begins with intention. We source premium fabrics and
-          work with skilled artisans to create streetwear that stands the test of
-          time — both in durability and design. Our collections are rooted in the
+          Every{' '}
+          <span style={{letterSpacing: '0.2em'}}>
+            V<span className="trigram">☰</span>RTEX
+          </span>{' '}
+          piece begins with intention. We source premium fabrics and work with
+          skilled artisans to create streetwear that stands the test of time —
+          both in durability and design. Our collections are rooted in the
           belief that contemporary style should be accessible, sustainable, and
           unapologetically bold.
         </p>
         <p className="text-bone/50 leading-relaxed mt-6">
-          From the cut of each silhouette to the weight of every fabric, we obsess
-          over the details so you don&apos;t have to. This is streetwear
+          From the cut of each silhouette to the weight of every fabric, we
+          obsess over the details so you don&apos;t have to. This is streetwear
           engineered for real life.
         </p>
         <div className="mt-12">
