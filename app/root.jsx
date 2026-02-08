@@ -14,6 +14,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {Layout as PageLayout} from './components/Layout';
+import {ErrorPage, getErrorDetails} from './components/ErrorPage';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -211,28 +212,72 @@ export default function App() {
   );
 }
 
+/**
+ * Error Boundary Component
+ * 
+ * Industry Best Practices for Error Pages:
+ * - NO full header with navigation (avoids distraction, keeps focus on error recovery)
+ * - NO footer with links (simplifies decision-making for users)
+ * - Minimal branding (logo only, clickable to home)
+ * - Clear error status and message
+ * - Obvious call-to-action buttons
+ * - Dark, premium aesthetic to differentiate from normal pages
+ * 
+ * References: Google, GitHub, Stripe, Airbnb all follow this pattern
+ */
 export function ErrorBoundary() {
   const error = useRouteError();
-  let errorMessage = 'Unknown error';
+  const nonce = useNonce();
+
+  let errorMessage = 'An unexpected error occurred';
   let errorStatus = 500;
 
   if (isRouteErrorResponse(error)) {
-    errorMessage = error?.data?.message ?? error.data;
     errorStatus = error.status;
+    errorMessage = error?.data?.message ?? error.data ?? error.statusText;
   } else if (error instanceof Error) {
     errorMessage = error.message;
   }
 
+  const errorDetails = getErrorDetails(errorStatus);
+  const showDeveloperInfo = process.env.NODE_ENV === 'development';
+
   return (
-    <div className="route-error">
-      <h1>Oops</h1>
-      <h2>{errorStatus}</h2>
-      {errorMessage && (
-        <fieldset>
-          <pre>{errorMessage}</pre>
-        </fieldset>
-      )}
-    </div>
+    <html lang="en" style={{backgroundColor: '#2D2D2D'}}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-color" content="#2D2D2D" />
+        <title>
+          {errorStatus} - V☰RTEX
+        </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=EB+Garamond:wght@400;500&display=optional"
+          rel="stylesheet"
+        />
+        <link rel="stylesheet" href={resetStyles}></link>
+        <link rel="stylesheet" href={appStyles}></link>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <ErrorPage
+          status={errorStatus}
+          title={errorDetails.title}
+          description={errorDetails.description}
+          showShopButton={errorDetails.showShopButton}
+          showDeveloperInfo={showDeveloperInfo}
+          errorMessage={errorMessage}
+        />
+        <Scripts nonce={nonce} />
+      </body>
+    </html>
   );
 }
 
