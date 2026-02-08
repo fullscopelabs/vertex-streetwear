@@ -257,7 +257,7 @@ function OrderLineRow({lineItem}) {
         </p>
       </div>
       <div className="text-right shrink-0">
-        <span className="text-sm text-charcoal/40 line-through mr-2 hidden md:inline">
+        <span className="text-sm text-charcoal/55 line-through mr-2 hidden md:inline">
           <Money data={lineItem.price} />
         </span>
         <span className="text-sm font-medium text-charcoal">

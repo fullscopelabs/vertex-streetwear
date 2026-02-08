@@ -167,7 +167,7 @@ function SearchResultsProducts({term, products}) {
                       <h3 className="font-semibold text-sm uppercase tracking-wider text-charcoal">
                         {product.title}
                       </h3>
-                      <p className="text-charcoal-light text-sm mt-1 tracking-wide">
+                      <p className="text-charcoal/70 text-sm mt-1 tracking-wide font-medium">
                         {price && <Money data={price} />}
                       </p>
                     </Link>

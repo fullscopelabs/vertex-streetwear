@@ -71,7 +71,7 @@ export function ProductCard({product, loading}: ProductCardProps) {
         <h3 className="text-[12px] uppercase tracking-[0.12em] font-medium text-charcoal leading-normal group-hover:text-charcoal/60 transition-colors duration-300">
           {product.title}
         </h3>
-        <p className="text-[11px] tracking-[0.08em] text-charcoal/40 mt-1 tabular-nums">
+        <p className="text-[11px] tracking-[0.08em] text-charcoal/70 mt-1 tabular-nums font-medium">
           <Money data={product.priceRange.minVariantPrice} />
         </p>
       </div>

@@ -682,7 +682,7 @@ function ProductPriceDisplay({price, compareAtPrice}) {
     return (
       <div className="flex items-center gap-3">
         <Money data={price} />
-        <s className="text-lg text-charcoal/40">
+        <s className="text-lg text-charcoal/55">
           <Money data={compareAtPrice} />
         </s>
       </div>
