@@ -1,4 +1,4 @@
-import {useLoaderData, Link, redirect} from 'react-router';
+import {useLoaderData, Link} from 'react-router';
 import {Money} from '@shopify/hydrogen';
 import {ScrollReveal} from '~/components/ScrollReveal';
 
@@ -93,7 +93,7 @@ async function loadCriticalData({context}) {
  * Load data for rendering content below the fold.
  * @param {Route.LoaderArgs}
  */
-function loadDeferredData({context}) {
+function loadDeferredData() {
   return {};
 }
 
