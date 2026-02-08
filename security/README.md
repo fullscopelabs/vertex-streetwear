@@ -15,7 +15,7 @@ Security audits, scan results, and remediation reports for Vertex Streetwear app
 | **High Issues** | 0 |
 | **Medium Issues** | 0 |
 | **Low Issues** | 4 (accepted) |
-| **Last Audit** | 2026-02-07T23:38:44Z |
+| **Last Audit** | 2026-02-08T18:52:51Z |
 | **Next Audit** | 2026-02-21 (recommended) |
 
 ---
@@ -27,14 +27,17 @@ security/
 ├── README.md                                        # This file
 │
 ├── audits/                                          # Security audit reports
-│   └── 2026-02-07T23-38-44Z-stackhawk-audit.md     # StackHawk DAST audit
+│   ├── 2026-02-07T23-38-44Z-stackhawk-audit.md     # StackHawk DAST audit
+│   └── 2026-02-08T18-52-51Z-stackhawk-audit.md     # Latest StackHawk audit
 │
 ├── reports/                                         # Remediation & compliance
 │   └── 2026-02-08T00-46-00Z-remediation-report.md  # Fix documentation
 │
 └── scans/                                           # Raw scan outputs
     ├── 2026-02-07T23-38-44Z-stackhawk-scan-1.log   # First scan (gitignored)
-    └── 2026-02-08T00-39-59Z-stackhawk.sarif        # Latest SARIF
+    ├── 2026-02-08T19-56-03Z-stackhawk-scan-1.log   # Latest raw log (gitignored)
+    ├── 2026-02-08T00-39-59Z-stackhawk.sarif        # Previous SARIF
+    └── 2026-02-08T18-52-51Z-stackhawk.sarif        # Latest SARIF
 ```
 
 ---
@@ -53,12 +56,23 @@ security/
   - Remediation: `reports/2026-02-08T00-46-00Z-remediation-report.md`
   - SARIF: `scans/2026-02-08T00-39-59Z-stackhawk.sarif`
 
+### 2026-02-08T18:52:51Z - StackHawk DAST Audit (Latest)
+
+- **Tool:** StackHawk v5.2.0
+- **Type:** Dynamic Application Security Testing
+- **Scan ID:** 7d8eda7c-616e-4c52-8657-09bb32e6f138
+- **Result:** 59 findings (10 High SQL injection, 11 Medium, 38 Low)
+- **Files:**
+  - Audit: `audits/2026-02-08T18-52-51Z-stackhawk-audit.md`
+  - SARIF: `scans/2026-02-08T18-52-51Z-stackhawk.sarif`
+
 ---
 
 ## 📈 Scan History
 
 | Date | Tool | URLs | Findings | Status |
 |------|------|------|----------|--------|
+| 2026-02-08T18:52:51Z | StackHawk | 212 | 59 | 📋 To triage |
 | 2026-02-08T00:39:59Z | StackHawk | 212 | 59 → 4 | ✅ Fixed |
 | 2026-02-07T23:38:44Z | StackHawk | 144 | 71 | ✅ Fixed |
 
@@ -133,10 +147,10 @@ hawk scan stackhawk.yml --sarif-artifact
 ## 🎯 Quick Links
 
 - **Configuration:** `../stackhawk.yml`
-- **Latest Scan:** [StackHawk Platform](https://app.stackhawk.com/scans/dee5c01a-e117-454e-b229-1abed47be5c8)
+- **Latest Scan:** [StackHawk Platform](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138)
 - **Security Policy:** `../SECURITY.md`
 
 ---
 
-**Last Updated:** 2026-02-08T00:46:00Z  
+**Last Updated:** 2026-02-08T18:52:51Z  
 **Maintained By:** Security Team

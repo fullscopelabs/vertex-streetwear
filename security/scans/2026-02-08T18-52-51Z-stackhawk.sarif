@@ -1,0 +1,1838 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0",
+  "runs": [{
+    "tool": {
+      "driver": {
+        "version": "5.2.0",
+        "name": "StackHawk",
+        "informationUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138",
+        "properties": {
+          "scanId": "7d8eda7c-616e-4c52-8657-09bb32e6f138"
+        },
+        "rules": [{
+          "id": "csp-notices",
+          "name": "CSPNotices",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+          "help": {
+            "text": "Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.",
+            "markdown": "Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files."
+          },
+          "properties": {
+            "tags": ["CWE-693", "WASC-15"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "CSP: Notices"
+          },
+          "fullDescription": {
+            "text": "CSP: Notices"
+          }
+        }, {
+          "id": "information-leak---email-address",
+          "name": "InformationLeakEmailAddress",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+          "help": {
+            "text": "The response contains email addresses. Email addresses are considered sensitive information as they can be used for spam, phishing attacks, social engineering, or account enumeration. While email addresses may seem innocuous, their exposure increases the attack surface for targeted phishing campaigns and privacy violations.",
+            "markdown": "The response contains email addresses. Email addresses are considered sensitive information as they can be used for spam, phishing attacks, social engineering, or account enumeration. While email addresses may seem innocuous, their exposure increases the attack surface for targeted phishing campaigns and privacy violations."
+          },
+          "properties": {
+            "tags": ["CWE-311", "WASC-13"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "Information Leak - Email Address"
+          },
+          "fullDescription": {
+            "text": "Information Leak - Email Address"
+          }
+        }, {
+          "id": "application-error-disclosure",
+          "name": "ApplicationErrorDisclosure",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+          "help": {
+            "text": "This page contains an error/warning message that may disclose sensitive information like the location of the file that produced the unhandled exception. This information can be used to launch further attacks against the web application. The alert could be a false positive if the error message is found inside a documentation page.",
+            "markdown": "This page contains an error/warning message that may disclose sensitive information like the location of the file that produced the unhandled exception. This information can be used to launch further attacks against the web application. The alert could be a false positive if the error message is found inside a documentation page."
+          },
+          "properties": {
+            "tags": ["CWE-200", "WASC-13"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "Application Error Disclosure"
+          },
+          "fullDescription": {
+            "text": "Application Error Disclosure"
+          }
+        }, {
+          "id": "format-string-error",
+          "name": "FormatStringError",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+          "help": {
+            "text": "A Format String error occurs when the submitted data of an input string is evaluated as a command by the application. ",
+            "markdown": "A Format String error occurs when the submitted data of an input string is evaluated as a command by the application. "
+          },
+          "properties": {
+            "tags": ["CWE-134", "WASC-6"],
+            "security-severity": "5.0"
+          },
+          "shortDescription": {
+            "text": "Format String Error"
+          },
+          "fullDescription": {
+            "text": "Format String Error"
+          }
+        }, {
+          "id": "information-leak---iban",
+          "name": "InformationLeakIBAN",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+          "help": {
+            "text": "The response contains International Bank Account Numbers (IBANs). IBANs are international identifiers for bank accounts used in many countries, particularly in Europe. They consist of a 2-letter country code, 2 check digits, and 11-30 alphanumeric characters representing bank and account details. Exposing IBANs represents a significant privacy and security concern as they can be used to identify financial accounts and may facilitate unauthorized transactions or social engineering attacks.",
+            "markdown": "The response contains International Bank Account Numbers (IBANs). IBANs are international identifiers for bank accounts used in many countries, particularly in Europe. They consist of a 2-letter country code, 2 check digits, and 11-30 alphanumeric characters representing bank and account details. Exposing IBANs represents a significant privacy and security concern as they can be used to identify financial accounts and may facilitate unauthorized transactions or social engineering attacks."
+          },
+          "properties": {
+            "tags": ["CWE-200", "WASC-13"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "Information Leak - IBAN"
+          },
+          "fullDescription": {
+            "text": "Information Leak - IBAN"
+          }
+        }, {
+          "id": "sql-injection",
+          "name": "SqlInjection",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+          "help": {
+            "text": "SQL injection may be possible.",
+            "markdown": "SQL injection may be possible."
+          },
+          "properties": {
+            "tags": ["CWE-89", "WASC-19"],
+            "security-severity": "8.0"
+          },
+          "shortDescription": {
+            "text": "SQL Injection"
+          },
+          "fullDescription": {
+            "text": "SQL Injection"
+          }
+        }, {
+          "id": "x-content-type-options-header-missing",
+          "name": "XContentTypeOptionsHeaderMissing",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+          "help": {
+            "text": "The Anti-MIME-Sniffing header X-Content-Type-Options was not set to \u0027nosniff\u0027. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.",
+            "markdown": "The Anti-MIME-Sniffing header X-Content-Type-Options was not set to \u0027nosniff\u0027. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing."
+          },
+          "properties": {
+            "tags": ["CWE-693", "WASC-15"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "X-Content-Type-Options Header Missing"
+          },
+          "fullDescription": {
+            "text": "X-Content-Type-Options Header Missing"
+          }
+        }, {
+          "id": "cookie-no-httponly-flag",
+          "name": "CookieNoHttpOnlyFlag",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10010",
+          "help": {
+            "text": "A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.",
+            "markdown": "A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible."
+          },
+          "properties": {
+            "tags": ["CWE-1004", "WASC-13"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "Cookie No HttpOnly Flag"
+          },
+          "fullDescription": {
+            "text": "Cookie No HttpOnly Flag"
+          }
+        }, {
+          "id": "cookie-without-samesite-attribute",
+          "name": "CookiewithoutSameSiteAttribute",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10054",
+          "help": {
+            "text": "A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a \u0027cross-site\u0027 request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.",
+            "markdown": "A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a \u0027cross-site\u0027 request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks."
+          },
+          "properties": {
+            "tags": ["CWE-1275", "WASC-13"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "Cookie without SameSite Attribute"
+          },
+          "fullDescription": {
+            "text": "Cookie without SameSite Attribute"
+          }
+        }, {
+          "id": "cross-domain-misconfiguration",
+          "name": "CrossDomainMisconfiguration",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10098",
+          "help": {
+            "text": "Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server",
+            "markdown": "Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server"
+          },
+          "properties": {
+            "tags": ["CWE-264", "WASC-14"],
+            "security-severity": "5.0"
+          },
+          "shortDescription": {
+            "text": "Cross-Domain Misconfiguration"
+          },
+          "fullDescription": {
+            "text": "Cross-Domain Misconfiguration"
+          }
+        }, {
+          "id": "cross-domain-javascript-source-file-inclusion",
+          "name": "CrossDomainJavaScriptSourceFileInclusion",
+          "helpUri": "https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10017",
+          "help": {
+            "text": "The page includes one or more script files from a third-party domain.",
+            "markdown": "The page includes one or more script files from a third-party domain."
+          },
+          "properties": {
+            "tags": ["CWE-829", "WASC-15"],
+            "security-severity": "3.0"
+          },
+          "shortDescription": {
+            "text": "Cross-Domain JavaScript Source File Inclusion"
+          },
+          "fullDescription": {
+            "text": "Cross-Domain JavaScript Source File Inclusion"
+          }
+        }],
+        "fullName": "HawkScan 5.2.0"
+      }
+    },
+    "results": [{
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/assets/favicon.svg can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/assets/favicon.svg`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/assets/favicon.svg"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/account/orders can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/account/orders`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/orders"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "1240bb89038bcf739562b51858710d64c8727b8292f2473e28844ec5b64c9ab3"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/blogs can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/blogs`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "blogs"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "bbafd54c1c37c2e3fd893ecccbee65376ff8513967529e7c2e05a39813d19e12"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/cart can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/cart`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "cart"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "cf8cd02464071c693e53be0e4c6b7ee9a1201c06217d1399899de9ceec45d989"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/account/profile can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/account/profile`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/profile"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "fc9b4da161c89c24635e6e3dfdd8e6d7ddbc7e4f7d2a35c6b11bc7ecac7fd090"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000 can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "b7462e30ed08efcf4b1e455f1c3690332c6bae1cfe5872949bbca4d3d028e87e"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/ can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "428eb27fe78e09123b3ea7488111e5634678765a6a1556c401191a68ad5238a4"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/account/addresses can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/account/addresses`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/addresses"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "eddbf2578d051ea5c2dbed852d6133008288e50e8367016d56d5a2d4d83fd29b"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/products can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/products`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "products"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "7c54602c760714203f9d4f14f82eab17417c5276255ba65aa1590d1efc78b809"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/pages/contact can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/pages/contact`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "pages/contact"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "629639b5eca4724418ad664b47689a88f0fc61d56f8c990a7a74ee6ff49977dc"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/collections/outerwear can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/collections/outerwear`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections/outerwear"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "0a706c51e8276ecc53ecba3c2e6405c0aae47afdce308c9469b83f8f9455b05e"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/collections/core-collection can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/collections/core-collection`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections/core-collection"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "cf3d07b9114b62973edad8540d3e582153fa06138459e44f05eec6194ce40573"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/collections can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/collections`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "d04e73c1c0e7f9599159e2d97cb09ce0b8dce211ad916f6fcfb80d97327c64b9"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/search can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/search`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "search"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "5334711983d49b2de3a41f70775c3b7e128d9311594f451ca71ce3f0612dbb2b"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/collections/all can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/collections/all`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections/all"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "d2ecc8191c2b9c34b4d96bd09147d814eba9466e765f969f4ec7e92f8ba85192"
+      }
+    }, {
+      "ruleId": "csp-notices",
+      "message": {
+        "text": "Details for CSP: Notices at http://localhost:3000/products/monolith-oversized-hoodie can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3",
+        "markdown": "Details for [CSP: Notices](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10055-3) at `http://localhost:3000/products/monolith-oversized-hoodie`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "products/monolith-oversized-hoodie"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "32f535cfcef61d12379c6fa727301407530f90cab18e0625b290c01b6f9443f1"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/account/orders can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/account/orders`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/orders"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "46603ccb0ebd8b9983eeaa40a05e52d8d13c7eb1a8ea85aa99b41e4e53123e89"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/blogs can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/blogs`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "blogs"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "1069ef6b25798402b443f9b85266409bbca0016a94151497a6cfb92513f0f122"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/styles/reset.css can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/styles/reset.css`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/styles/reset.css"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/account/profile can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/account/profile`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/profile"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "46603ccb0ebd8b9983eeaa40a05e52d8d13c7eb1a8ea85aa99b41e4e53123e89"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/account/addresses can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/account/addresses`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/addresses"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "46603ccb0ebd8b9983eeaa40a05e52d8d13c7eb1a8ea85aa99b41e4e53123e89"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/entry.client.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/entry.client.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/entry.client.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/styles/app.css can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/styles/app.css`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/styles/app.css"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/shipping-returns can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/shipping-returns`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "shipping-returns"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "7f34af96cb69a6de6be1b568bed02376e5bbae9ff527cedcf65c9775e03d6b2d"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/policies/privacy-policy can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/policies/privacy-policy`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "policies/privacy-policy"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "d35dd50c0779c0136d2dd754243ef74af43806d93a8d7f41a9fbaf2343522a67"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/policies/refund-policy can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/policies/refund-policy`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "policies/refund-policy"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "7f34af96cb69a6de6be1b568bed02376e5bbae9ff527cedcf65c9775e03d6b2d"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/policies can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/policies`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "policies"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "9c1b26ba2bb90ec07f07bd4d324ae9e044f0a423c6aaaf6a97c476431f2766b0"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/policies/terms-of-service can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/policies/terms-of-service`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "policies/terms-of-service"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "7f34af96cb69a6de6be1b568bed02376e5bbae9ff527cedcf65c9775e03d6b2d"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/account/profile can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/account/profile`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/profile"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "46603ccb0ebd8b9983eeaa40a05e52d8d13c7eb1a8ea85aa99b41e4e53123e89"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/account/orders?confirmation_number\u0026name can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/account/orders?confirmation_number\u0026name`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/orders?confirmation_number\u0026name"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "46603ccb0ebd8b9983eeaa40a05e52d8d13c7eb1a8ea85aa99b41e4e53123e89"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/?q can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/?q`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?q"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "0e70a9942e7149b4638cffc109e46a4594293fc3a814f900ffd58bcca9060d86"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "46603ccb0ebd8b9983eeaa40a05e52d8d13c7eb1a8ea85aa99b41e4e53123e89"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/routes/account.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/routes/account.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/account.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/shipping-returns can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/shipping-returns`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "shipping-returns"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "f6af3336cddb65daf4fbb6e37535382ceaa18bc0b3e7e7e8db20bfebc7887b63"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/*/collections/*+ can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/*/collections/*+`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "*/collections/*+"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "adb34d04678d8402544b7c4a06d9014910657603ab2180a0e1194873a3be87c4"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/collections/*%2B can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/collections/*%2B`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections/*+"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "739836143699fc5869d117ed8b89b470172eee94e3d6ade688f98d067f99d34a"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/routes/$.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/routes/$.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/$.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/root.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/root.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/root.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/blogs/*+ can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/blogs/*+`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "blogs/*+"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "432f292cf024a1c4cbbc30a9a255a77607fc73805423117f53f6c239da747943"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/routes/account.profile.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/routes/account.profile.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/account.profile.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/*/blogs/*%2b can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/*/blogs/*%2b`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "*/blogs/*+"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "fb773f2322366139e50d768452818f43c4795080291985ac00aea2123c6b0512"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/routes/pages.$handle.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/routes/pages.$handle.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/pages.$handle.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/routes/collections.all.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/routes/collections.all.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/collections.all.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/routes/policies._index.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/routes/policies._index.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/policies._index.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "cookie-no-httponly-flag",
+      "message": {
+        "text": "Details for Cookie No HttpOnly Flag at http://localhost:3000/cart can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10010",
+        "markdown": "Details for [Cookie No HttpOnly Flag](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10010) at `http://localhost:3000/cart`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "cart"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "d499d7febac938708bb0a3762a619c36a9320a6cb3a1e60c86dda5211d4c2757"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/EN-CA/collections/outerwear can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/EN-CA/collections/outerwear`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "EN-CA/collections/outerwear"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "593b68853f6878c404a490e203b9a697915390c2e2c5847fe1e6903f653d22fa"
+      }
+    }, {
+      "ruleId": "cookie-without-samesite-attribute",
+      "message": {
+        "text": "Details for Cookie without SameSite Attribute at http://localhost:3000/cart can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10054",
+        "markdown": "Details for [Cookie without SameSite Attribute](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10054) at `http://localhost:3000/cart`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "cart"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "d499d7febac938708bb0a3762a619c36a9320a6cb3a1e60c86dda5211d4c2757"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/EN-CA/products/tactical-cascade-cargo-jogger can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/EN-CA/products/tactical-cascade-cargo-jogger`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "EN-CA/products/tactical-cascade-cargo-jogger"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "0f55322eec483ad3cda0b6524a853c77613c1b1ff6a3906b632af9e839c53a90"
+      }
+    }, {
+      "ruleId": "cross-domain-javascript-source-file-inclusion",
+      "message": {
+        "text": "Details for Cross-Domain JavaScript Source File Inclusion at http://localhost:3000/pages/data-sharing-opt-out can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10017",
+        "markdown": "Details for [Cross-Domain JavaScript Source File Inclusion](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10017) at `http://localhost:3000/pages/data-sharing-opt-out`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "pages/data-sharing-opt-out"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "4d8b91b8ab09f3f9994976657ac59127d24a20fcbbca1a9c7b4efb77cdef5d4c"
+      }
+    }, {
+      "ruleId": "x-content-type-options-header-missing",
+      "message": {
+        "text": "Details for X-Content-Type-Options Header Missing at http://localhost:3000/app/routes/blogs._index.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021",
+        "markdown": "Details for [X-Content-Type-Options Header Missing](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10021) at `http://localhost:3000/app/routes/blogs._index.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/blogs._index.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/pages/data-sharing-opt-out can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/pages/data-sharing-opt-out`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "pages/data-sharing-opt-out"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "5b7e0e86b786bc441e4aaa4d594619359684af9cfede22a47c301abddabeaed8"
+      }
+    }, {
+      "ruleId": "information-leak---iban",
+      "message": {
+        "text": "Details for Information Leak - IBAN at http://localhost:3000/cart can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012",
+        "markdown": "Details for [Information Leak - IBAN](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100012) at `http://localhost:3000/cart`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "cart"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "6b46a80d7cc64169ba8a12245f0a1ccb91151c54551f6a9113efc98f280a9489"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/node_modules/.vite/deps/@shopify_hydrogen.js?v\u003d05a1ddcc can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/node_modules/.vite/deps/@shopify_hydrogen.js?v\u003d05a1ddcc`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "node_modules/.vite/deps/@shopify_hydrogen.js?v\u003d05a1ddcc"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "79035c38aea34409fded6c735ba65114752771e8ee1aa6b5175cb541e37431d1"
+      }
+    }, {
+      "ruleId": "cookie-no-httponly-flag",
+      "message": {
+        "text": "Details for Cookie No HttpOnly Flag at http://localhost:3000/api/unstable/graphql.json can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10010",
+        "markdown": "Details for [Cookie No HttpOnly Flag](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10010) at `http://localhost:3000/api/unstable/graphql.json`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "api/unstable/graphql.json"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "cb613df1fa1028598a3be3374de9fa55015db98a8e841eff3083ba9f1c4d3cd1"
+      }
+    }, {
+      "ruleId": "cross-domain-misconfiguration",
+      "message": {
+        "text": "Details for Cross-Domain Misconfiguration at http://localhost:3000/api/unstable/graphql.json can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10098",
+        "markdown": "Details for [Cross-Domain Misconfiguration](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/10098) at `http://localhost:3000/api/unstable/graphql.json`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "api/unstable/graphql.json"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "c441a9d6340c8c24dc41da570a0dae0e31cb97e66e978fec2ec7b058a1114184"
+      }
+    }, {
+      "ruleId": "information-leak---email-address",
+      "message": {
+        "text": "Details for Information Leak - Email Address at http://localhost:3000/app/routes/shipping-returns.jsx can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009",
+        "markdown": "Details for [Information Leak - Email Address](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/100009) at `http://localhost:3000/app/routes/shipping-returns.jsx`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "app/routes/shipping-returns.jsx"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "7f34af96cb69a6de6be1b568bed02376e5bbae9ff527cedcf65c9775e03d6b2d"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/collections/outerwear.data?_routes\u003droutes%2Fcollections.%24handle can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/collections/outerwear.data?_routes\u003droutes%2Fcollections.%24handle`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections/outerwear.data?_routes\u003droutes/collections.$handle"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/products/genesis-edition-hoodie-01-50.data?_routes\u003droutes%2Fproducts.%24handle can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/products/genesis-edition-hoodie-01-50.data?_routes\u003droutes%2Fproducts.%24handle`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "products/genesis-edition-hoodie-01-50.data?_routes\u003droutes/products.$handle"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/collections/all.data?_routes\u003droutes%2Fcollections.all can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/collections/all.data?_routes\u003droutes%2Fcollections.all`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections/all.data?_routes\u003droutes/collections.all"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/api/unstable/graphql.json can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/api/unstable/graphql.json`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "api/unstable/graphql.json"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/__manifest?paths\u003d%2Faccount\u0026version\u003d0.9845771813346125 can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/__manifest?paths\u003d%2Faccount\u0026version\u003d0.9845771813346125`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "__manifest?paths\u003d/account\u0026version\u003d0.9845771813346125"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/products/obsidian-edifice-box-tee.data?_routes\u003droutes%2Fproducts.%24handle can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/products/obsidian-edifice-box-tee.data?_routes\u003droutes%2Fproducts.%24handle`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "products/obsidian-edifice-box-tee.data?_routes\u003droutes/products.$handle"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/collections/core-collection.data can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/collections/core-collection.data`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "collections/core-collection.data"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/products/paradigm-shift-coach-jacket.data?_routes\u003droutes%2Fproducts.%24handle can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/products/paradigm-shift-coach-jacket.data?_routes\u003droutes%2Fproducts.%24handle`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "products/paradigm-shift-coach-jacket.data?_routes\u003droutes/products.$handle"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "application-error-disclosure",
+      "message": {
+        "text": "Details for Application Error Disclosure at http://localhost:3000/products/tactical-cascade-cargo-jogger.data?_routes\u003droutes%2Fproducts.%24handle can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022",
+        "markdown": "Details for [Application Error Disclosure](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/90022) at `http://localhost:3000/products/tactical-cascade-cargo-jogger.data?_routes\u003droutes%2Fproducts.%24handle`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "products/tactical-cascade-cargo-jogger.data?_routes\u003droutes/products.$handle"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "127e737f7add30ff1821c664c00725faf5b40c83410ca10273bf0c25799555a3"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/account/logout.data can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/account/logout.data`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/logout.data"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/account/logout can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/account/logout`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/logout"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/?Color\u003dStealth+Black+AND+1%3D1+--+\u0026q\u003d can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/?Color\u003dStealth+Black+AND+1%3D1+--+\u0026q\u003d`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?Color\u003dStealth+Black+AND+1\u003d1+--+\u0026q\u003d"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/api/unstable/graphql.json can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/api/unstable/graphql.json`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "api/unstable/graphql.json"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/?Color\u003dShadow%27+AND+%271%27%3D%271%27+--+\u0026Size\u003dM\u0026q\u003d can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/?Color\u003dShadow%27+AND+%271%27%3D%271%27+--+\u0026Size\u003dM\u0026q\u003d`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?Color\u003dShadow\u0027+AND+\u00271\u0027\u003d\u00271\u0027+--+\u0026Size\u003dM\u0026q\u003d"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/?confirmation_number\u003d\u0026name\u003d+AND+1%3D1+--+\u0026q\u003d can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/?confirmation_number\u003d\u0026name\u003d+AND+1%3D1+--+\u0026q\u003d`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?confirmation_number\u003d\u0026name\u003d+AND+1\u003d1+--+\u0026q\u003d"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/?address1\u003dHSTE\u0026address2\u003dHSTE%27+AND+%271%27%3D%271%27+--+\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003d\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/?address1\u003dHSTE\u0026address2\u003dHSTE%27+AND+%271%27%3D%271%27+--+\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003d\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?address1\u003dHSTE\u0026address2\u003dHSTE\u0027+AND+\u00271\u0027\u003d\u00271\u0027+--+\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003d\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/?Color\u003dMidnight\u0026Waist\u003d56%2F2\u0026q\u003d can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/?Color\u003dMidnight\u0026Waist\u003d56%2F2\u0026q\u003d`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?Color\u003dMidnight\u0026Waist\u003d56/2\u0026q\u003d"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/account/orders?confirmation_number\u003d\u0026name\u003d+AND+1%3D1+--+ can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/account/orders?confirmation_number\u003d\u0026name\u003d+AND+1%3D1+--+`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/orders?confirmation_number\u003d\u0026name\u003d+AND+1\u003d1+--+"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "sql-injection",
+      "message": {
+        "text": "Details for SQL Injection at http://localhost:3000/account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE%27+AND+%271%27%3D%271%27+--+\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018",
+        "markdown": "Details for [SQL Injection](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/40018) at `http://localhost:3000/account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE%27+AND+%271%27%3D%271%27+--+\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE\u0027+AND+\u00271\u0027\u003d\u00271\u0027+--+\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/account/logout can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/account/logout`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/logout"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/account/profile can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/account/profile`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/profile"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/*/*?*ls\u003d*\u0026ls\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/*/*?*ls\u003d*\u0026ls\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "*/*?*ls\u003d*\u0026ls\u003dHSTE%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s\n"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/?Color\u003dMidnight\u0026Waist\u003d28\u0026q\u003dHSTE+%251%21s%252%21s%253%21s%254%21s%255%21s%256%21s%257%21s%258%21s%259%21s%2510%21s%2511%21s%2512%21s%2513%21s%2514%21s%2515%21s%2516%21s%2517%21s%2518%21s%2519%21s%2520%21s%2521%21n%2522%21n%2523%21n%2524%21n%2525%21n%2526%21n%2527%21n%2528%21n%2529%21n%2530%21n%2531%21n%2532%21n%2533%21n%2534%21n%2535%21n%2536%21n%2537%21n%2538%21n%2539%21n%2540%21n%0A can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/?Color\u003dMidnight\u0026Waist\u003d28\u0026q\u003dHSTE+%251%21s%252%21s%253%21s%254%21s%255%21s%256%21s%257%21s%258%21s%259%21s%2510%21s%2511%21s%2512%21s%2513%21s%2514%21s%2515%21s%2516%21s%2517%21s%2518%21s%2519%21s%2520%21s%2521%21n%2522%21n%2523%21n%2524%21n%2525%21n%2526%21n%2527%21n%2528%21n%2529%21n%2530%21n%2531%21n%2532%21n%2533%21n%2534%21n%2535%21n%2536%21n%2537%21n%2538%21n%2539%21n%2540%21n%0A`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?Color\u003dMidnight\u0026Waist\u003d28\u0026q\u003dHSTE+%1!s%2!s%3!s%4!s%5!s%6!s%7!s%8!s%9!s%10!s%11!s%12!s%13!s%14!s%15!s%16!s%17!s%18!s%19!s%20!s%21!n%22!n%23!n%24!n%25!n%26!n%27!n%28!n%29!n%30!n%31!n%32!n%33!n%34!n%35!n%36!n%37!n%38!n%39!n%40!n\n"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003d\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003d\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003dHSTE%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s\n\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003d\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/__manifest?paths\u003d%2Fproducts%2Fgenesis-edition-hoodie-01-50%2C%2Fproducts%2Fobsidian-edifice-box-tee%2C%2Fproducts%2Ftactical-cascade-cargo-jogger\u0026version\u003dHSTE+%251%21s%252%21s%253%21s%254%21s%255%21s%256%21s%257%21s%258%21s%259%21s%2510%21s%2511%21s%2512%21s%2513%21s%2514%21s%2515%21s%2516%21s%2517%21s%2518%21s%2519%21s%2520%21s%2521%21n%2522%21n%2523%21n%2524%21n%2525%21n%2526%21n%2527%21n%2528%21n%2529%21n%2530%21n%2531%21n%2532%21n%2533%21n%2534%21n%2535%21n%2536%21n%2537%21n%2538%21n%2539%21n%2540%21n%0A can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/__manifest?paths\u003d%2Fproducts%2Fgenesis-edition-hoodie-01-50%2C%2Fproducts%2Fobsidian-edifice-box-tee%2C%2Fproducts%2Ftactical-cascade-cargo-jogger\u0026version\u003dHSTE+%251%21s%252%21s%253%21s%254%21s%255%21s%256%21s%257%21s%258%21s%259%21s%2510%21s%2511%21s%2512%21s%2513%21s%2514%21s%2515%21s%2516%21s%2517%21s%2518%21s%2519%21s%2520%21s%2521%21n%2522%21n%2523%21n%2524%21n%2525%21n%2526%21n%2527%21n%2528%21n%2529%21n%2530%21n%2531%21n%2532%21n%2533%21n%2534%21n%2535%21n%2536%21n%2537%21n%2538%21n%2539%21n%2540%21n%0A`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "__manifest?paths\u003d/products/genesis-edition-hoodie-01-50,/products/obsidian-edifice-box-tee,/products/tactical-cascade-cargo-jogger\u0026version\u003dHSTE+%1!s%2!s%3!s%4!s%5!s%6!s%7!s%8!s%9!s%10!s%11!s%12!s%13!s%14!s%15!s%16!s%17!s%18!s%19!s%20!s%21!n%22!n%23!n%24!n%25!n%26!n%27!n%28!n%29!n%30!n%31!n%32!n%33!n%34!n%35!n%36!n%37!n%38!n%39!n%40!n\n"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/account/addresses?address1\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/account/addresses?address1\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/addresses?address1\u003dHSTE%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s\n\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003dHSTE+%251%21s%252%21s%253%21s%254%21s%255%21s%256%21s%257%21s%258%21s%259%21s%2510%21s%2511%21s%2512%21s%2513%21s%2514%21s%2515%21s%2516%21s%2517%21s%2518%21s%2519%21s%2520%21s%2521%21n%2522%21n%2523%21n%2524%21n%2525%21n%2526%21n%2527%21n%2528%21n%2529%21n%2530%21n%2531%21n%2532%21n%2533%21n%2534%21n%2535%21n%2536%21n%2537%21n%2538%21n%2539%21n%2540%21n%0A\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003dHSTE+%251%21s%252%21s%253%21s%254%21s%255%21s%256%21s%257%21s%258%21s%259%21s%2510%21s%2511%21s%2512%21s%2513%21s%2514%21s%2515%21s%2516%21s%2517%21s%2518%21s%2519%21s%2520%21s%2521%21n%2522%21n%2523%21n%2524%21n%2525%21n%2526%21n%2527%21n%2528%21n%2529%21n%2530%21n%2531%21n%2532%21n%2533%21n%2534%21n%2535%21n%2536%21n%2537%21n%2538%21n%2539%21n%2540%21n%0A\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "[root]?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026q\u003dHSTE+%1!s%2!s%3!s%4!s%5!s%6!s%7!s%8!s%9!s%10!s%11!s%12!s%13!s%14!s%15!s%16!s%17!s%18!s%19!s%20!s%21!n%22!n%23!n%24!n%25!n%26!n%27!n%28!n%29!n%30!n%31!n%32!n%33!n%34!n%35!n%36!n%37!n%38!n%39!n%40!n\n\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE%25x%25x%25x%25x%25x%25x%25x%25x%25x%25x%0A\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE%25x%25x%25x%25x%25x%25x%25x%25x%25x%25x%0A\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "account/addresses?address1\u003dHSTE\u0026address2\u003dHSTE\u0026addressId\u003dNEW_ADDRESS_ID\u0026city\u003dHSTE\u0026company\u003dHSTE\u0026defaultAddress\u003don\u0026firstName\u003dHSTE%x%x%x%x%x%x%x%x%x%x\n\u0026lastName\u003dHSTE\u0026phoneNumber\u003d9999999999\u0026territoryCode\u003dHSTE\u0026zip\u003dHSTE\u0026zoneCode\u003dHSTE"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }, {
+      "ruleId": "format-string-error",
+      "message": {
+        "text": "Details for Format String Error at http://localhost:3000/blogs/news.data?_routes\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A can be found here: https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002",
+        "markdown": "Details for [Format String Error](https://app.stackhawk.com/scans/7d8eda7c-616e-4c52-8657-09bb32e6f138/finding/30002) at `http://localhost:3000/blogs/news.data?_routes\u003dHSTE%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%25n%25s%0A`"
+      },
+      "locations": [{
+        "physicalLocation": {
+          "artifactLocation": {
+            "uri": "blogs/news.data?_routes\u003dHSTE%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s\n"
+          },
+          "region": {
+            "startLine": 1
+          }
+        }
+      }],
+      "partialFingerprints": {
+        "5.2.0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }],
+    "automationDetails": {
+      "id": "HawkScan 7d8eda7c-616e-4c52-8657-09bb32e6f138",
+      "description": {
+        "text": "This is a Scan 7d8eda7c-616e-4c52-8657-09bb32e6f138 of Application: bd5d46c2-200f-4915-97c8-71f31e13fcfe"
+      }
+    }
+  }]
+}
