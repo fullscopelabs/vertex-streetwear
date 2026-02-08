@@ -196,7 +196,7 @@ function EditorialHero({heroProduct}) {
             <Image
               data={image}
               alt={image.altText || heroProduct.title}
-              sizes="(min-width: 768px) 60vw, 100vw"
+              sizes="(min-width: 768px) 60vw, 50vw"
               loading="eager"
               fetchpriority="high"
               srcSetOptions={{
