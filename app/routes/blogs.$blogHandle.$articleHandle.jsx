@@ -86,82 +86,90 @@ export default function Article() {
   }).format(new Date(article.publishedAt));
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
-      {/* Dark header band */}
+    <div className="min-h-screen page-fade-in">
+      {/* Premium dark header with enhanced gradient */}
       <section className="relative bg-gradient-to-br from-charcoal via-tobacco to-forest overflow-hidden grain dark-accent-border">
-        <div className="relative z-10 max-w-3xl mx-auto px-6 py-14 md:py-20">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 md:py-24">
           <ScrollReveal>
             {/* Back to journal */}
             <Link
               to={`/blogs/${blogHandle}`}
-              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-sand/40 hover:text-sand/70 transition-colors duration-300 mb-8"
+              className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-sand/50 hover:text-sand transition-colors duration-300 mb-10"
             >
               <span>&larr;</span>
               <span>Back to Journal</span>
             </Link>
 
-            {/* Meta line */}
-            <div className="flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-bone/40 mb-4">
+            {/* Meta line with enhanced styling */}
+            <div className="flex items-center gap-4 text-[10px] tracking-[0.25em] uppercase text-sand/50 mb-6">
               <time dateTime={article.publishedAt}>{publishedDate}</time>
               {author?.name && (
                 <>
-                  <span>&middot;</span>
-                  <address className="not-italic">{author.name}</address>
+                  <span className="text-sand/30">&middot;</span>
+                  <address className="not-italic">By {author.name}</address>
                 </>
               )}
             </div>
 
-            {/* Title */}
-            <h1 className="font-serif text-4xl md:text-5xl font-light tracking-tight text-bone leading-tight">
+            {/* Title with better spacing */}
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-bone leading-tight mb-8">
               {title}
             </h1>
-            <div className="divider-lux mt-6" />
+            <div className="divider-sand max-w-xs" />
           </ScrollReveal>
         </div>
       </section>
 
-      <article>
-        {/* Hero image */}
-        {image && (
-          <div className="max-w-4xl mx-auto mt-12 px-4 overflow-hidden">
+      {/* Content wrapper with gradient */}
+      <div className="bg-gradient-to-b from-bone to-bone-dark">
+        <article>
+          {/* Hero image with premium framing */}
+          {image && (
+            <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
+              <ScrollReveal>
+                <div className="relative overflow-hidden border border-charcoal/10 bg-bone-dark/40 backdrop-blur-sm p-4 md:p-6">
+                  <Image
+                    data={image}
+                    sizes="(min-width: 768px) 80vw, 100vw"
+                    loading="eager"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </ScrollReveal>
+            </div>
+          )}
+
+          {/* Article body with premium card */}
+          <div className="max-w-4xl mx-auto px-4 pb-16 md:pb-20">
             <ScrollReveal>
-              <Image
-                data={image}
-                sizes="(min-width: 768px) 80vw, 100vw"
-                loading="eager"
-                className="w-full h-auto"
-              />
+              <div className="bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-8 md:p-12 lg:p-16">
+                <div
+                  className="cms-prose text-base md:text-lg leading-relaxed"
+                  dangerouslySetInnerHTML={{__html: contentHtml}}
+                />
+              </div>
             </ScrollReveal>
           </div>
-        )}
+        </article>
 
-        {/* Article body */}
-        <div className="max-w-3xl mx-auto px-4 py-12 md:py-16">
-          <ScrollReveal>
-            <div
-              className="cms-prose"
-              dangerouslySetInnerHTML={{__html: contentHtml}}
-            />
-          </ScrollReveal>
-        </div>
-      </article>
-
-      {/* Back to journal CTA */}
-      <section className="border-t border-charcoal/10">
-        <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-          <ScrollReveal>
-            <p className="text-[10px] tracking-[0.35em] uppercase text-charcoal/40 mb-4">
-              Continue Reading
-            </p>
-            <Link
-              to={`/blogs/${blogHandle}`}
-              className="btn-secondary inline-block"
-            >
-              Back to Journal
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
+        {/* Back to journal CTA with premium styling */}
+        <section className="border-t border-charcoal/10 bg-bone">
+          <div className="max-w-4xl mx-auto px-4 py-16 md:py-20 text-center">
+            <ScrollReveal>
+              <div className="divider-sand max-w-xs mx-auto mb-8" />
+              <p className="text-[10px] tracking-[0.35em] uppercase text-charcoal/40 mb-6">
+                Continue Reading
+              </p>
+              <Link
+                to={`/blogs/${blogHandle}`}
+                className="btn-secondary inline-block"
+              >
+                Back to Journal
+              </Link>
+            </ScrollReveal>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

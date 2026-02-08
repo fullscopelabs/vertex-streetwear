@@ -62,64 +62,81 @@ export default function Blogs() {
   const hasBlogs = blogs?.nodes?.length > 0;
 
   return (
-    <div className="bg-bone min-h-screen page-fade-in">
-      <PageHero title="Journal" subtitle="Stories & Editorials" />
+    <div className="min-h-screen page-fade-in">
+      <div className="bg-gradient-to-b from-bone-dark via-bone to-bone">
+        <PageHero title="Journal" subtitle="Stories & Editorials" />
 
-      <section className="section-padding">
-        <div className="max-w-3xl mx-auto">
-          {hasBlogs ? (
-            <PaginatedResourceSection connection={blogs}>
-              {({node: blog, index}) => (
-                <ScrollReveal key={blog.handle} delay={index * 100}>
+        <section className="py-16 md:py-20">
+          <div className="max-w-4xl mx-auto px-4">
+            {hasBlogs ? (
+              <PaginatedResourceSection connection={blogs}>
+                {({node: blog, index}) => (
+                  <ScrollReveal key={blog.handle} delay={index * 100}>
+                    <Link
+                      prefetch="intent"
+                      to={`/blogs/${blog.handle}`}
+                      className="group block mb-8"
+                    >
+                      <article className="bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-8 md:p-10 hover:border-sand/30 transition-all duration-500 hover:shadow-lg">
+                        <div className="flex items-start justify-between gap-6">
+                          <div className="flex-1">
+                            <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal group-hover:text-rust transition-colors duration-300 mb-4">
+                              {blog.title}
+                            </h2>
+                            {blog.seo?.description && (
+                              <p className="text-sm text-charcoal/60 max-w-2xl leading-relaxed mb-4">
+                                {blog.seo.description}
+                              </p>
+                            )}
+                            <div className="flex items-center gap-2 pt-4 border-t border-charcoal/10">
+                              <span className="text-[10px] uppercase tracking-[0.2em] text-charcoal/40 group-hover:text-sand transition-colors duration-300">
+                                Explore Articles
+                              </span>
+                              <span className="text-sm text-charcoal/40 group-hover:text-sand group-hover:translate-x-1 transition-all duration-300">
+                                &rarr;
+                              </span>
+                            </div>
+                          </div>
+                          <div className="hidden md:block flex-shrink-0">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-sand/20 to-rust/20 flex items-center justify-center group-hover:from-sand/30 group-hover:to-rust/30 transition-all duration-300">
+                              <span className="text-2xl text-charcoal/40 group-hover:text-sand transition-colors duration-300">
+                                &rarr;
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </Link>
+                  </ScrollReveal>
+                )}
+              </PaginatedResourceSection>
+            ) : (
+              <div className="max-w-2xl mx-auto">
+                <ScrollReveal className="text-center py-20 bg-bone-dark/40 backdrop-blur-sm border border-charcoal/8 p-12">
+                  <div className="divider-sand max-w-xs mx-auto mb-8" />
+                  <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal mb-4">
+                    Coming Soon
+                  </h3>
+                  <p className="text-charcoal/60 text-sm leading-relaxed max-w-md mx-auto mb-2">
+                    We&apos;re crafting stories about design, materials, and the
+                    process behind each <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span> collection.
+                  </p>
+                  <p className="text-charcoal/50 text-sm leading-relaxed max-w-md mx-auto mb-8">
+                    Check back soon for editorials, behind-the-scenes features, and
+                    style guides.
+                  </p>
                   <Link
-                    prefetch="intent"
-                    to={`/blogs/${blog.handle}`}
-                    className="group flex items-center justify-between py-8 border-b border-charcoal/10 first:pt-0"
+                    to="/collections/all"
+                    className="btn-secondary inline-block"
                   >
-                    <div>
-                      <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal group-hover:text-rust transition-colors duration-300">
-                        {blog.title}
-                      </h2>
-                      {blog.seo?.description && (
-                        <p className="text-sm text-charcoal/50 mt-2 max-w-lg leading-relaxed">
-                          {blog.seo.description}
-                        </p>
-                      )}
-                      <span className="inline-block mt-3 text-xs uppercase tracking-[0.15em] text-charcoal/40 group-hover:text-rust transition-colors duration-300">
-                        Read More
-                      </span>
-                    </div>
-                    <span className="text-charcoal/20 group-hover:text-rust group-hover:translate-x-1 transition-all duration-300 text-xl ml-6 flex-shrink-0">
-                      &rarr;
-                    </span>
+                    Shop the Collection
                   </Link>
                 </ScrollReveal>
-              )}
-            </PaginatedResourceSection>
-          ) : (
-            <ScrollReveal className="text-center py-16">
-              <div className="w-12 h-px bg-rust mx-auto mb-8" />
-              <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-charcoal mb-4">
-                Coming Soon
-              </h3>
-              <p className="text-charcoal/50 text-sm leading-relaxed max-w-md mx-auto mb-2">
-                We&apos;re crafting stories about design, materials, and the
-                process behind each <span style={{letterSpacing: '0.2em'}}>V<span style={{fontSize: '0.85em', verticalAlign: 'baseline'}}>☰</span>RTEX</span> collection.
-              </p>
-              <p className="text-charcoal/40 text-sm leading-relaxed max-w-md mx-auto mb-8">
-                Check back soon for editorials, behind-the-scenes features, and
-                style guides.
-              </p>
-              <Link
-                to="/collections/all"
-                className="btn-secondary inline-block"
-              >
-                Shop the Collection
-              </Link>
-            </ScrollReveal>
-          )}
-        </div>
-      </section>
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
