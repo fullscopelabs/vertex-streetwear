@@ -56,6 +56,7 @@ function SearchAside() {
           {({fetchResults, goToSearch, inputRef}) => (
             <>
               <input
+                id="header-search-input"
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}

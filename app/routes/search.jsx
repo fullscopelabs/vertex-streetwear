@@ -62,8 +62,9 @@ export default function SearchPage() {
               {({inputRef}) => (
                 <div className="flex items-stretch border border-sand/20 focus-within:border-sand/40 transition-colors duration-200">
                   <input
-                    defaultValue={term}
+                    id="search-query"
                     name="q"
+                    defaultValue={term}
                     placeholder="Search products, articles..."
                     ref={inputRef}
                     type="search"

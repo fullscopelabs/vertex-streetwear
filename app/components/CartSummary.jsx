@@ -75,7 +75,12 @@ function CartDiscounts({discountCodes}) {
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
         <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
+          <input
+            id="cart-discount-code"
+            type="text"
+            name="discountCode"
+            placeholder="Discount code"
+          />
           &nbsp;
           <button type="submit" className="cursor-pointer">Apply</button>
         </div>
@@ -156,6 +161,7 @@ function CartGiftCard({giftCardCodes}) {
       >
         <div>
           <input
+            id="cart-gift-card-code"
             type="text"
             name="giftCardCode"
             placeholder="Gift card code"
