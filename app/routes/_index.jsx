@@ -77,9 +77,11 @@ async function loadCriticalData({context}) {
   const [{collection}, {product: featuredProduct}] = await Promise.all([
     context.storefront.query(CORE_COLLECTION_QUERY, {
       variables: {handle: 'core-collection', first: 4},
+      cache: context.storefront.CacheLong(),
     }),
     context.storefront.query(FEATURED_PRODUCT_QUERY, {
       variables: {handle: 'monolith-oversized-hoodie'},
+      cache: context.storefront.CacheLong(),
     }),
   ]);
 
@@ -172,19 +174,20 @@ function HeroSection({heroProduct}) {
 /* ═══════════════════════════════════════════
  *  1b. MARQUEE DIVIDER BAND
  * ═══════════════════════════════════════════ */
-function MarqueeBand() {
-  const text =
-    'PRECISION CRAFTED  •  INTENTIONALLY DESIGNED  •  BUILT TO ENDURE  •  WEAR YOUR VISION  •  WHERE AMBITION MEETS EXECUTION  •  EST. 2024  •  ';
-  const repeated = text.repeat(4);
+const MARQUEE_TEXT =
+  'PRECISION CRAFTED  •  INTENTIONALLY DESIGNED  •  BUILT TO ENDURE  •  WEAR YOUR VISION  •  WHERE AMBITION MEETS EXECUTION  •  EST. 2024  •  '.repeat(
+    4,
+  );
 
+function MarqueeBand() {
   return (
     <section className="bg-charcoal overflow-hidden py-5 border-y border-charcoal">
       <div className="animate-marquee whitespace-nowrap flex-shrink-0">
         <span className="text-bone/50 text-[11px] uppercase tracking-[0.3em] font-medium">
-          {repeated}
+          {MARQUEE_TEXT}
         </span>
         <span className="text-bone/50 text-[11px] uppercase tracking-[0.3em] font-medium">
-          {repeated}
+          {MARQUEE_TEXT}
         </span>
       </div>
     </section>

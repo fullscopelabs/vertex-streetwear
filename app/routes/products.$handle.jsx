@@ -59,6 +59,7 @@ async function loadCriticalData({context, params, request}) {
   const [{product}] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
       variables: {handle, selectedOptions: getSelectedProductOptions(request)},
+      cache: storefront.CacheShort(),
     }),
   ]);
 
@@ -79,6 +80,7 @@ function loadDeferredData({context, params}) {
   const relatedProducts = context.storefront
     .query(RELATED_PRODUCTS_QUERY, {
       variables: {handle: params.handle},
+      cache: context.storefront.CacheLong(),
     })
     .catch((error) => {
       console.error('Failed to load related products', error);

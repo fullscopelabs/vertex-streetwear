@@ -44,6 +44,7 @@ async function loadCriticalData({context, params, request}) {
   const [{collection}] = await Promise.all([
     storefront.query(COLLECTION_QUERY, {
       variables: {handle, first: 50},
+      cache: storefront.CacheShort(),
     }),
   ]);
 

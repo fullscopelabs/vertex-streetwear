@@ -6,7 +6,9 @@ import {PageHero} from '~/components/PageHero';
  * @param {Route.LoaderArgs}
  */
 export async function loader({context}) {
-  const data = await context.storefront.query(POLICIES_QUERY);
+  const data = await context.storefront.query(POLICIES_QUERY, {
+    cache: context.storefront.CacheLong(),
+  });
 
   const shopPolicies = data.shop;
   const policies = [

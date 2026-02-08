@@ -39,6 +39,7 @@ async function loadCriticalData({context, request}) {
   const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {...paginationVariables},
+      cache: storefront.CacheShort(),
     }),
   ]);
   return {products};

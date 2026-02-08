@@ -261,6 +261,7 @@ async function regularSearch({request, context}) {
   // Search articles, pages, and products for the `q` term
   const {errors, ...items} = await storefront.query(SEARCH_QUERY, {
     variables: {...variables, term},
+    cache: storefront.CacheShort(),
   });
 
   if (!items) {
@@ -431,6 +432,7 @@ async function predictiveSearch({request, context}) {
         limitScope: 'EACH',
         term,
       },
+      cache: storefront.CacheShort(),
     },
   );
 

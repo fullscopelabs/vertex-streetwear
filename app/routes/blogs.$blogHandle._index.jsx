@@ -45,6 +45,7 @@ async function loadCriticalData({context, request, params}) {
         blogHandle: params.blogHandle,
         ...paginationVariables,
       },
+      cache: context.storefront.CacheShort(),
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
