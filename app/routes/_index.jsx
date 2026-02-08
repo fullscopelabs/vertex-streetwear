@@ -203,7 +203,11 @@ function EditorialHero({heroProduct}) {
               sizes="(min-width: 768px) 60vw, 100vw"
               loading="eager"
               fetchpriority="high"
-              srcSetOptions={{startingWidth: 240, incrementSize: 120, intervals: 9}}
+              srcSetOptions={{
+                startingWidth: 240,
+                incrementSize: 120,
+                intervals: 9,
+              }}
               className="w-full h-full object-cover min-h-[400px] md:min-h-0"
             />
           </div>
