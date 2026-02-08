@@ -155,13 +155,28 @@ export function Layout({children}) {
         <meta name="color-scheme" content="light" />
         {/* Hide body until app.css loads and sets opacity:1.
             The html background-color is set as an element attribute above
-            so the page is bone from the very first byte — never white. */}
+            so the page is bone from the very first byte — never white.
+            Fallback: if app.css is slow or blocked, reveal body on DOMContentLoaded
+            so content and fonts are never stuck invisible. */}
         <style
           nonce={nonce || undefined}
           suppressHydrationWarning
           dangerouslySetInnerHTML={{__html: 'body{opacity:0}'}}
         />
+        <script
+          nonce={nonce || undefined}
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `document.addEventListener('DOMContentLoaded',function(){document.body.style.opacity='1';});`,
+          }}
+        />
         <Links />
+        {/* Preload font stylesheet so it's fetched early and applied before paint. */}
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
+          as="style"
+        />
         {/* Google Fonts: Cormorant Garamond. Preconnect is in links() for earliest connection.
             font-display=swap so text shows immediately (fallback) then swaps — better LCP. */}
         <link
@@ -172,7 +187,7 @@ export function Layout({children}) {
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
@@ -204,7 +219,7 @@ export default function App() {
 
 /**
  * Error Boundary Component
- * 
+ *
  * Industry Best Practices for Error Pages:
  * - NO full header with navigation (avoids distraction, keeps focus on error recovery)
  * - NO footer with links (simplifies decision-making for users)
@@ -212,7 +227,7 @@ export default function App() {
  * - Clear error status and message
  * - Obvious call-to-action buttons
  * - Dark, premium aesthetic to differentiate from normal pages
- * 
+ *
  * References: Google, GitHub, Stripe, Airbnb all follow this pattern
  */
 export function ErrorBoundary() {
@@ -243,9 +258,7 @@ export function ErrorBoundary() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="theme-color" content="#2D2D2D" />
-        <title>
-          {errorStatus} - V☰RTEX
-        </title>
+        <title>{errorStatus} - V☰RTEX</title>
         <Links />
         <link
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
