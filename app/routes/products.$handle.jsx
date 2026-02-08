@@ -214,6 +214,10 @@ export default function Product() {
               (p) => p.id !== product.id,
             ) ?? [];
             if (related.length === 0) return null;
+            
+            const relatedProducts = related.slice(0, 4);
+            const productCount = relatedProducts.length;
+            
             return (
               <section className="relative bg-gradient-to-b from-charcoal to-charcoal/95 dark-accent-border grain py-16 md:py-20">
                 <div className="relative z-10 max-w-7xl mx-auto px-4">
@@ -228,10 +232,19 @@ export default function Product() {
                       </p>
                     </div>
                   </ScrollReveal>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-                    {related.slice(0, 4).map((relProduct, i) => (
-                      <ScrollReveal key={relProduct.id} delay={i * 100}>
-                        <div className="card-product-accent p-4">
+                  
+                  {/* Flex layout with centering for any number of items */}
+                  <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+                    {relatedProducts.map((relProduct, i) => (
+                      <ScrollReveal 
+                        key={relProduct.id} 
+                        delay={i * 100}
+                        style={{
+                          width: 'calc((100% - 1.5rem) / 2)',
+                        }}
+                        className="md:w-[calc((100%-6rem)/4)]"
+                      >
+                        <div className="card-product-accent p-4 h-full">
                           <ProductCard
                             product={relProduct}
                             loading={i < 2 ? 'eager' : 'lazy'}
